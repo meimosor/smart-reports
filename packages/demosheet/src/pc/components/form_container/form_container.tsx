@@ -394,13 +394,6 @@ export const FormContainer: React.FC<React.PropsWithChildren<unknown>> = () => {
     if (shareId) {
       setContentType(IFormContentType.Welcome);
     }
-    try {
-      if (!isPrivateDeployment() || getEnvVariables().SENSORSDATA_TOKEN) {
-        (window as any).sensors?.track('formSubmitSuccess', { $url: window.location.href })
-      }
-    } catch (error) {
-      Sentry.captureMessage(String(error));
-    }
   };
 
   const onJump = () => {

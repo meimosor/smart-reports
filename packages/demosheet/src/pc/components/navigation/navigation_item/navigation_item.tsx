@@ -57,11 +57,6 @@ export const NavigationItem: FC<React.PropsWithChildren<INavigationItemProps>> =
   });
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (getEnvVariables().SENSORSDATA_TOKEN) {
-      window.sensors?.quick('trackHeatMap', event.target, {
-        activity_entry: id,
-      });
-    }
     onClick && onClick();
   };
 

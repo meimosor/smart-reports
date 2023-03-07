@@ -59,6 +59,13 @@ scripts/design_token/__pycache__
 /packages/datasheet/settings/public
 /packages/datasheet/.env.development
 
+# demosheet
+/packages/demosheet/.next
+/packages/demosheet/out
+/packages/demosheet/web_build
+/packages/demosheet/settings/custom
+/packages/demosheet/settings/public
+/packages/demosheet/.env.development
 # init-db
 /init-db/bin
 

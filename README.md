@@ -4,65 +4,6 @@
     </a>
 </p>
 
-<p align="center">
-    <!-- Gitpod -->
-    <a target="_blank" href="https://gitpod.io/#https://github.com/apitable/apitable">
-        <img src="https://img.shields.io/badge/gitpod-devenv-orange" alt="APITable Gitpod Development Environment" />
-    </a>
-    <!-- NodeJS -->
-    <img src="https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white" alt="TypeScript Language, NestJS Framework" />
-    <!-- Java -->
-    <img src="https://img.shields.io/badge/Java-ED8B00?logo=spring&logoColor=white" alt="Java Language, Spring Framework" />
-    <!-- hub.docker.com-->
-    <a target="_blank" href="#installation">
-        <img src="https://img.shields.io/docker/pulls/apitable/init-db" />
-    </a>
-    <!-- Github Release Latest -->
-    <a target="_blank" href="https://github.com/apitable/apitable/releases/latest">
-        <img src="https://img.shields.io/github/v/release/apitable/apitable" />
-    </a>
-    <!-- Render -->
-    <a target="_blank" href="https://render.com/deploy?repo=https://github.com/apitable/apitable">
-        <img src="https://img.shields.io/badge/render-deploy-5364e9" />
-    </a>
-    <br />
-    <!-- LICENSE -->
-    <a target="_blank" href="https://github.com/apitable/apitable/blob/main/LICENSE">
-        <img src="https://img.shields.io/badge/LICENSE-AGPL--3.0-ff69b4" alt="APITable License Badge AGPL" />
-    </a>
-    <!-- Discord -->
-    <a target="_blank" href="https://discord.gg/TwNb9nfdBU">
-        <img src="https://img.shields.io/discord/1016320471010115666?label=discord&logo=discord&style=social" />
-    </a>
-    <!-- Twitter -->
-    <a target="_blank" href="https://twitter.com/apitable_com">
-        <img src="https://img.shields.io/twitter/follow/apitable_com?label=Twitter&style=social" />
-    </a>
-    <!-- Github Action Build-->
-    <a target="_blank" href="https://github.com/apitable/apitable/actions/workflows/build.yaml">
-        <img src="https://github.com/apitable/apitable/actions/workflows/build.yaml/badge.svg" />
-    </a>
-    <!-- Better Uptime-->
-    <a target="_blank" href="https://apitable.betteruptime.com/">
-        <img src="https://betteruptime.com/status-badges/v1/monitor/a1a9.svg" />
-    </a>
-</p>
-
-<p align="center">
-  English
-  | 
-  <a href="docs/readme/fr-FR/README.md">Français</a>
-  | 
-  <a href="docs/readme/es-ES/README.md">Español</a>
-  | 
-  <a href="docs/readme/de-DE/README.md">Deutsch</a>
-  | 
-  <a href="docs/readme/zh-CN/README.md">简体中文</a>
-  | 
-  <a href="docs/readme/zh-HK/README.md">繁體中文</a>
-  | 
-  <a href="docs/readme/ja-JP/README.md">日本語</a>
-</p>
 
 ## ✨ Quick Start
 
