@@ -16,7 +16,7 @@
     "start:i18n": "yarn workspace @apitable/i18n-lang start",
     "start:icons": "yarn workspace @apitable/icons start",
     "start:datasheet": "yarn workspace @apitable/datasheet dev",
-    "start:demosheet": "yarn workspace @apitable/demosheet start",
+    "start:demosheet": "yarn workspace @apitable/demosheet dev",
     "start:widget-sdk": "yarn workspace @apitable/widget-sdk start",
     "start:room-server": "yarn workspace @apitable/room-server start:dev",
     "start:room-server:perf:flame": "yarn workspace @apitable/room-server start:room:perf:flame",

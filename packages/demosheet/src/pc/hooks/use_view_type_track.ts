@@ -16,38 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { tracker } from 'pc/utils/tracker';
-import { TrackEvents, Selectors, ViewType } from '@apitable/core';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-
-const viewMap = {
-  1: 'Table View',
-  2: 'Kanban View',
-  3: 'Gallery View',
-  4: 'Form',
-  5: 'Calendar View',
-  6: 'Gantt View',
-  7: 'Org Chart View',
-};
 export const useViewTypeTrack = () => {
-  const { formId, mirrorId, datasheetId } = useSelector(state => state.pageParams);
-  const currentView = useSelector(state => Selectors.getCurrentView(state));
 
-  useEffect(() => {
-    if (currentView?.id) {
-      tracker.track(TrackEvents.ViewsInfo, {
-        viewName: viewMap[currentView.type]
-      });
-    }
-  // eslint-disable-next-line
-  }, [mirrorId, datasheetId, currentView?.id]);
-
-  useEffect(() => {
-    if (formId) {
-      tracker.track(TrackEvents.ViewsInfo, {
-        viewName: viewMap[ViewType.Form]
-      });
-    }
-  }, [formId]);
 };

@@ -1,5 +1,5 @@
 server:
-  max-http-header-size: ${MAX_HTTP_HEADER_SIZE:32KB}
+  max-http-header-size: 32KB
 spring:
   main:
     allow-circular-references: true
@@ -7,35 +7,35 @@ spring:
     name: service-api
   servlet:
     multipart:
-      max-file-size: ${MAX_FILE_SIZE:1GB}
-      max-request-size: ${MAX_REQUEST_SIZE:1GB}
+      max-file-size: 1GB
+      max-request-size: 1GB
   session:
     redis:
-      namespace: ${SESSION_NAMESPACE:apitable:session}
-    timeout: ${SESSION_TIMEOUT:30d}
+      namespace: apitable:session
+    timeout: 30d
   datasource:
-    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:apitable}?characterEncoding=utf8&autoReconnect=true
-    username: ${MYSQL_USERNAME:apitable}
-    password: ${MYSQL_PASSWORD:apitable@com}
+    url: jdbc:mysql://192.168.1.5:3306/apitable?characterEncoding=utf8&autoReconnect=true
+    username: root
+    password: apitable@com
   # Redis
   redis:
-    host: ${REDIS_HOST:127.0.0.1}
-    username: ${REDIS_USERNAME:}
-    password: ${REDIS_PASSWORD:}
-    port: ${REDIS_PORT:6379}
-    database: ${REDIS_DB:0}
+    host: 192.168.1.5
+    username:
+    password: apitable@com
+    port: 6379
+    database: 0
     timeout: 30000
   rabbitmq:
-    addresses: amqp://${RABBITMQ_HOST:127.0.0.1}:${RABBITMQ_PORT:5672}
-    username: ${RABBITMQ_USERNAME:apitable}
-    password: ${RABBITMQ_PASSWORD:apitable@com}
+    addresses: amqp://192.168.1.5:5672
+    username: apitable
+    password: apitable@com
     publisher-returns: true
     publisher-confirm-type: correlated
     listener:
       simple:
         acknowledge-mode: manual
         prefetch: 5
-    virtual-host: ${RABBITMQ_VHOST:/}
+    virtual-host: /
   mail:
     host: ${MAIL_HOST:smtp.apitable.com}
     username: ${MAIL_USERNAME:support@apitable.com}
@@ -84,7 +84,7 @@ limit:
   dsb-widget-max-count: ${DSB_WIDGET_MAX_COUNT:30}
   dst-robot-max-count: ${DST_ROBOT_MAX_COUNT:10}
 socket:
-  domain: ${SOCKET_DOMAIN:http://127.0.0.1:3001/socket}
+  domain: http://192.168.1.5:3001/socket
 
 email:
   personal: ${EMAIL_PERSONAL:APITable}
@@ -92,11 +92,11 @@ email:
 starter:
   socketio:
     client:
-      url: ${SOCKET_URL:http://127.0.0.1:3002}
-      path: ${SOCKET_PATH:/notification}
-      reconnection-attempts: ${SOCKET_RECONNECTION_ATTEMPTS:2}
-      reconnection-delay: ${SOCKET_RECONNECTION_DELAY:1000}
-      timeout: ${SOCKET_TIMEOUT:1000}
+      url: http://192.168.1.5:3002
+      path: /notification
+      reconnection-attempts: 2
+      reconnection-delay: 1000
+      timeout: 1000
   oss:
     enabled: ${OSS_ENABLED:true}
     type: ${OSS_CLIENT_TYPE:aws}
@@ -115,10 +115,10 @@ starter:
         url: ${QINIU_CALLBACK_URL:http://fktcca.natappfree.cc/api/v1/asset/qiniu/uploadCallback}
         body-type: ${QINIU_CALLBACK_BODY_TYPE:application/json}
     minio:
-      endpoint: ${MINIO_ENDPOINT:http://minio:9000}
-      access-key: ${MINIO_ACCESS_KEY:apitable}
-      secret-key: ${MINIO_SECRET_KEY:apitable@com}
-      bucket-policy: ${MINIO_BUCKET_POLICY:'{"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["s3:GetBucketLocation"],"Resource":["arn:aws:s3:::vk-assets-ltd"]},{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["s3:ListBucket"],"Resource":["arn:aws:s3:::vk-assets-ltd"],"Condition":{"StringEquals":{"s3:prefix":["*.*"]}}},{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["s3:GetObject"],"Resource":["arn:aws:s3:::vk-assets-ltd/*.**"]}]}'}
+      endpoint: http://192.168.1.5:9000
+      access-key: apitable
+      secret-key: apitable@com
+      bucket-policy: {"Version":"2012-10-17","Statement":[{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["s3:GetBucketLocation"],"Resource":["arn:aws:s3:::vk-assets-ltd"]},{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["s3:ListBucket"],"Resource":["arn:aws:s3:::vk-assets-ltd"],"Condition":{"StringEquals":{"s3:prefix":["*.*"]}}},{"Effect":"Allow","Principal":{"AWS":["*"]},"Action":["s3:GetObject"],"Resource":["arn:aws:s3:::vk-assets-ltd/*.**"]}]}
   sms:
     enabled: ${SMS_ENABLED:false}
     local-area-code: ${SMS_LOCAL_AREA_CODE:+86}
@@ -159,7 +159,7 @@ grpc:
     port: ${BACKEND_GRPC_PORT:0}
   client:
     nest-grpc-server:
-      address: ${NEST_GRPC_ADDRESS:static://localhost:3334}
+      address: static://192.168.1.5:3334
     dingtalk-grpc-server:
       address: ${DINGTALK_GRPC_ADDRESS:}
       security:

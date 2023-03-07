@@ -21,9 +21,8 @@ import { Select, Typography } from '@apitable/components';
 import { Message } from 'pc/components/common';
 import { useRequest } from 'pc/hooks';
 import styles from './style.module.less';
-import { getLanguage, Strings, t, TrackEvents } from '@apitable/core';
+import { getLanguage, Strings, t } from '@apitable/core';
 import { useUserRequest } from 'pc/hooks';
-import { tracker } from 'pc/utils/tracker';
 
 const options = [{
   label: '简体中文',
@@ -53,9 +52,6 @@ export const LanguageSetting: FC<React.PropsWithChildren<unknown>> = () => {
       return;
     }
     setValue(newValue);
-    tracker.track(TrackEvents.Language, {
-      languageType: newValue
-    });
     // cache client locale
     window.document.cookie = `client-lang=${newValue}`;
     window.location.reload();

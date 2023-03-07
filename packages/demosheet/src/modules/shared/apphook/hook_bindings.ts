@@ -37,7 +37,6 @@ import * as Sentry from '@sentry/nextjs';
 import { Modal } from 'pc/components/common';
 import { resourceService } from 'pc/resource_service';
 import { store } from 'pc/store';
-import { tracker } from 'pc/utils/tracker';
 import { IModalConfirmArgs } from './interface';
 
 let lastModalDestroy: any = null;
@@ -233,16 +232,6 @@ const fixLinkConsistency = (error: ILinkConsistencyError) => {
 
 // Set user ID, logged in
 Player.bindTrigger(Events.app_set_user_id, (args: IUserInfo) => {
-  tracker.login(args.uuid);
-  tracker.setProfile({
-    nick_name: args.nickName,
-    email: args.email,
-  });
-
-  tracker.setOnceProfile({
-    userId: args.uuid,
-    signup_time: Date.now(),
-  });
 
   Sentry.setUser({
     email: args.email,
@@ -301,9 +290,4 @@ Player.bindTrigger(Events.app_modal_confirm, (args: IModalConfirmArgs) => {
       break;
     }
   }
-});
-
-// Buried point statistics related
-Player.bindTrigger(Events.app_tracker, args => {
-  tracker.track(args.name, args.props);
 });

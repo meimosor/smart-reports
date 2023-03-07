@@ -19,7 +19,7 @@
 import { Button, ContextMenu, TextButton, useThemeColors } from '@apitable/components';
 import {
   Api, AutoTestID, CacheManager, ConfigConstant, Events, ExpCache, Field, FieldOperateType, FieldType, FormApi, getNewId, IDPrefix, IField, IFieldMap,
-  IFormState, IRecord, ISegment, isPrivateDeployment, Navigation, OVER_LIMIT_PER_SHEET_RECORDS, OVER_LIMIT_SPACE_RECORDS, Player, Selectors,
+  IFormState, IRecord, ISegment, Navigation, OVER_LIMIT_PER_SHEET_RECORDS, OVER_LIMIT_SPACE_RECORDS, Player, Selectors,
   StatusCode, StoreActions, string2Segment, Strings, t,
 } from '@apitable/core';
 import { ArrowDownOutlined, ArrowUpOutlined, InfoCircleOutlined, EditOutlined } from '@apitable/icons';
@@ -58,7 +58,6 @@ import { FormPropContainer } from './form_prop_container';
 import styles from './style.module.less';
 // @ts-ignore
 import { triggerUsageAlertForDatasheet } from 'enterprise';
-import { getEnvVariables } from '../../utils/env';
 
 enum IFormContentType {
   Form = 'Form',

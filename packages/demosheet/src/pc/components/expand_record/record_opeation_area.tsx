@@ -17,7 +17,7 @@
  */
 
 import * as React from 'react';
-import { StoreActions, Strings, t, TrackEvents } from '@apitable/core';
+import { StoreActions, Strings, t } from '@apitable/core';
 import { GotoOutlined, CloseOutlined, ExpandOutlined, NarrowOutlined } from '@apitable/icons';
 import { IconButton, LinkButton } from '@apitable/components';
 
@@ -27,7 +27,6 @@ import { colorVars } from '@apitable/components';
 import styles from './style.module.less';
 import { useDispatch, useSelector } from 'react-redux';
 import { Tooltip } from 'antd';
-import { tracker } from 'pc/utils/tracker';
 
 interface IRecordOperationArea {
   datasheetId: string;
@@ -93,9 +92,6 @@ export const RecordOperationArea: React.FC<React.PropsWithChildren<IRecordOperat
           )}
           onClick={() => {
             dispatch(StoreActions.toggleRecordFullScreen());
-            tracker.track(TrackEvents.RecordCard, {
-              recordCardStyle: 'fullScreen'
-            });
           }}
           style={{ marginLeft: 4 }}
         />

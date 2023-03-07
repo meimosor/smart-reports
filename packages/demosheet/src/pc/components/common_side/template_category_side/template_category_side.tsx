@@ -26,7 +26,6 @@ import {
   Navigation,
   Strings,
   t,
-  TrackEvents
 } from '@apitable/core';
 import { useDebounceFn, useUnmount } from 'ahooks';
 import { Tooltip } from 'antd';
@@ -39,7 +38,6 @@ import { SearchInput } from 'pc/components/common/search_input';
 import { Router } from 'pc/components/route_manager/router';
 import { useQuery, useRequest, useResponsive, useSideBarVisible, useTemplateRequest } from 'pc/hooks';
 import { KeyCode } from 'pc/utils/keycode';
-import { tracker } from 'pc/utils/tracker';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import NotDataImgDark from 'static/icon/datasheet/empty_state_dark.png';
@@ -122,9 +120,6 @@ export const TemplateCategorySide: FC<React.PropsWithChildren<unknown>> = () => 
     }
     hasTrackSearchKeyWords.current = keywords;
     console.log(`template keyword track: ${keywords}`);
-    tracker.track(TrackEvents.TemplateKeyword, {
-      keyword: keywords,
-    });
   }, []);
 
   const jumpTemplate = (categoryCode: string, templateId: string) => {

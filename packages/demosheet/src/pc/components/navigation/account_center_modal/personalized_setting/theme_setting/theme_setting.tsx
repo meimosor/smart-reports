@@ -20,10 +20,9 @@ import { FC } from 'react';
 import { Select, ThemeName, Typography } from '@apitable/components';
 import { useLocalStorageState } from 'ahooks';
 import styles from './style.module.less';
-import { StoreActions, Strings, t, TrackEvents } from '@apitable/core';
+import { StoreActions, Strings, t } from '@apitable/core';
 import { useDispatch } from 'react-redux';
 import { SystemTheme } from 'pc/common/theme';
-import { tracker } from 'pc/utils/tracker';
 import { getEnvVariables } from 'pc/utils/env';
 
 const options = [{
@@ -51,16 +50,10 @@ export const ThemeSetting: FC<React.PropsWithChildren<unknown>> = () => {
     }
     if (newValue === 'system') {
       setSystemTheme(SystemTheme.Open);
-      tracker.track(TrackEvents.Theme, {
-        themeType: 'FollowSystem'
-      });
       const themeMedia = window.matchMedia('(prefers-color-scheme: light)');
       newValue = themeMedia.matches ? ThemeName.Light : ThemeName.Dark;
     } else {
       setSystemTheme(SystemTheme.Close);
-      tracker.track(TrackEvents.Theme, {
-        themeType: newValue
-      });
     }
     dispatch(StoreActions.setTheme(newValue));
     setTheme(newValue);
