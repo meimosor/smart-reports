@@ -25,7 +25,6 @@ import {
 } from '@apitable/icons';
 import { Tooltip } from 'antd';
 import { TriggerCommands } from 'modules/shared/apphook/trigger_commands';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { resourceService } from 'pc/resource_service';
 import { getEnvVariables } from 'pc/utils/env';
 import { executeCommandWithMirror } from 'pc/utils/execute_command_with_mirror';
@@ -45,7 +44,6 @@ export const OrgChartSettingPanel: React.FC<React.PropsWithChildren<IOrgChartSet
   const { onClose, onAddField } = props;
 
   const {
-    isCryptoLinkField,
     isFieldInvalid,
     isFieldDeleted,
     orgChartStyle: { linkFieldId, horizontal },
@@ -59,15 +57,6 @@ export const OrgChartSettingPanel: React.FC<React.PropsWithChildren<IOrgChartSet
 
   const options = useMemo(() => {
     const options: IOption[] = [];
-    if (isCryptoLinkField) {
-      options.push({
-        value: linkFieldId,
-        label: t(Strings.crypto_field),
-        disabled: true,
-        suffixIcon: <FieldPermissionLock fieldId={linkFieldId} tooltip={t(Strings.field_permission_lock_tips)} />,
-      });
-    }
-
     activeView.columns.filter((column) => fieldMap[column.fieldId].type === FieldType.Link)
       .forEach((column) => {
         options.push({
@@ -86,7 +75,7 @@ export const OrgChartSettingPanel: React.FC<React.PropsWithChildren<IOrgChartSet
       prefixIcon: <AddOutlined color={colors.thirdLevelText} />,
     });
     return options;
-  }, [activeView, fieldMap, datasheetId, isCryptoLinkField, linkFieldId, permissions, colors]);
+  }, [activeView, fieldMap, datasheetId, permissions, colors]);
 
   const onPlayGuideVideo = () => {
     TriggerCommands.open_guide_wizard?.(ConfigConstant.WizardIdConstant.REPLAY_ORG_CHART_VIDEO);

@@ -27,12 +27,11 @@ import { clone, find, get, has, isEmpty, keyBy, set, toPairs, uniq, values } fro
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { Message } from 'pc/components/common';
-import { SpaceLevelInfo } from 'pc/components/space_manage/space_info/utils';
 import { resourceService } from 'pc/resource_service';
 import { store } from 'pc/store';
 import { ACTIVITY_SELECT_MAP, ActivitySelectType } from 'pc/utils';
 import * as React from 'react';
-import { FC, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import IconNoListLight from 'static/icon/datasheet/activity/activity_empty_light.png';
 import IconNoListDark from 'static/icon/datasheet/activity/activity_empty_dark.png';
@@ -81,13 +80,8 @@ export const ActivityListItems: FC<React.PropsWithChildren<IActivityListProps & 
   const [listHeight, setListHeight] = useState(0);
   const topRef = useRef<HTMLDivElement>(null);
   const observerRef = useRef<IntersectionObserver>();
-  const productName = useSelector(state => String(state.billing?.subscription?.product).toLowerCase());
   const themeName = useSelector(state => state.theme);
   const IconNoList = themeName === ThemeName.Light ? IconNoListLight : IconNoListDark;
-
-  const product = useMemo(() => {
-    return SpaceLevelInfo[productName]?.title || '';
-  }, [productName]);
 
   const scrollTo = (isBottom?: boolean) => {
     // Wait for the list to update before scrolling
@@ -462,16 +456,6 @@ export const ActivityListItems: FC<React.PropsWithChildren<IActivityListProps & 
                   {t(Strings.history_view_more)}
                 </Typography>
               </div>
-            )}
-            {maxRemainRecordActivityDays !== MAX_LIMIT_DAY ? (
-              <div>
-                「{product}」{t(Strings.history_view_tip, { day: maxRemainRecordActivityDays })}
-                <LinkButton href={t(Strings.record_history_help_url)} color={colors.thirdLevelText} className={styles.more} target='_blank'>
-                  {t(Strings.know_more)}
-                </LinkButton>
-              </div>
-            ) : (
-              <div>{t(Strings.record_activity_experience_tips, { day: MAX_LIMIT_DAY })}</div>
             )}
           </div>
         ))}

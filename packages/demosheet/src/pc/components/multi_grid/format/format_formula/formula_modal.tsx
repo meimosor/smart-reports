@@ -38,7 +38,6 @@ import classNames from 'classnames';
 import Fuse from 'fuse.js';
 import { Message } from 'pc/components/common';
 import { ComponentDisplay, ScreenSize } from 'pc/components/common/component_display';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { useSelectIndex } from 'pc/hooks';
 import { store } from 'pc/store';
 import { KeyCode } from 'pc/utils';
@@ -395,7 +394,6 @@ export const FormulaModal: React.FC<React.PropsWithChildren<IFormulaModal>> = pr
                   >
                     {<ValueTypeIcon valueType={Field.bindModel(fld).basicValueType} />}
                     <span className={styles.fieldName}>{fld.name}</span>
-                    {<FieldPermissionLock fieldId={fld.id} />}
                   </div>
                 );
               })}

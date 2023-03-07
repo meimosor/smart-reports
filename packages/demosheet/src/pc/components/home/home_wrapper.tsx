@@ -19,7 +19,6 @@
 import { Typography, useThemeColors, Box } from '@apitable/components';
 import { integrateCdnHost, SystemConfig } from '@apitable/core';
 import { getEnvVariables } from 'pc/utils/env';
-import { GithubButton } from './components/github_button';
 import { NavBar } from './components/nav_bar';
 import styles from './style.module.less';
 
@@ -61,9 +60,7 @@ export const HomeWrapper: React.FC<React.PropsWithChildren<unknown>> = ({ childr
               );
             })}
           </div>
-          <Box marginLeft={24}>
-            <GithubButton/>
-          </Box>
+          <Box marginLeft={24} />
         </div>
       </div>
       <div className={styles.main}>

@@ -22,7 +22,7 @@ import {
   IKanbanViewProperty, IViewProperty, LayoutType, Player, ResourceType, RowHeightLevel, Selectors, StoreActions, Strings, t, UN_GROUP, ViewType,
 } from '@apitable/core';
 import {
-  AddCircleOutlined, ApiOutlined, ChevronDownOutlined, EyeOpenOutlined, FilterOutlined, GalleryOutlined, GroupOutlined, HistoryFilled, ListOutlined,
+  AddCircleOutlined, ChevronDownOutlined, EyeOpenOutlined, FilterOutlined, GalleryOutlined, GroupOutlined, ListOutlined,
   RankOutlined, RobotOutlined, SettingFilled, SettingOutlined, ShareOutlined, WidgetOutlined
 } from '@apitable/icons';
 import { useMount, useSize, useThrottleFn } from 'ahooks';
@@ -30,20 +30,18 @@ import classNames from 'classnames';
 import { get } from 'lodash';
 import { ShortcutActionManager, ShortcutActionName } from 'modules/shared/shortcut_key';
 import { closeAllExpandRecord } from 'pc/components/expand_record/utils';
-import { MirrorList } from 'pc/components/mirror/mirror_list';
 import { getFieldTypeIcon } from 'pc/components/multi_grid/field_setting';
 import { useShowViewLockModal } from 'pc/components/view_lock/use_show_view_lock_modal';
 import { SideBarClickType, SideBarType, useSideBar } from 'pc/context';
 import { useResponsive } from 'pc/hooks';
 import { resourceService } from 'pc/resource_service';
 import { store } from 'pc/store';
-import { getEnvVariables, isIframe } from 'pc/utils/env';
+import { isIframe } from 'pc/utils/env';
 import { setStorage, StorageName } from 'pc/utils/storage/storage';
 import * as React from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { isMobile } from 'react-device-detect';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { Share } from '../catalog/share';
 import { Collapse, ICollapseFunc } from '../common/collapse';
 import { ScreenSize } from '../common/component_display';
 import { expandRecordIdNavigate } from '../expand_record';
@@ -87,7 +85,6 @@ const ToolbarBase = () => {
   const colors = useThemeColors();
   const collapseRef = useRef<ICollapseFunc>(null);
   // Whether to show the sharing modal box.
-  const [shareNodeId, setShareNodeId] = useState('');
   const [isFindOpen, setIsFindOpen] = useState(false);
   const [iconRotation, setIconRotation] = useState(false);
   const [winWidth, setWinWidth] = useState(0);
@@ -409,28 +406,6 @@ const ToolbarBase = () => {
       show: isGridView && !shareId && !templateId && !mirrorId && !embedId,
     },
     {
-      component: <MirrorList key='mirror' className={styles.toolbarItem} showLabel={showIconBarLabel} />,
-      key: 'mirror',
-      show: !shareId && !templateId && !mirrorId && !embedId,
-    },
-    {
-      component: (
-        <ToolItem
-          key='api'
-          icon={<ApiOutlined size={16} className={styles.toolIcon} />}
-          text={'API'}
-          // onClick={() => ShortcutActionManager.trigger(ShortcutActionName.ToggleApiPanel)}
-          onClick={() => handleToggleRightBar(ShortcutActionName.ToggleApiPanel)}
-          className={classNames({ [styles.toolbarItem]: true, [styles.apiActive]: isApiPanelOpen })}
-          showLabel={showIconBarLabel}
-          id={DATASHEET_ID.API_BTN}
-          disabled={!permissions.editable}
-        />
-      ),
-      key: 'api',
-      show: !isGanttView && !shareId && !templateId && !mirrorId && embedSetting.apiBtn,
-    },
-    {
       component: (
         <ToolItem
           key='widget'
@@ -461,22 +436,6 @@ const ToolbarBase = () => {
       ),
       key: 'robot',
       show: !mirrorId && !shareId && !templateId && embedSetting.robotBtn, // Open the portal only in the preview environment before going online.
-    },
-    {
-      component: (
-        <ToolItem
-          key='timeMachine'
-          icon={<HistoryFilled size={16} />}
-          text={t(Strings.time_machine)}
-          onClick={() => handleToggleRightBar(ShortcutActionName.ToggleTimeMachinePanel)}
-          className={classNames({ [styles.toolbarItem]: true, [styles.apiActive]: isTimeMachinePanelOpen })}
-          id={DATASHEET_ID.TIME_MACHINE_BTN}
-          showLabel={showIconBarLabel}
-          disabled={!permissions.editable}
-        />
-      ),
-      key: 'timeMachine',
-      show: !mirrorId && !shareId && !templateId && embedSetting.historyBtn && getEnvVariables().TIME_MACHINE_VISIBLE
     },
   ];
 
@@ -693,7 +652,6 @@ const ToolbarBase = () => {
           </Display>
         )}
       </div>
-      <Share nodeId={shareNodeId} onClose={() => setShareNodeId('')} />
       {!isMobile && (
         <div
           className={styles.toolbarRight}

@@ -32,7 +32,6 @@ import {
   t,
 } from '@apitable/core';
 import { NoticeTemplatesConstant, NotificationTemplates } from 'pc/components/notification/utils';
-import { UnitTag } from 'pc/components/catalog/permission_settings/permission/select_unit_modal/unit_tag';
 import { UserCardTrigger } from 'pc/components/common';
 import classNames from 'classnames';
 import styles from './style.module.less';
@@ -133,10 +132,6 @@ const triggerBase = {
   spareSrc: integrateCdnHost(Settings.datasheet_unlogin_user_avatar.value),
 };
 
-const unitTagBase = {
-  deletable: false,
-  isTeam: false,
-};
 const triggerWrapBase = {
   onClick: (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -157,45 +152,18 @@ const renderUser = (info: IFromUserInfo, spaceName: string) => {
         spareName={info.userName || t(Strings.guests_per_space)}
         spareSrc={info.avatar}
         permissionVisible={false}
-      >
-        <div className={styles.unitTagWrap}>
-          <UnitTag 
-            {...unitTagBase} 
-            unitId={info.uuid} 
-            avatar={info.avatar} 
-            avatarColor={info.avatarColor}
-            nickName={info.nickName}
-            name={info.userName || t(Strings.guests_per_space)} 
-          />
-        </div>
-      </UserCardTrigger>
+      />
     </div>
   );
 };
-export const renderMember = (info: IFromUserInfo, spaceName: string, spaceInfo?: ISpaceBasicInfo | null) => {
+export const renderMember = (info: IFromUserInfo, spaceName: string) => {
   const isDeleted = Boolean(info.playerType === MemberTypeInNotice.IsDeleted);
   const unitTagWrapClasses = classNames(styles.unitTagWrap, { [styles.isLeave]: isDeleted });
   if (isDeleted) {
     return (
-      <div className={unitTagWrapClasses}>
-        <UnitTag 
-          {...unitTagBase} 
-          unitId={info.memberId} 
-          avatar={info.avatar} 
-          avatarColor={info.avatarColor}
-          nickName={info.nickName}
-          name={info.memberName || info.userName || t(Strings.unnamed)} 
-        />
-      </div>
+      <div className={unitTagWrapClasses} />
     );
   }
-  const title = spaceInfo
-    ? (getSocialWecomUnitName?.({
-      name: info?.memberName,
-      isModified: info?.isMemberNameModified,
-      spaceInfo,
-    }) || info?.memberName)
-    : undefined;
   return (
     <div {...triggerWrapBase}>
       <UserCardTrigger
@@ -210,17 +178,7 @@ export const renderMember = (info: IFromUserInfo, spaceName: string, spaceInfo?:
           src: info.avatar,
         }}
       >
-        <div className={unitTagWrapClasses}>
-          <UnitTag
-            {...unitTagBase}
-            unitId={info.memberId}
-            avatar={info.avatar}
-            avatarColor={info.avatarColor}
-            nickName={info.nickName}
-            title={title}
-            name={info.memberName || info.userName || t(Strings.unnamed)}
-          />
-        </div>
+        <div className={unitTagWrapClasses} />
       </UserCardTrigger>
     </div>
   );
@@ -264,7 +222,6 @@ export const getMsgText = (data: INoticeDetail) => {
 // spaceName is the space to which the current notification belongs
 export const renderNoticeBody = (data: INoticeDetail, options?: IRenderNoticeBodyOptions) => {
   const pureString = options ? options.pureString : false;
-  const spaceInfo = options ? options.spaceInfo : null;
 
   const templateConfig = SystemConfig.notifications.templates[data.templateId];
   if (!templateConfig) {
@@ -308,7 +265,7 @@ export const renderNoticeBody = (data: INoticeDetail, options?: IRenderNoticeBod
           if (!data.fromUser) {
             return;
           }
-          return renderMember(data.fromUser, data.notifyBody.space.spaceName, spaceInfo);
+          return renderMember(data.fromUser, data.notifyBody.space.spaceName);
         }
         case TemplateKeyword.UserName: {
           if (!data.fromUser) {
@@ -320,7 +277,7 @@ export const renderNoticeBody = (data: INoticeDetail, options?: IRenderNoticeBod
           if (!involveMemberArr || involveMemberArr.length === 0) {
             return;
           }
-          const userList = involveMemberArr.map((item: IFromUserInfo) => renderMember(item, data.notifyBody.space.spaceName, spaceInfo));
+          const userList = involveMemberArr.map((item: IFromUserInfo) => renderMember(item, data.notifyBody.space.spaceName));
           return <>{userList}</>;
         }
         case TemplateKeyword.SpaceName: {

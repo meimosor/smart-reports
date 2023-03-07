@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Typography, useThemeColors, Button, TextInput, Box, LinkButton } from '@apitable/components';
+import { Typography, useThemeColors, Button, TextInput } from '@apitable/components';
 import { Strings, t, isEmail, ConfigConstant, StatusCode, api, IReduxState } from '@apitable/core';
 import { EmailFilled, EyeCloseOutlined, EyeOpenOutlined, LockFilled } from '@apitable/icons';
 import { useBoolean, useMount } from 'ahooks';
@@ -42,7 +42,7 @@ interface ILoginProps {
 }
 
 export const Login: React.FC<React.PropsWithChildren<ILoginProps>> = (props) => {
-  const { switchClick = () => {}, email = '', setEmail } = props;
+  const { email = '', setEmail } = props;
   const colors = useThemeColors();
   const { loginOrRegisterReq } = useUserRequest();
   const { run: loginReq, loading } = useRequest(loginOrRegisterReq, { manual: true });
@@ -201,27 +201,11 @@ export const Login: React.FC<React.PropsWithChildren<ILoginProps>> = (props) => 
             />
           </WithTipWrapper>
         </div>
-        <Box textAlign={'right'}>
-          <Typography 
-            className={styles.forgetPassword} 
-            variant="body2" 
-            color={colors.textCommonPrimary} 
-            onClick={() => switchClick(ActionType.ForgetPassword)}
-          >
-            {t(Strings.apitable_forget_password_button)}
-          </Typography>
-        </Box>
       </Form>
      
       <Button className={styles.loginBtn} color="primary" size="large" block loading={loading} onClick={handleSubmit}>
         {t(Strings.apitable_sign_in)}
       </Button>
-      <div className={styles.switchContent}>
-        <p>{t(Strings.apitable_no_account)}</p>
-        <LinkButton underline={false} component='button' 
-          onClick={() => switchClick(ActionType.SignUp)} style={{ paddingRight: 0 }}>{t(Strings.apitable_sign_up)}
-        </LinkButton>
-      </div>
       
     </div>
   );

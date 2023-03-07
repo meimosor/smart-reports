@@ -19,7 +19,6 @@
 export * from './dom';
 export * from './keycode';
 export * from './upload_manager';
-export * from './catalog';
 export * from './mobile';
 export * from './file_type';
 export * from './color_utils';

@@ -18,7 +18,6 @@
 
 import { colors } from '@apitable/components';
 import { Api, INoticeDetail, Navigation, StoreActions } from '@apitable/core';
-import { IDingTalkModalType, showTipInDingTalk } from 'pc/components/economy/upgrade_modal';
 // @ts-ignore
 import { isSocialDingTalk, showOrderModalAfterPay, showVikaby } from 'enterprise';
 import { navigationToUrl } from 'pc/components/route_manager/navigation_to_url';
@@ -89,7 +88,7 @@ export const PublishController = (props: INoticeDetail) => {
       const spaceId = state.space.activeId;
       if (!spaceId || (notifyBody.space?.spaceId !== spaceId)) return;
 
-      templateId === NoticeTemplatesConstant.space_paid_notify && showTipInDingTalk(IDingTalkModalType.Subscribe);
+      templateId === NoticeTemplatesConstant.space_paid_notify;
       templateId === NoticeTemplatesConstant.space_vika_paid_notify && showOrderModalAfterPay(colors.fc2, notifyBody.extras.orderType);
 
       Api.transferNoticeToRead([id], false).then(res => {

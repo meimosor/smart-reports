@@ -20,7 +20,6 @@ import { useThemeColors } from '@apitable/components';
 import { AutoTestID, ConfigConstant, Navigation, Selectors, Strings, t, ThemeName } from '@apitable/core';
 import { Tree } from 'antd';
 import classNames from 'classnames';
-import { getNodeIcon } from 'pc/components/catalog/tree/node_icon';
 import { Avatar, AvatarSize, Logo, Modal } from 'pc/components/common';
 import { Router } from 'pc/components/route_manager/router';
 import * as React from 'react';
@@ -68,29 +67,16 @@ const NodeTree = (nodeTree: INodeTree | undefined) => {
   const renderNode = (node: INodeTree[] | undefined) => {
     if (!node || !node.length) return <></>;
     return node!.map(item => {
-      const icon = getNodeIcon(item.icon, item.type, {
-        size: 16,
-        emojiSize: 18,
-        actived: item.nodeId === activedNodeId,
-        normalColor: colors.staticWhite0,
-      });
       if (item.type === ConfigConstant.NodeType.FOLDER) {
         return (
-          <TreeNode title={item.nodeName} key={item.nodeId} style={{ width: '100%' }} icon={icon}>
+          <TreeNode title={item.nodeName} key={item.nodeId} style={{ width: '100%' }}>
             {renderNode(item.children)}
           </TreeNode>
         );
       }
-      return <TreeNode title={item.nodeName} key={item.nodeId} style={{ width: '100%' }} isLeaf icon={icon} />;
+      return <TreeNode title={item.nodeName} key={item.nodeId} style={{ width: '100%' }} isLeaf />;
     });
   };
-
-  const icon = getNodeIcon(nodeTree.icon, nodeTree.type, {
-    size: 16,
-    emojiSize: 18,
-    actived: nodeTree.nodeId === activedNodeId,
-    normalColor: colors.staticWhite0,
-  });
 
   return (
     <DirectoryTree
@@ -105,11 +91,11 @@ const NodeTree = (nodeTree: INodeTree | undefined) => {
       expandAction={false}
     >
       {nodeTree.type === ConfigConstant.NodeType.FOLDER && nodeTree.children!.length ? (
-        <TreeNode title={nodeTree.nodeName} key={nodeTree.nodeId} style={{ width: '100%' }} icon={icon}>
+        <TreeNode title={nodeTree.nodeName} key={nodeTree.nodeId} style={{ width: '100%' }}>
           {renderNode(nodeTree.children)}
         </TreeNode>
       ) : (
-        <TreeNode title={nodeTree.nodeName} key={nodeTree.nodeId} style={{ width: '100%' }} icon={icon} isLeaf />
+        <TreeNode title={nodeTree.nodeName} key={nodeTree.nodeId} style={{ width: '100%' }} isLeaf />
       )}
     </DirectoryTree>
   );

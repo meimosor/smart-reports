@@ -17,7 +17,6 @@
  */
 
 import { FC } from 'react';
-import { ReportWeb } from '../feedback';
 import { DATASHEET_ID } from '@apitable/core';
 import styles from './style.module.less';
 
@@ -26,12 +25,11 @@ interface IProps {
   datasheetId?: string;
 }
 
-export const SuspensionPanel: FC<React.PropsWithChildren<IProps>> = ({ shareId, datasheetId }) => {
+export const SuspensionPanel: FC<React.PropsWithChildren<IProps>> = () => {
 
   return (
     <div className={styles.suspensionPanel}>
       <div id={DATASHEET_ID.APPLICATION_JOIN_SPACE_BTN} />
-      {shareId && datasheetId && <ReportWeb nodeId={datasheetId} />}
       <div id={DATASHEET_ID.ADD_RECORD_BTN} />
     </div>
   );

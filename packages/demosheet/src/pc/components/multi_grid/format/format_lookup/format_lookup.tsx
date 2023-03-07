@@ -18,7 +18,7 @@
 
 import { Select, TextButton, useThemeColors } from '@apitable/components';
 import {
-  BasicValueType, ConfigConstant, DateTimeField, Field, FieldType, Functions, IField, ILookUpField, ILookUpProperty, IViewColumn, LookUpField,
+  BasicValueType, DateTimeField, Field, FieldType, Functions, IField, ILookUpField, ILookUpProperty, IViewColumn, LookUpField,
   NOT_FORMAT_FUNC_SET, RollUpFuncType, Selectors, StringKeysType, Strings, t,
 } from '@apitable/core';
 import { ChevronRightOutlined, WarnCircleFilled } from '@apitable/icons';
@@ -29,7 +29,6 @@ import { ComponentDisplay, ScreenSize } from 'pc/components/common/component_dis
 import { InlineNodeName } from 'pc/components/common/inline_node_name';
 import { FilterModal } from 'pc/components/common/modal/filter_modal/filter_modal';
 import { TComponent } from 'pc/components/common/t_component';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { LinkFieldPanel } from 'pc/components/multi_grid/format/format_lookup/link_field_panel';
 import { LookupFieldPanel } from 'pc/components/multi_grid/format/format_lookup/look_field_panel';
 import { store } from 'pc/store';
@@ -126,7 +125,6 @@ export const FormateLookUp: React.FC<React.PropsWithChildren<IFormateLookUpProps
     return relatedLinkField && Selectors.getCurrentView(state, relatedLinkField.property.foreignDatasheetId);
   });
   const foreignDatasheetReadable = useSelector(state => Selectors.getPermissions(state, relatedLinkField?.property.foreignDatasheetId).readable);
-  const foreignFieldPermissionMap = useSelector(state => Selectors.getFieldPermissionMap(state, relatedLinkField?.property.foreignDatasheetId));
 
   const foreignDatasheetFields =
     foreignDatasheetFieldMap && foreignDatasheetActiveView && foreignDatasheetReadable
@@ -136,7 +134,6 @@ export const FormateLookUp: React.FC<React.PropsWithChildren<IFormateLookUpProps
       : [];
 
   const lookUpField = foreignDatasheetFieldMap && foreignDatasheetFieldMap[lookUpTargetFieldId];
-  const isCryptoLookField = Selectors.getFieldRoleByFieldId(foreignFieldPermissionMap, lookUpTargetFieldId) === ConfigConstant.Role.None;
 
   const getFieldValueType = (field: ILookUpField) => {
     let showFormatType = lookUpField ? LookUpField.bindModel(field).basicValueType : BasicValueType.String;
@@ -266,14 +263,6 @@ export const FormateLookUp: React.FC<React.PropsWithChildren<IFormateLookUpProps
             <div className={lookupStyles.iconType}>{getFieldTypeIcon(lookUpField.type)}</div>
             <div className={lookupStyles.fieldName}>{lookUpField.name}</div>
           </div>
-        );
-      }
-      if (isCryptoLookField) {
-        return (
-          <span className={lookupStyles.cryptoLinkField}>
-            <FieldPermissionLock isLock />
-            {t(Strings.crypto_field)}
-          </span>
         );
       }
       return <span className={lookupStyles.plzSelectFieldText}>{t(Strings.check_field)}</span>;

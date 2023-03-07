@@ -20,7 +20,6 @@
  * @doc https://www.notion.so/vikadata/50b41920a64f4bffaf55f7f9b4427985
  */
 import {
-  ConfigConstant,
   Field,
   FieldType,
   Group,
@@ -46,7 +45,6 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { StatOption } from '../../../stat_option';
 import styles from '../../../styles.module.less';
 import { GROUP_HEIGHT } from '../constant';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { dispatch } from 'pc/worker/store';
 import { ConicalDownFilled, ConicalRightFilled, TriangleDownFilled, TriangleRightFilled } from '@apitable/icons';
 
@@ -69,7 +67,7 @@ const GroupTabBase: React.FC<React.PropsWithChildren<IGroupTab>> = props => {
   const fieldId = groupInfo[row.depth]?.fieldId;
   const pathKey = `${row.recordId}_${row.depth}`;
   const colors = useThemeColors();
-  const { field, statTypeFieldId, viewId, datasheetId, groupingCollapseIds, isSearching, fieldPermissionMap } = useSelector(state => {
+  const { field, statTypeFieldId, viewId, datasheetId, groupingCollapseIds, isSearching } = useSelector(state => {
     const columns = Selectors.getVisibleColumns(state);
     const statTypeFieldId = columns[actualColumnIndex].fieldId;
     return {
@@ -83,8 +81,6 @@ const GroupTabBase: React.FC<React.PropsWithChildren<IGroupTab>> = props => {
     };
   }, shallowEqual);
   const groupingCollapseIdsMap = new Map<string, boolean>(groupingCollapseIds?.map(v => [v, true]));
-  const fieldRole = Selectors.getFieldRoleByFieldId(fieldPermissionMap, fieldId);
-  const isCryptoField = fieldRole === ConfigConstant.Role.None;
   const triggerRef = useRef<any>();
 
   const changeGroupCollapseState = useCallback(
@@ -323,12 +319,7 @@ const GroupTabBase: React.FC<React.PropsWithChildren<IGroupTab>> = props => {
   const FirstColumnGroupTab = () => {
     return (
       <div className={styles.cellWrapper} style={{ flex: '1', height: '100%' }}>
-        {isCryptoField ? (
-          <div className={styles.lockedTab}>
-            {t(Strings.crypto_field)}
-            <FieldPermissionLock fieldId={fieldId} />
-          </div>
-        ) : (
+        { (
           <>
             {getFieldName()}
             {partOfCellValue()}

@@ -17,14 +17,13 @@
  */
 
 import { Button, Skeleton, TextButton, useThemeColors } from '@apitable/components';
-import { ConfigConstant, DATASHEET_ID, Navigation, Strings, t } from '@apitable/core';
+import { DATASHEET_ID, Navigation, Strings, t } from '@apitable/core';
 import { AddOutlined, FormOutlined, QuestionCircleOutlined } from '@apitable/icons';
 import classnames from 'classnames';
 
 import Image from 'next/image';
 import { Tooltip } from 'pc/components/common';
 import { Router } from 'pc/components/route_manager/router';
-import { useCatalog } from 'pc/hooks/use_catalog';
 import { FC } from 'react';
 import EmptyState from 'static/icon/datasheet/form/emptystate.png';
 import styles from './style.module.less';
@@ -49,28 +48,14 @@ interface IFormListPanelProps {
 export const FormListPanel: FC<React.PropsWithChildren<IFormListPanelProps>> = (props) => {
   const {
     spaceId,
-    folderId,
-    datasheetId,
-    viewId,
     formList,
     loading,
     creatable,
-    viewName,
   } = props;
   const colors = useThemeColors();
-  const { addTreeNode } = useCatalog();
   const isEmpty = !formList?.length;
 
   const addForm = () => {
-    addTreeNode(
-      folderId,
-      ConfigConstant.NodeType.FORM,
-      {
-        datasheetId,
-        viewId,
-      },
-      viewName ? `${viewName}${t(Strings.key_of_adjective)}${t(Strings.view_form)}` : undefined,
-    );
   };
 
   const renderSkeleton = () => {

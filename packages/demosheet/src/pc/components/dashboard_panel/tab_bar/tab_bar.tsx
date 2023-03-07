@@ -17,24 +17,19 @@
  */
 
 import { TextButton, useThemeColors } from '@apitable/components';
-import { ConfigConstant, PermissionType, ResourceType, Selectors, Strings, t } from '@apitable/core';
-import { NetworkStatus } from 'pc/components/network_status';
-import { CollaboratorStatus } from 'pc/components/tab_bar/collaboration_status';
+import { ConfigConstant, PermissionType, Selectors, Strings, t } from '@apitable/core';
 import { expandWidgetCenter, InstallPosition } from 'pc/components/widget/widget_center';
 import { WrapperTooltip } from 'pc/components/widget/widget_panel/widget_panel_header';
-import { usePrevious, useQuery, useSideBarVisible } from 'pc/hooks';
-import { useNetwork } from 'pc/hooks/use_network';
+import { usePrevious, useSideBarVisible } from 'pc/hooks';
 import RcTrigger from 'rc-trigger';
 import { default as React, useEffect, useRef, useState } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import styles from './style.module.less';
-import { AddFilled, AddOutlined, NarrowOutlined, ImportOutlined, ExpandOutlined, ListOutlined } from '@apitable/icons';
+import { AddFilled, AddOutlined, NarrowOutlined, ExpandOutlined, ListOutlined } from '@apitable/icons';
 import { useFullscreen } from 'ahooks';
 import { useSize } from 'ahooks';
 import { InlineNodeName } from 'pc/components/common/inline_node_name';
 import { NodeInfoBar } from 'pc/components/common/node_info_bar';
-// @ts-ignore
-import { isDingtalkSkuPage } from 'enterprise';
 
 interface ITabBarProps {
   dashboardId: string;
@@ -49,27 +44,13 @@ interface ITabBarProps {
 }
 
 const Menu: React.FC<React.PropsWithChildren<Pick<ITabBarProps, 'setVisibleRecommend'> & { triggerRef: React.MutableRefObject<any>; openWidgetCenter: () => void }>> =
-  ({ setVisibleRecommend, triggerRef, openWidgetCenter }) => {
-    const { embedId } = useSelector(state => state.pageParams);
+  ({ openWidgetCenter }) => {
     const colors = useThemeColors();
     return <div className={styles.addWidgetMenu}>
       <div className={styles.menuItem} onClick={openWidgetCenter}>
         <AddOutlined size={16} color={colors.thirdLevelText} />
         {t(Strings.add_widget)}
       </div>
-      {
-        !embedId && <div
-          className={styles.menuItem}
-          onClick={(e) => {
-            setVisibleRecommend(status => !status);
-            triggerRef.current!.close(e);
-          }}
-        >
-          <ImportOutlined size={15} color={colors.thirdLevelText} />
-          {t(Strings.import_widget)}
-        </div>
-      }
-
     </div>;
   };
 
@@ -84,14 +65,12 @@ export const TabBar: React.FC<React.PropsWithChildren<ITabBarProps>> = (props) =
   const [isFullscreen, { toggleFullscreen }] = useFullscreen(containerRef);
   const [openTrigger, setOpenTrigger] = useState(false);
   const triggerRef = useRef<any>();
-  const { status } = useNetwork(true, dashboardId, ResourceType.Dashboard);
   const { templateId, shareId, embedId } = useSelector(state => state.pageParams);
   const installedWidgetIds = useSelector(Selectors.getInstalledWidgetInDashboard);
   const {
     dashboardName,
     role,
     dashboardIcon,
-    nodeFavorite,
     nodePermissions,
   } = useSelector(state => {
     const dashboard = Selectors.getDashboard(state);
@@ -126,9 +105,6 @@ export const TabBar: React.FC<React.PropsWithChildren<ITabBarProps>> = (props) =
   const toolbarRef = useRef(null);
   const size = useSize(toolbarRef);
   const linkId = templateId || shareId;
-  const query = useQuery();
-  const purchaseToken = query.get('purchaseToken') || '';
-  const isSkuPage = isDingtalkSkuPage?.(purchaseToken);
 
   useEffect(() => {
     setIsFullScreen(isFullscreen);
@@ -159,7 +135,7 @@ export const TabBar: React.FC<React.PropsWithChildren<ITabBarProps>> = (props) =
         onClick={() => setSideBarVisible(true)}
         className={styles.side}
         style={{
-          backgroundColor: isSkuPage ? colors.defaultBg : colors.primaryColor
+          backgroundColor: colors.primaryColor
         }}
       >
         <ListOutlined size={20} color={colors.defaultBg} />
@@ -181,11 +157,11 @@ export const TabBar: React.FC<React.PropsWithChildren<ITabBarProps>> = (props) =
             name: dashboardName,
             type: ConfigConstant.NodeType.DASHBOARD,
             role: role === ConfigConstant.Role.Foreigner && !readonly ? ConfigConstant.Role.Editor : role,
-            favoriteEnabled: nodeFavorite && !hideReadonlyEmbedItem,
-            nameEditable: nodePermissions?.renamable && !hideReadonlyEmbedItem,
-            iconEditable: nodePermissions?.iconEditable && !hideReadonlyEmbedItem,
+            favoriteEnabled: false,
+            nameEditable: true,
+            iconEditable: false,
           }}
-          hiddenModule={{ favorite: Boolean(shareId || templateId) }}
+          // hiddenModule={{ favorite: Boolean(shareId || templateId) }}
           style={{ fontSize: '20px', fontWeight: 'bold', maxWidth: '256px' }}
         />
       }
@@ -252,27 +228,6 @@ export const TabBar: React.FC<React.PropsWithChildren<ITabBarProps>> = (props) =
         >
           {isFullscreen ? t(Strings.collapse_full_screen) : t(Strings.full_screen)}
         </TextButton>
-      }
-      {
-        !isFullscreen && !readonly && isEnoughToShowButton && !embedId &&
-        <a href={t(Strings.intro_dashboard)} target='_blank' className={styles.shareDoc} rel='noreferrer'>
-          {t(Strings.form_tour_desc)}
-        </a>
-      }
-      {
-        !isFullscreen && !templateId &&
-        (!embedId || embedInfo.viewControl?.collaboratorStatusBar) &&
-        <div className={styles.status}>
-          {
-            !hideReadonlyEmbedItem && <CollaboratorStatus
-              resourceId={dashboardId!}
-              resourceType={ResourceType.Dashboard}
-              style={{ width: '110px' }}
-            />
-          }
-
-          <NetworkStatus currentStatus={status} />
-        </div>
       }
     </div>
   </div>;

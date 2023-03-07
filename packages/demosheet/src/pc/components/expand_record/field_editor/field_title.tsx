@@ -38,7 +38,6 @@ import { ScreenSize } from 'pc/components/common/component_display';
 import { useAppendField } from 'pc/components/expand_record/hooks/use_append_field';
 import { useEditDesc } from 'pc/components/expand_record/hooks/use_edit_desc';
 import { useEditField } from 'pc/components/expand_record/hooks/use_edit_field';
-import { FieldPermissionLockEnhance } from 'pc/components/field_permission';
 import { getCopyField } from 'pc/components/multi_grid/context_menu/utils';
 import { getFieldTypeIcon } from 'pc/components/multi_grid/field_setting';
 import { renderComputeFieldError } from 'pc/components/multi_grid/header';
@@ -93,7 +92,6 @@ export const FieldTitle: React.FC<React.PropsWithChildren<IFieldTitleProps>> = p
     onMouseDown,
     hideDesc,
     cellValue,
-    hideLock,
     marker,
     iconColor,
     hover,
@@ -222,8 +220,6 @@ export const FieldTitle: React.FC<React.PropsWithChildren<IFieldTitleProps>> = p
               {t(Strings.task_reminder_entry)}
             </LinkButton>
           )}
-
-          {!hideLock && <FieldPermissionLockEnhance fieldId={fieldId} className="more" />}
 
           {allowToInsertField &&
             manageable && (!fieldPermissionMap || !fieldPermissionMap[fieldId] || fieldPermissionMap[fieldId].manageable) &&

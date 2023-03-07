@@ -16,23 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { LinkButton, useTheme } from '@apitable/components';
-import { Api, AutoTestID, ConfigConstant, Events, IReduxState, Navigation, Player, StoreActions, Strings, t } from '@apitable/core';
-import { CollapseOpenOutlined, CollapseOutlined } from '@apitable/icons';
+import { Api, AutoTestID, ConfigConstant, Events, IReduxState, Navigation, Player, StoreActions } from '@apitable/core';
 import { useMount } from 'ahooks';
 import classNames from 'classnames';
 // @ts-ignore
-import { destroyVikaby, showOrderModal, showVikaby } from 'enterprise';
+import { destroyVikaby, showVikaby } from 'enterprise';
 import { TriggerCommands } from 'modules/shared/apphook/trigger_commands';
 import { ShortcutActionManager, ShortcutActionName } from 'modules/shared/shortcut_key';
-import { getShortcutKeyString } from 'modules/shared/shortcut_key/keybinding_config';
 import { useRouter } from 'next/router';
-import { TComponent } from 'pc/components/common/t_component';
-import { Navigation as SiderNavigation } from 'pc/components/navigation';
 import { Router } from 'pc/components/route_manager/router';
 import WorkspaceRoute from 'pc/components/route_manager/workspace_route';
-import { expandUpgradeSpace } from 'pc/components/space_manage/upgrade_space/expand_upgrade_space';
-import Trash from 'pc/components/trash/trash';
 import { ISideBarContextProps, SideBarClickType, SideBarContext, SideBarType } from 'pc/context';
 import { getPageParams, useCatalogTreeRequest, useQuery, useRequest, useResponsive } from 'pc/hooks';
 import { store } from 'pc/store';
@@ -41,12 +34,9 @@ import { getStorage, setStorage, StorageMethod, StorageName } from 'pc/utils/sto
 import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Tooltip, VikaSplitPanel } from '../common';
+import { VikaSplitPanel } from '../common';
 import { ComponentDisplay, ScreenSize } from '../common/component_display';
-import { CommonSide } from '../common_side';
 import styles from './style.module.less';
-import UpgradeSucceedDark from 'static/icon/workbench/workbench_upgrade_succeed_dark.png';
-import UpgradeSucceedLight from 'static/icon/workbench/workbench_upgrade_succeed_light.png';
 
 // Restore the user's last opened datasheet.
 const resumeUserHistory = (path: string) => {
@@ -107,60 +97,12 @@ export const Workspace: React.FC<React.PropsWithChildren<unknown>> = () => {
   const isMobile = screenIsAtMost(ScreenSize.md);
   const query = useQuery();
   const router = useRouter();
-  const theme = useTheme();
 
   // Directory tree toggle source status, directory tree click status, sidebar switch.
   const [toggleType, setToggleType] = useState<SideBarType>(SideBarType.None);
   const [clickType, setClickType] = useState<SideBarClickType>(SideBarClickType.None);
   const [panelVisible, setPanelVisible] = useState(false);
-  const sideBarVisible = useSelector(state => state.space.sideBarVisible);
-
-  useMount(() => {
-    if (!query.get('choosePlan') || isMobile) return;
-    expandUpgradeSpace();
-  });
-
-  useMount(() => {
-    if (!query.get('stripePaySuccess') || isMobile) return;
-    showOrderModal({
-      modalTitle: t(Strings.upgrade_success_model, { orderType: t(Strings.upgrade) }),
-      modalSubTitle: () => <>
-        <div className={styles.desc1} style={{ marginTop: 24, fontSize: 16 }}>
-          {
-            <TComponent
-              tkey={t(Strings.upgrade_success_1_desc)}
-              params={{
-                orderType: t(Strings.upgrade),
-                position:
-                  <LinkButton
-                    className={styles.linkButton}
-                    style={{
-                      display: 'inline-block',
-                    }}
-                    onClick={() => {
-                      if (isMobile) {
-                        return;
-                      }
-                      Router.redirect(Navigation.SPACE_MANAGE, { params: { pathInSpace: 'overview' }, clearQuery: true });
-                    }}
-                  >
-                    {t(Strings.space_overview)}
-                  </LinkButton>,
-
-              }}
-            />
-          }
-        </div>
-      </>,
-      qrCodeUrl: '',
-      illustrations: <img
-        width={'250px'}
-        src={theme.palette.type === 'light' ? UpgradeSucceedLight.src : UpgradeSucceedDark.src}
-        style={{ marginTop: 16 }}
-      />,
-      btnText: t(Strings.got_it)
-    });
-  });
+  const sideBarVisible = false;
 
   /**
    * Directory Tree Switch Source - Users.
@@ -280,14 +222,7 @@ export const Workspace: React.FC<React.PropsWithChildren<unknown>> = () => {
     localStorage.removeItem(`${wizardId}`);
   });
 
-  const closeBtnClass = classNames({
-    [styles.closeBtn]: true,
-    [styles.isPanelClose]: !sideBarVisible,
-  });
-
-  const notVisible = !sideBarVisible && !templeVisible;
-
-  const children = router.asPath.includes('trash') ? <Trash /> : <WorkspaceRoute />;
+  const children = <WorkspaceRoute />;
   const sideContextValue: ISideBarContextProps = {
     toggleType,
     clickType,
@@ -312,49 +247,12 @@ export const Workspace: React.FC<React.PropsWithChildren<unknown>> = () => {
            that can not be dragged, the next version to solve. 0.4 temporarily do not add animation */}
           <VikaSplitPanel
             panelLeft={
-              <div style={{ width: sideBarVisible ? '100%' : 0 }} className={styles.splitLeft} data-test-id='workspace-sidebar'>
-                <div
-                  style={{
-                    width: sideBarVisible ? '100%' : templeVisible ? defaultSidePanelSize : 0,
-                    overflow: notVisible ? 'hidden' : 'inherit',
-                  }}
-                  className={classNames(styles.menuWrap, 'workspaceMenu', {
-                    [styles.animationOpen]: templeVisible,
-                    [styles.animationClose]: notVisible,
-                  })}
-                  ref={menuRef}
-                >
-                  <SiderNavigation />
-                  <div className={styles.wrapper}>
-                    <CommonSide />
-                  </div>
-                </div>
-                <Tooltip
-                  title={`${!sideBarVisible ? t(Strings.expand) : t(Strings.hidden)} ${getShortcutKeyString(ShortcutActionName.ToggleCatalogPanel)}`}
-                  placement={!sideBarVisible ? 'right' : 'bottom'}
-                  arrowPointAtCenter
-                >
-                  <div
-                    className={closeBtnClass}
-                    onClick={() => {
-                      handleSetSideBarByUser(!sideBarVisible, panelVisible);
-                    }}
-                    onMouseEnter={() => {
-                      if (!sideBarVisible && !templeVisible) {
-                        setTempleVisible(true);
-                      }
-                    }}
-                    data-test-id='sidebar-toggle-btn'
-                  >
-                    {!sideBarVisible ? <CollapseOpenOutlined /> : <CollapseOutlined />}
-                  </div>
-                </Tooltip>
-              </div>
+              <div style={{ width: sideBarVisible ? 0 : 0 }} className={styles.splitLeft} data-test-id='workspace-sidebar' />
             }
             panelRight={<div className={styles.splitRight}>{children}</div>}
             split='vertical'
             minSize={335}
-            defaultSize={defaultSidePanelSize}
+            defaultSize={0}
             maxSize={640}
             style={{ overflow: 'none' }}
             pane2Style={{ overflow: 'hidden' }}

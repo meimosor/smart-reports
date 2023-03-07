@@ -16,15 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Api, Selectors } from '@apitable/core';
 import { useDebounceFn } from 'ahooks';
-import { Spin } from 'antd';
-import dynamic from 'next/dynamic';
 import { ScreenSize } from 'pc/components/common/component_display';
-import { MemberOptionList } from 'pc/components/list/member_option_list';
 import { Portal } from 'pc/components/portal';
 import { useResponsive } from 'pc/hooks';
-import { store } from 'pc/store';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Editor, Path, Range, Transforms } from 'slate';
 import { ReactEditor, useSlate } from 'slate-react';
@@ -34,19 +29,14 @@ import { getValidPopupPosition, getValidSelection } from '../../helpers/utils';
 import { IVikaEditor } from '../../interface/editor';
 import styles from './mention.module.less';
 
-const LoadingOutlined = dynamic(() => import('@ant-design/icons/LoadingOutlined'), { ssr: false });
 export const MentionPanel = () => {
   const wrapRef = useRef<HTMLDivElement>(null);
   const visibleRef = useRef(false);
   const searchTextRef = useRef('');
-  const state = store.getState();
-  const unitMap = Selectors.getUnitMap(state) || {};
-  const datasheetId = Selectors.getActiveDatasheetId(state)!;
   const editor = useSlate() as ReactEditor & IVikaEditor;
   const { selection } = editor;
 
-  const [members, setMembers] = useState<Array<any>>([]);
-  const [loading, setLoading] = useState(false);
+  const [members] = useState<Array<any>>([]);
   const [index, setIndex] = useState(0);
   const { screenIsAtLeast } = useResponsive();
 
@@ -71,21 +61,9 @@ export const MentionPanel = () => {
     [editor, screenIsAtLeast],
   );
 
-  const getMembers = useCallback((keyword = '') => {
-    setLoading(true);
-    Api.loadOrSearch({ keyword })
-      .then(res => {
-        setMembers(res.data?.data ?? []);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
   const { run: searchTextChange } = useDebounceFn(
     (keyword: string) => {
       setIndex(0);
-      getMembers(keyword);
       searchTextRef.current = keyword;
     },
     { wait: 200 },
@@ -102,18 +80,6 @@ export const MentionPanel = () => {
       Transforms.insertFragment(editor, [mention, { text: ' ' }]);
     },
     [editor],
-  );
-
-  const handleMemberItemClick = useCallback(
-    (data: any) => {
-      const memberId = data && data[0];
-      const member = members.find(item => item.unitId === memberId);
-      if (member) {
-        insertMention(member);
-      }
-      setPanelVisibleAndPosition();
-    },
-    [members, insertMention, setPanelVisibleAndPosition],
   );
 
   const handleOk = useCallback(() => {
@@ -225,26 +191,7 @@ export const MentionPanel = () => {
 
   return (
     <Portal zIndex={Z_INDEX.HOVERING_TOOLBAR}>
-      <div className={styles.wrap} ref={wrapRef}>
-        {loading ? (
-          <div className={styles.loading}>
-            <Spin size='small' indicator={<LoadingOutlined />} />
-          </div>
-        ) : (
-          <MemberOptionList
-            listData={members}
-            showMoreTipButton={false}
-            uniqId='unitId'
-            unitMap={unitMap}
-            showSearchInput={false}
-            sourceId={datasheetId}
-            onClickItem={handleMemberItemClick}
-            multiMode={false}
-            activeIndex={index}
-            existValues={[]}
-          />
-        )}
-      </div>
+      <div className={styles.wrap} ref={wrapRef} />
     </Portal>
   );
 };

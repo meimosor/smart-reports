@@ -17,12 +17,11 @@
  */
 
 import { useThemeColors, ThemeName } from '@apitable/components';
-import { ConfigConstant, findNode, IShareInfo, Navigation, Selectors, StoreActions, Strings, t } from '@apitable/core';
+import { ConfigConstant, IShareInfo, Navigation, Selectors, StoreActions, Strings, t } from '@apitable/core';
 import classNames from 'classnames';
 import Head from 'next/head';
 import { Message } from 'pc/components/common/message';
 import { Tooltip } from 'pc/components/common/tooltip';
-import { MirrorRoute } from 'pc/components/mirror/mirror_route';
 import { Router } from 'pc/components/route_manager/router';
 import { usePageParams, useRequest, useSideBarVisible, useSpaceRequest, useUserRequest } from 'pc/hooks';
 import { useAppDispatch } from 'pc/hooks/use_app_dispatch';
@@ -34,7 +33,6 @@ import SplitPane from 'react-split-pane';
 import { ComponentDisplay, ScreenSize } from '../common/component_display';
 import { DashboardPanel } from '../dashboard_panel';
 import { DataSheetPane } from '../datasheet_pane';
-import { FolderShowcase } from '../folder_showcase';
 import { FormPanel } from '../form_panel';
 import { ShareMenu } from '../share/share_menu';
 import { ApplicationJoinSpaceAlert } from './application_join_space_alert';
@@ -104,8 +102,7 @@ const ComponentWrapper = ({
 const Share: React.FC<React.PropsWithChildren<IShareProps>> = ({ shareInfo }) => {
   const { sideBarVisible, setSideBarVisible } = useSideBarVisible();
   const shareLoginFailed = getStorage(StorageName.ShareLoginFailed);
-  const { shareId, datasheetId, folderId, formId, dashboardId, mirrorId } = useSelector(state => state.pageParams);
-  const treeNodesMap = useSelector(state => state.catalogTree.treeNodesMap);
+  const { shareId, datasheetId, formId, dashboardId } = useSelector(state => state.pageParams);
   const userInfo = useSelector(state => state.user.info);
   const [nodeTree, setNodeTree] = useState<INodeTree>();
   const [visible, setVisible] = useState(false);
@@ -205,31 +202,15 @@ const Share: React.FC<React.PropsWithChildren<IShareProps>> = ({ shareInfo }) =>
     if (!nodeTree) {
       return;
     }
-    if (mirrorId) {
-      return <MirrorRoute />;
-    } else if (datasheetId) {
+    if (datasheetId) {
       return <DataSheetPane />;
     } else if (formId) {
       return <FormPanel loading={loading} />;
     } else if (dashboardId) {
       return <DashboardPanel />;
-    } else if (folderId) {
-      const parentNode = findNode([nodeTree], folderId);
-      const childNodes = (parentNode && parentNode.children) ?? [];
-      return (
-        <FolderShowcase
-          nodeInfo={{
-            name: treeNodesMap[folderId]?.nodeName || '',
-            id: folderId,
-            icon: treeNodesMap[folderId]?.icon || '',
-          }}
-          childNodes={childNodes}
-          readOnly
-        />
-      );
-    }
+    } 
     return null;
-  }, [dashboardId, mirrorId, treeNodesMap, formId, folderId, nodeTree, datasheetId, loading]);
+  }, [dashboardId, formId, nodeTree, datasheetId, loading]);
 
   if (shareClose) {
     return <ShareFail />;

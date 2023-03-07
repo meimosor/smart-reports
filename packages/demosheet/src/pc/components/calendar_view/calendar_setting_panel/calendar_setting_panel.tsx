@@ -26,7 +26,6 @@ import { TriggerCommands } from 'modules/shared/apphook/trigger_commands';
 import { ColorPicker, OptionSetting } from 'pc/components/common/color_picker';
 import { notify } from 'pc/components/common/notify';
 import { NotifyKey } from 'pc/components/common/notify/notify.interface';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { getFieldTypeIcon } from 'pc/components/multi_grid/field_setting';
 import { setColor } from 'pc/components/multi_grid/format';
 import { resourceService } from 'pc/resource_service';
@@ -82,22 +81,6 @@ export const CalendarSettingPanel: FC<React.PropsWithChildren<ICalendarSettingPa
       }
       return null;
     }).filter(v => v) as IOption[];
-    if (isCryptoStartField) {
-      options.push({
-        value: startFieldId,
-        label: t(Strings.crypto_field),
-        disabled: true,
-        suffixIcon: <FieldPermissionLock fieldId={startFieldId} tooltip={t(Strings.field_permission_lock_tips)}/>,
-      });
-    }
-    if (isCryptoEndField) {
-      options.push({
-        value: endFieldId,
-        label: t(Strings.crypto_field),
-        disabled: true,
-        suffixIcon: <FieldPermissionLock fieldId={endFieldId} tooltip={t(Strings.field_permission_lock_tips)}/>,
-      });
-    }
     options.push({
       label: t(Strings.calendar_add_date_time_field),
       value: 'add',
@@ -105,7 +88,7 @@ export const CalendarSettingPanel: FC<React.PropsWithChildren<ICalendarSettingPa
       prefixIcon: <AddOutlined color={colors.thirdLevelText}/>,
     });
     return options;
-  }, [columns, endFieldId, fieldMap, isCryptoEndField, isCryptoStartField, permissions.manageable, startFieldId, colors]);
+  }, [columns, fieldMap, permissions.manageable, colors]);
 
   const dispatch = useDispatch();
   const onClose = () => {

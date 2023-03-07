@@ -34,7 +34,6 @@ import { ColorGroup } from 'pc/components/common/color_picker/color_group';
 import { Modal } from 'pc/components/common/modal/modal/modal';
 import { notify } from 'pc/components/common/notify';
 import { NotifyKey } from 'pc/components/common/notify/notify.interface';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { autoTaskScheduling } from 'pc/components/gantt_view/utils';
 import { KonvaGridContext } from 'pc/components/konva_grid';
 import { getFieldTypeIcon } from 'pc/components/multi_grid/field_setting';
@@ -138,8 +137,6 @@ export const SettingPanel: FC<React.PropsWithChildren<ISettingPanelProps>> = mem
   const noRequiredField = startFieldId == null && endFieldId == null;
   const manageable = permissions.manageable;
   const activeView = useSelector(state => Selectors.getCurrentView(state)) as IGanttViewProperty;
-  const linkFieldRole = Selectors.getFieldRoleByFieldId(fieldPermissionMap, linkFieldId);
-  const isCryptoLinkField = Boolean(linkFieldRole && linkFieldRole === ConfigConstant.Role.None);
   const linkField = fieldMap[linkFieldId];
   const visibleRows = useSelector(state => Selectors.getVisibleRows(state));
 
@@ -172,14 +169,6 @@ export const SettingPanel: FC<React.PropsWithChildren<ISettingPanelProps>> = mem
 
   const linkFieldOptions = useMemo(() => {
     const options: IOption[] = [];
-    if (isCryptoLinkField) {
-      options.push({
-        value: linkFieldId,
-        label: t(Strings.crypto_field),
-        disabled: true,
-        suffixIcon: <FieldPermissionLock fieldId={linkFieldId} tooltip={t(Strings.field_permission_lock_tips)} />,
-      });
-    }
 
     activeView.columns
       .filter(column => fieldMap[column.fieldId].type === FieldType.Link)
@@ -208,7 +197,7 @@ export const SettingPanel: FC<React.PropsWithChildren<ISettingPanelProps>> = mem
     });
 
     return options;
-  }, [activeView, fieldMap, datasheetId, isCryptoLinkField, linkFieldId, permissions, colors]);
+  }, [activeView, fieldMap, datasheetId, permissions, colors]);
 
   const onClose = () => {
     dispatch(StoreActions.toggleGanttSettingPanel(false, datasheetId!));
@@ -374,23 +363,7 @@ export const SettingPanel: FC<React.PropsWithChildren<ISettingPanelProps>> = mem
     if (!isCryptoStartField && !isCryptoEndField) {
       return;
     }
-    if (isCryptoStartField) {
-      fieldOptions.push({
-        value: startFieldId,
-        label: t(Strings.crypto_field),
-        disabled: true,
-        suffixIcon: <FieldPermissionLock fieldId={startFieldId} tooltip={t(Strings.field_permission_lock_tips)} />,
-      });
-    }
-    if (isCryptoEndField) {
-      fieldOptions.push({
-        value: endFieldId,
-        label: t(Strings.crypto_field),
-        disabled: true,
-        suffixIcon: <FieldPermissionLock fieldId={endFieldId} tooltip={t(Strings.field_permission_lock_tips)} />,
-      });
-    }
-  }, [endFieldId, fieldOptions, isCryptoEndField, isCryptoStartField, startFieldId]);
+  }, [isCryptoEndField, isCryptoStartField]);
 
   const onPlayGuideVideo = () => {
     TriggerCommands.open_guide_wizard?.(ConfigConstant.WizardIdConstant.REPLAY_GANTT_VIDEO);

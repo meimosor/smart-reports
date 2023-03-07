@@ -42,14 +42,14 @@ export const getServerSideProps = async(context: NextPageContext) => {
 
   const userInfo = res.data.userInfo;
 
-  // if (!userInfo || userInfo === 'null') {
-  //   return {
-  //     redirect: {
-  //       destination: '/login',
-  //       statusCode: 302,
-  //     },
-  //   };
-  // }
+  if (!userInfo || userInfo === 'null') {
+    return {
+      redirect: {
+        destination: '/login',
+        statusCode: 302,
+      },
+    };
+  }
   return {
     redirect: {
       destination: '/workbench',

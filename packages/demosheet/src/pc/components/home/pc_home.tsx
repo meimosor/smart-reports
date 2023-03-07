@@ -20,22 +20,18 @@ import { useState } from 'react';
 import { IReduxState, t, Strings } from '@apitable/core';
 import { Login } from './components/login';
 import styles from './style.module.less';
-import { SignUp } from './components/sign_up';
-import { ForgetPassword } from './components/forget_password';
 import { useSelector } from 'react-redux';
 import { HomeWrapper } from './home_wrapper';
 import { useMount } from 'ahooks';
 
 export enum ActionType {
   SignIn = 'SignIn',
-  SignUp = 'SignUp',
-  ForgetPassword = 'ForgetPassword'
 }
 
 export const PcHome: React.FC<React.PropsWithChildren<unknown>> = () => {
   const inviteLinkInfo = useSelector((state: IReduxState) => state.invite.inviteLinkInfo);
   const inviteEmailInfo = useSelector((state: IReduxState) => state.invite.inviteEmailInfo);
-  const [action, setAction] = useState<ActionType>(ActionType.SignUp);
+  const [action, setAction] = useState<ActionType>(ActionType.SignIn);
   const [email, setEmail] = useState<string>('');
 
   const switchActionType = (actionType: ActionType) => {
@@ -54,12 +50,6 @@ export const PcHome: React.FC<React.PropsWithChildren<unknown>> = () => {
       case ActionType.SignIn:
         return <Login switchClick={switchActionType} email={email} setEmail={setEmail} />;
         break;
-      case ActionType.SignUp:
-        return <SignUp switchClick={switchActionType} email={email} setEmail={setEmail} />;
-        break;
-      case ActionType.ForgetPassword:
-        return <ForgetPassword switchClick={switchActionType} email={email} setEmail={setEmail} />;
-        break;
     }
     
   };
@@ -68,12 +58,6 @@ export const PcHome: React.FC<React.PropsWithChildren<unknown>> = () => {
     switch(action) {
       case ActionType.SignIn:
         return 'Sign In';
-        break;
-      case ActionType.SignUp:
-        return 'Sign Up';
-        break;
-      case ActionType.ForgetPassword:
-        return 'Reset Password';
         break;
     }
   };

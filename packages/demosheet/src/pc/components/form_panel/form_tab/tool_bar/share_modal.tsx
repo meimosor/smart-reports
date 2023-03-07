@@ -17,13 +17,11 @@
  */
 
 import { Button, Skeleton } from '@apitable/components';
-import { Api, FormApi, IFormProps, IReduxState, IShareSettings, StoreActions, Strings, t } from '@apitable/core';
+import { Api, FormApi, IFormProps, IShareSettings, StoreActions, Strings, t } from '@apitable/core';
 import { CloseOutlined } from '@apitable/icons';
 import { Radio, Space, Switch, RadioChangeEvent } from 'antd';
 import produce from 'immer';
 import Image from 'next/image';
-import { DisabledShareFile } from 'pc/components/catalog/share_node/disabled_share_file/disabled_share_file';
-import { ShareLink } from 'pc/components/catalog/share_node/share/share_link';
 import { ScreenSize } from 'pc/components/common/component_display';
 import { Message } from 'pc/components/common/message';
 import { Popup } from 'pc/components/common/mobile/popup';
@@ -32,7 +30,7 @@ import { Popconfirm } from 'pc/components/common/popconfirm';
 import { Tooltip } from 'pc/components/common/tooltip';
 import { useResponsive } from 'pc/hooks';
 import React, { useEffect, useState } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import HeaderCover from 'static/icon/datasheet/share/datasheet_img_share.png';
 import styles from './style.module.less';
 
@@ -52,7 +50,6 @@ export const ShareModal: React.FC<React.PropsWithChildren<IShareModalProps>> = p
   const [isLoadingShow, setLoadingShow] = useState<boolean>(true);
   // Information about the node being shared
   const [shareSettings, setShareSettings] = useState<IShareSettings | null>(null);
-  const { userInfo } = useSelector((state: IReduxState) => ({ userInfo: state.user.info }), shallowEqual);
   const dispatch = useDispatch();
   const { screenIsAtMost } = useResponsive();
   const isMobile = screenIsAtMost(ScreenSize.md);
@@ -243,9 +240,6 @@ export const ShareModal: React.FC<React.PropsWithChildren<IShareModalProps>> = p
                       )}
                       {t(Strings.form_share_closed_desc)}
                     </div>
-                    <div className={styles.shareLink}>
-                      <ShareLink shareName={shareSettings?.nodeName || ''} shareSettings={shareSettings!} userInfo={userInfo} />
-                    </div>
                     <div className={styles.shareContent}>
                       <div className={styles.fillSetting}>
                         <div className={styles.fillTitle}>{t(Strings.form_fill_setting)}</div>
@@ -300,9 +294,7 @@ export const ShareModal: React.FC<React.PropsWithChildren<IShareModalProps>> = p
           )}
         </div>
       ) : (
-        <div style={{ padding: 24 }}>
-          <DisabledShareFile style={{ width: '100%', height: 486 }} />
-        </div>
+        <div style={{ padding: 24 }} />
       )}
     </>
   );

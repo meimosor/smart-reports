@@ -31,7 +31,6 @@ import styles from './styles.module.less';
 import { store } from 'pc/store';
 import { WrapperTooltip } from 'pc/components/widget/widget_panel/widget_panel_header';
 import { Tooltip } from 'pc/components/common';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { HighlightWords } from 'pc/components/highlight_words';
 import { WarnCircleFilled } from '@apitable/icons';
 
@@ -148,7 +147,6 @@ const FieldItem = ({ showType, handleFieldClick, field, activeFieldId, index, cu
           </div>
         </div>
         {warnText && <WarnTip text={warnText} />}
-        <FieldPermissionLock fieldId={field.id} />
       </div>
     </WrapperTooltip>
   );

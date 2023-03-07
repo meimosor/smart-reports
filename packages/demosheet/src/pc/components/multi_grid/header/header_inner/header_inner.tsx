@@ -21,7 +21,6 @@ import { DATASHEET_ID, Field, FieldOperateType, IField, Selectors, Strings, t } 
 import { MoreOutlined, WarnCircleFilled, InfoCircleOutlined } from '@apitable/icons';
 import classNames from 'classnames';
 import { Tooltip } from 'pc/components/common';
-import { FieldPermissionLockEnhance } from 'pc/components/field_permission';
 import { getFieldTypeIcon } from 'pc/components/multi_grid/field_setting';
 import { ButtonOperateType, FIELD_DOT, OPACITY_LINE_CLASS, OPERATE_BUTTON_CLASS } from 'pc/utils';
 import * as React from 'react';
@@ -98,7 +97,6 @@ export const HeaderInner: React.FC<React.PropsWithChildren<IHeadInnerProps>> = p
             Field.bindModel(field).warnText,
           )
         }
-        <FieldPermissionLockEnhance fieldId={field.id} style={{ marginLeft: 4 }} color={isSelected ? colors.primaryColor : colors.thirdLevelText} />
         {
           isShowFieldDesc &&
           <div

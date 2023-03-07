@@ -26,7 +26,6 @@ import { confirm, danger, info, success, warning } from './modal.function';
 import { IModalFuncProps, IModalProps, IModalReturn } from './modal.interface';
 import { destroyFns } from './utils';
 import { ModalWithTheme } from './modal_with_theme';
-import { IDingTalkModalType, showModalInDingTalk } from 'pc/components/economy/upgrade_modal';
 import { store } from 'pc/store';
 import React, { FC, useEffect } from 'react';
 import { Provider } from 'react-redux';
@@ -103,9 +102,6 @@ export const BillingModal = (props?: IModalFuncProps) => {
   const space = state.space.curSpaceInfo;
   const inDDApp = space && isSocialDingTalk?.(space);
   const finalOnOk = () => {
-    if (inDDApp) {
-      showModalInDingTalk(IDingTalkModalType.Upgrade);
-    }
     props?.onOk && props.onOk();
   };
   const modalBase = {

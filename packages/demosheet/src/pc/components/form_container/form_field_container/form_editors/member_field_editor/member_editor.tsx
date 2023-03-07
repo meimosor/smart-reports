@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { useImperativeHandle, useRef, useState, useMemo, useLayoutEffect, useEffect } from 'react';
+import { useImperativeHandle, useRef, useState, useMemo, useEffect } from 'react';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { ICellValue, Selectors } from '@apitable/core';
@@ -28,7 +28,6 @@ import { printableKey, KeyCode } from 'pc/utils';
 import { CellMember } from './cell_member';
 import { IBaseEditorProps, IEditor } from 'pc/components/editors/interface';
 import { IExpandFieldEditRef } from 'pc/components/expand_record/field_editor';
-import { MemberEditor } from 'pc/components/editors/member_editor/member_editor';
 import { ComponentDisplay, ScreenSize } from 'pc/components/common/component_display';
 
 export interface IMemberFieldEditorProps extends IBaseEditorProps {
@@ -45,11 +44,9 @@ export const MemberFieldEditor: React.FC<React.PropsWithChildren<IMemberFieldEdi
   const editorRef = useRef<IEditor>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [editing, _setEditing] = useState(false);
-  const [height, setHeight] = useState(0);
   const { screenIsAtMost } = useResponsive();
   const isMobile = screenIsAtMost(ScreenSize.md);
   const unitMap = useSelector(state => Selectors.getUnitMap(state));
-  const { shareId } = useSelector(state => state.pageParams);
 
   const setEditing = (status: boolean) => {
     if (!editable) {
@@ -68,12 +65,6 @@ export const MemberFieldEditor: React.FC<React.PropsWithChildren<IMemberFieldEdi
     }
     // eslint-disable-next-line
   }, [editing]);
-
-  useLayoutEffect(() => {
-    if (containerRef.current) {
-      setHeight(containerRef.current.clientHeight);
-    }
-  }, [editing, cellValue]);
 
   useClickAway(
     () => {
@@ -158,24 +149,6 @@ export const MemberFieldEditor: React.FC<React.PropsWithChildren<IMemberFieldEdi
               style={commonCellStyle}
             />
           </div>
-          <div style={{ position: 'absolute', left: 0, top: 0 }}>
-            {editing && (
-              <MemberEditor
-                ref={editorRef}
-                {...props}
-                unitMap={unitMap}
-                height={height || 0}
-                editing={editing}
-                linkId={shareId}
-                toggleEditing={() => setEditing(!editing)}
-                style={{
-                  width: editing && editable ? 160 : 0,
-                  overflow: editing && editable ? '' : 'hidden',
-                  zIndex: 1000,
-                }}
-              />
-            )}
-          </div>
         </div>
       </ComponentDisplay>
 
@@ -192,9 +165,6 @@ export const MemberFieldEditor: React.FC<React.PropsWithChildren<IMemberFieldEdi
             onChange={onChange}
           />
         </div>
-        {editing && (
-          <MemberEditor ref={editorRef} {...props} unitMap={unitMap} editing={editing} linkId={shareId} toggleEditing={() => setEditing(false)} />
-        )}
       </ComponentDisplay>
     </>
   );

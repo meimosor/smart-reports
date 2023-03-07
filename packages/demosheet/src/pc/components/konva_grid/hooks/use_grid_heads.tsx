@@ -17,9 +17,8 @@
  */
 
 import { indigo } from '@apitable/components';
-import { ConfigConstant, KONVA_DATASHEET_ID, Selectors, Strings, t } from '@apitable/core';
+import { KONVA_DATASHEET_ID, Selectors, Strings, t } from '@apitable/core';
 import { TComponent } from 'pc/components/common/t_component';
-import { getFieldLock } from 'pc/components/field_permission';
 import { AreaType, IScrollState, PointPosition } from 'pc/components/gantt_view';
 import { Icon, IconType, Line, Rect } from 'pc/components/konva_components';
 import { GRID_ICON_COMMON_SIZE, GRID_ROW_HEAD_WIDTH, GridCoordinate, KonvaGridContext, KonvaGridViewContext } from 'pc/components/konva_grid';
@@ -56,7 +55,6 @@ export const useHeads = (props: IUseHeadsProps) => {
     fieldRanges,
     visibleRows,
     filterInfo,
-    fieldPermissionMap,
   } = useContext(KonvaGridViewContext);
   const { setTooltipInfo, clearTooltipInfo, theme } = useContext(KonvaGridContext);
   const colors = theme.color;
@@ -73,7 +71,7 @@ export const useHeads = (props: IUseHeadsProps) => {
   const embedInfo = useSelector(state => Selectors.getEmbedInfo(state));
   const { embedId } = useSelector(state => state.pageParams);
   const isEmbedShow = embedId ? (!embedInfo.isShowEmbedToolBar && !embedInfo.viewControl?.tabBar) : false;
-  const getFieldHeadStatus = useCallback((fieldId: string, columnIndex: number) => {
+  const getFieldHeadStatus = useCallback((fieldId: string) => {
     const iconVisible = (pointAreaType === AreaType.Grid || [
       KONVA_DATASHEET_ID.GRID_FIELD_HEAD_DESC,
       KONVA_DATASHEET_ID.GRID_FIELD_HEAD,
@@ -83,14 +81,7 @@ export const useHeads = (props: IUseHeadsProps) => {
     const isSortField = sortInfo?.keepSort ? sortInfo.rules.some(sort => sort.fieldId === fieldId) : false;
     const isHighlight = isFilterField || isSortField;
     const isSelected = Boolean(fieldRanges && fieldRanges.includes(fieldId));
-    let permissionInfo: any = null;
-
-    if (columnIndex !== 0) {
-      const fieldRole = Selectors.getFieldRoleByFieldId(fieldPermissionMap, fieldId);
-      if (fieldPermissionMap && fieldRole) {
-        permissionInfo = getFieldLock(fieldPermissionMap[fieldId].manageable ? ConfigConstant.Role.Manager : fieldRole);
-      }
-    }
+    const permissionInfo: any = null;
 
     return {
       iconVisible,
@@ -98,7 +89,7 @@ export const useHeads = (props: IUseHeadsProps) => {
       isSelected,
       permissionInfo
     };
-  }, [filterInfo, sortInfo, fieldPermissionMap, fieldRanges, pointAreaType, pointFieldId, pointTargetName]);
+  }, [filterInfo, sortInfo, fieldRanges, pointAreaType, pointFieldId, pointTargetName]);
 
   const getColumnHead = useCallback((columnStartIndex: number, columnStopIndex: number, isFrozen = false) => {
     const _fieldHeads: React.ReactNode[] = [];
@@ -116,7 +107,7 @@ export const useHeads = (props: IUseHeadsProps) => {
         isHighlight,
         isSelected,
         permissionInfo
-      } = getFieldHeadStatus(fieldId, columnIndex);
+      } = getFieldHeadStatus(fieldId);
 
       _fieldHeads.push(
         <FieldHead
@@ -205,11 +196,7 @@ export const useHeads = (props: IUseHeadsProps) => {
         }
       </>
     );
-  }, [
-    recordRanges?.length, visibleRows.length, getColumnHead,
-    frozenColumnCount, fieldHeadHeight, colors.defaultBg, isExporting,
-    colors.primaryColor, colors.thirdLevelText, colors.sheetLineColor, frozenColumnWidth, clearTooltipInfo, setTooltipInfo
-  ]);
+  }, [recordRanges?.length, visibleRows.length, getColumnHead, frozenColumnCount, fieldHeadHeight, colors.defaultBg, colors.primaryColor, colors.thirdLevelText, colors.sheetLineColor, frozenColumnWidth, isEmbedShow, isExporting, clearTooltipInfo, setTooltipInfo]);
 
   /**
    * Drawing other column headers

@@ -21,7 +21,6 @@ import { Emoji } from 'pc/components/common';
 import { Button, useThemeColors } from '@apitable/components';
 import { Dispatch, SetStateAction } from 'react';
 import * as React from 'react';
-import { EMOJI_SIZE } from '../../catalog/tree/tree';
 import styles from './styles.module.less';
 import { EmojiPicker } from 'pc/components/common/emoji_picker';
 import { ChevronDownOutlined } from '@apitable/icons';
@@ -52,7 +51,7 @@ export const FormateCheckbox: React.FC<React.PropsWithChildren<IFormateCheckboxP
         paddingLeft: 0,
       }}
     >
-      <Emoji emoji={currentField.property.icon} set="apple" size={EMOJI_SIZE} />
+      <Emoji emoji={currentField.property.icon} set="apple" size={23} />
       <span style={{ marginLeft: 4 }}>
         <ChevronDownOutlined size={16} color={colors.fourthLevelText} />
       </span>

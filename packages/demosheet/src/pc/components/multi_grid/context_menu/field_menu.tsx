@@ -19,25 +19,22 @@
 import { ContextMenu, useThemeColors } from '@apitable/components';
 import {
   BasicValueType, CollaCommandName, DATASHEET_ID, Events, ExecuteResult, Field, FieldOperateType, FieldType, FieldTypeDescriptionMap,
-  getMaxFieldCountPerSheet, getUniqName, isSelectField, Player, Selectors, SetFieldFrom, StoreActions, Strings, t, ToolBarMenuCardOpenState, ViewType
+  getUniqName, isSelectField, Player, Selectors, SetFieldFrom, StoreActions, Strings, t, ToolBarMenuCardOpenState, ViewType
 } from '@apitable/core';
 import {
   ArrowDownOutlined, ArrowLeftOutlined, ArrowRightOutlined, ArrowUpOutlined, CopyOutlined, DeleteOutlined, InfoCircleOutlined, EditOutlined,
-  FilterOutlined, FreezeOutlined, GroupOutlined, EyeOpenOutlined, LockOutlined
-} from '@apitable/icons';
+  FilterOutlined, FreezeOutlined, GroupOutlined, EyeOpenOutlined } from '@apitable/icons';
 import { useMount } from 'ahooks';
 import { ContextName, ShortcutContext } from 'modules/shared/shortcut_key';
 import { fieldChangeConfirm } from 'pc/components/common/field_change_confirm/field_change_confirm';
 import { notifyWithUndo } from 'pc/components/common/notify';
 import { NotifyKey } from 'pc/components/common/notify/notify.interface';
-import { expandFieldPermission } from 'pc/components/field_permission';
 import { getCopyField, getShowFieldName } from 'pc/components/multi_grid/context_menu/utils';
 import { useCacheScroll } from 'pc/context';
 import { useAppDispatch } from 'pc/hooks/use_app_dispatch';
 import { resourceService } from 'pc/resource_service';
 import { store } from 'pc/store';
 import { flatContextData } from 'pc/utils';
-import { getEnvVariables } from 'pc/utils/env';
 import { executeCommandWithMirror } from 'pc/utils/execute_command_with_mirror';
 import * as React from 'react';
 import { memo, useMemo, useRef } from 'react';
@@ -93,9 +90,7 @@ export const FieldMenu: React.FC<React.PropsWithChildren<IFieldMenuProps>> = mem
     };
   }, shallowEqual);
   const hasChosenMulti = fieldRanges && fieldRanges.length > 1;
-  const fieldPermissionMap = useSelector(Selectors.getFieldPermissionMap);
   const isViewLock = Boolean(view.lockInfo);
-  const embedId = useSelector(state => state.pageParams.embedId);
 
   const chosenCount = fieldRanges ?
     fieldRanges.filter(id => id !== visibleColumns[0].fieldId).length
@@ -103,7 +98,7 @@ export const FieldMenu: React.FC<React.PropsWithChildren<IFieldMenuProps>> = mem
 
   const {
     fieldPropertyEditable, descriptionEditable, fieldCreatable, fieldRemovable,
-    editable, fieldSortable, fieldPermissionManageable, columnWidthEditable
+    editable, fieldSortable, columnWidthEditable
   } = permissions;
 
   useMount(() => {
@@ -282,16 +277,6 @@ export const FieldMenu: React.FC<React.PropsWithChildren<IFieldMenuProps>> = mem
     Player.doTrigger(Events.datasheet_field_context_hidden);
   }
 
-  const getFieldPermissionText = () => {
-    if (!fieldPermissionMap || !fieldPermissionMap[fieldId]) {
-      return t(Strings.config_field_permission);
-    }
-    if (fieldPermissionMap[fieldId].manageable) {
-      return t(Strings.config_field_permission);
-    }
-    return t(Strings.view_field_permission);
-  };
-
   if (mirrorId) {
     return null;
   }
@@ -311,39 +296,6 @@ export const FieldMenu: React.FC<React.PropsWithChildren<IFieldMenuProps>> = mem
         hidden: !descriptionEditable || hasChosenMulti,
         onClick: toOpenFieldDesc,
         id: 'edit_field_desc',
-      },
-      {
-        icon: <LockOutlined color={colors.thirdLevelText} />,
-        text: getFieldPermissionText(),
-        onClick: () => {
-          expandFieldPermission(field);
-        },
-        disabled: !Boolean(fieldPermissionManageable),
-        disabledTip: t(Strings.set_field_permission_no_access),
-        hidden(arg: any) {
-          if (!getEnvVariables().FIELD_PERMISSION_VISIBLE || embedId) {
-            return true;
-          }
-          if (!arg['props']) {
-            return true;
-          }
-          const { props: { fieldId }} = arg;
-          if (!fieldId) {
-            return true;
-          }
-          if (!fieldPermissionManageable || hasChosenMulti || !fieldIndex) {
-            return true;
-          }
-
-          return Boolean(
-            (
-              fieldPermissionMap &&
-              !fieldPermissionMap[fieldId] &&
-              Object.keys(fieldPermissionMap).length > getMaxFieldCountPerSheet()
-            ),
-          );
-        },
-        id: 'lock',
       },
     ],
     [

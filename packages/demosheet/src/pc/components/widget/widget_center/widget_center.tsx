@@ -17,13 +17,11 @@
  */
 
 import { Box, Button, Skeleton, ThemeName, ThemeProvider, Tooltip, Typography, useThemeColors } from '@apitable/components';
-import { IMember, IWidgetPackage, Selectors, Strings, t, UnitItem, WidgetApi, WidgetReleaseType } from '@apitable/core';
-import { InfoCircleOutlined, TransferOutlined, QuestionCircleOutlined, UnpublishOutlined, WarnFilled, AddOutlined } from '@apitable/icons';
+import { IWidgetPackage, Selectors, Strings, t, WidgetApi, WidgetReleaseType } from '@apitable/core';
+import { InfoCircleOutlined, TransferOutlined, QuestionCircleOutlined, UnpublishOutlined, AddOutlined } from '@apitable/icons';
 import { Tabs } from 'antd';
 import classNames from 'classnames';
-import parser from 'html-react-parser';
 import Image from 'next/image';
-import { SelectUnitModal, SelectUnitSource } from 'pc/components/catalog/permission_settings/permission/select_unit_modal';
 import { Message } from 'pc/components/common';
 import { Modal } from 'pc/components/common/modal/modal/modal';
 import { InstallPosition } from 'pc/components/widget/widget_center/enum';
@@ -62,7 +60,7 @@ export const WidgetCenterModal: React.FC<React.PropsWithChildren<IWidgetCenterMo
   const { dashboardId } = useSelector(state => state.pageParams);
   const manageable = useResourceManageable();
   const contextMenuRef = useRef<IContextMenuMethods>(null);
-  const [selectMemberModal, setSelectMemberModal] = useState(false);
+  const [, setSelectMemberModal] = useState(false);
   const listStatus = useRef<WidgetReleaseType[]>([]);
   const [packageListMap, setPackageListMap] = useState<{ [key in WidgetReleaseType]?: IWidgetPackage[] }>({});
   const query = useQuery();
@@ -150,38 +148,6 @@ export const WidgetCenterModal: React.FC<React.PropsWithChildren<IWidgetCenterMo
     contextMenuRef && contextMenuRef.current?.show(e, props);
     e.nativeEvent.stopImmediatePropagation();
   }, []);
-
-  const selectMemberSubmit = (checkedList: UnitItem[]) => {
-    if (checkedList.length === 0) {
-      return;
-    }
-    const selectMember = checkedList[0] as IMember;
-    // Handover widget.
-    Modal.warning({
-      title: t(Strings.widget_transfer_modal_title, {
-        widgetPackageName: curOperationProps.current.widgetPackageName,
-      }),
-      icon: <WarnFilled size={24} />,
-      content: (
-        <div className={styles.transferWidgetWrap}>
-          {parser(t(Strings.widget_transfer_modal_content, {
-            oldOwner: curOperationProps.current.authorName,
-            newOwner: selectMember.memberName,
-          }))}
-        </div>
-      ),
-      onOk: () => transferWidget(selectMember.memberId),
-      okButtonProps: { className: styles.colorWhite, color: colors.warningColor },
-      closable: true,
-    });
-  };
-
-  const transferWidget = (memberId: string) => {
-    WidgetApi.transferWidget(curOperationProps.current.widgetPackageId, memberId).then(() => {
-      Message.success({ content: t(Strings.widget_transfer_success) });
-      fetchPackageList(WidgetReleaseType.Space, true);
-    });
-  };
 
   const renderThumb = ({ style, ...props }: {
     style: CSSProperties
@@ -317,18 +283,6 @@ export const WidgetCenterModal: React.FC<React.PropsWithChildren<IWidgetCenterMo
       </Tabs>
     </div>
     <ContextMenu ref={contextMenuRef} menuData={menuData} />
-    {
-      selectMemberModal &&
-      (
-        <SelectUnitModal
-          isSingleSelect
-          source={SelectUnitSource.Admin}
-          onSubmit={selectMemberSubmit}
-          onCancel={() => setSelectMemberModal(false)}
-          disableIdList={curOperationProps.current?.ownerMemberId ? [curOperationProps.current?.ownerMemberId] : []}
-        />
-      )
-    }
   </Modal>;
 };
 

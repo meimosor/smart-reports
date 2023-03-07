@@ -25,7 +25,6 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import styles from './style.module.less';
 import { IOption, Select, WrapperTooltip, useThemeColors } from '@apitable/components';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 
 interface IViewFieldOptions {
   defaultFieldId: string;
@@ -45,9 +44,6 @@ export const ViewFieldOptions: React.FC<React.PropsWithChildren<IViewFieldOption
   const currentViewAllField = useSelector(state => Selectors.getCurrentView(state))!.columns;
   const fieldMap = useSelector(state => Selectors.getFieldMap(state, state.pageParams.datasheetId!))!;
   const [isOpen, setIsOpen] = useState(false);
-  const fieldPermissionMap = useSelector(state => {
-    return Selectors.getFieldPermissionMap(state);
-  });
 
   function optionSelect(targetId: string) {
     onChange(targetId);
@@ -68,9 +64,6 @@ export const ViewFieldOptions: React.FC<React.PropsWithChildren<IViewFieldOption
   }
 
   const getSuffixIcon = (fieldId: string, isFieldInvalid: boolean) => {
-    if (fieldPermissionMap && fieldPermissionMap[fieldId]) {
-      return <FieldPermissionLock fieldId={fieldId} />;
-    }
     if (isFieldInvalid) {
       const valid = renderComputeFieldError(fieldMap[fieldId], t(Strings.err_field_group_tip));
       return valid && <WrapperTooltip wrapper={isFieldInvalid} tip={invalidTip || ''}>
@@ -115,14 +108,6 @@ export const ViewFieldOptions: React.FC<React.PropsWithChildren<IViewFieldOption
       });
       return;
     }
-    options.push({
-      label: t(Strings.crypto_field),
-      value: defaultFieldId,
-      prefixIcon: undefined,
-      suffixIcon: <FieldPermissionLock fieldId={defaultFieldId} />,
-      disabled: true,
-      disabledTip: t(Strings.disabled_crypto_field),
-    });
   }, [isCryptoField, fieldNotFound, options, defaultFieldId]);
 
   return (

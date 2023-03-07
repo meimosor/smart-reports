@@ -21,14 +21,12 @@ import { uploadAttachToS3, UploadType } from '@apitable/widget-sdk';
 import { Message } from 'pc/components/common/message';
 import { Modal } from 'pc/components/common/modal/modal/modal';
 import { openSliderVerificationModal } from 'pc/components/common/slider_verification';
-import { useLinkInvite } from 'pc/components/invite/use_invite';
 import { Router } from 'pc/components/route_manager/router';
 import { useDispatch } from 'pc/hooks/use_dispatch';
 import { secondStepVerify } from 'pc/hooks/utils';
 import { NotificationStore } from 'pc/notification_store';
 import { store } from 'pc/store';
 import { getSearchParams } from 'pc/utils';
-import { isLocalSite } from 'pc/utils/catalog';
 import { useSelector } from 'react-redux';
 import { batchActions } from 'redux-batched-actions';
 import { getEnvVariables } from 'pc/utils/env';
@@ -48,7 +46,6 @@ export const useUserRequest = () => {
   const inviteEmailInfo = useSelector(
     (state: IReduxState) => state.invite.inviteEmailInfo
   );
-  const { join } = useLinkInvite();
   /**
    * Get the login status and update the user information into userMe in redux if you are already logged in.
    * @param {{spaceId?: string | null, nodeId?: string | null}} locateIdMap
@@ -121,24 +118,12 @@ export const useUserRequest = () => {
           Api.submitInviteCode(inviteCode);
         }
         if (!data) {
-          if (urlParams.has('inviteLinkToken')) {
-            join();
-            return res.data;
-          }
           if (urlParams.has('inviteMailToken') && inviteEmailInfo) {
             Router.redirect(Navigation.WORKBENCH, {
               params: { spaceId: inviteEmailInfo.data.spaceId },
               clearQuery: true,
             });
             return res.data;
-          }
-        }
-
-        if (reference) {
-          localStorage.removeItem('reference');
-          if (isLocalSite(window.location.href, reference)) {
-            window.location.href = reference;
-            return;
           }
         }
 
@@ -149,10 +134,6 @@ export const useUserRequest = () => {
         const shareReference = localStorage.getItem('share_login_reference');
         if (shareReference) {
           window.location.href = shareReference;
-          return res.data;
-        }
-        if (reference && isLocalSite(window.location.href, reference)) {
-          window.location.href = reference;
           return res.data;
         }
         Router.redirect(Navigation.WORKBENCH,);
@@ -184,10 +165,6 @@ export const useUserRequest = () => {
         dispatch(StoreActions.setLoading(true));
 
         const urlParams = getSearchParams();
-        if (urlParams.has('inviteLinkToken') && !data) {
-          join();
-          return res.data;
-        }
         if (urlParams.has('inviteMailToken') && !data && inviteEmailInfo) {
           Router.push(Navigation.WORKBENCH, {
             params: { spaceId: inviteEmailInfo.data.spaceId },
@@ -212,10 +189,6 @@ export const useUserRequest = () => {
         const shareReference = localStorage.getItem('share_login_reference');
         if (shareReference) {
           window.location.href = shareReference;
-          return res.data;
-        }
-        if (reference && isLocalSite(window.location.href, reference)) {
-          window.location.href = reference;
           return res.data;
         }
         Router.push(Navigation.HOME);
@@ -282,10 +255,6 @@ export const useUserRequest = () => {
 
         const urlParams = getSearchParams();
         // Send a friend invitation code for a reward
-        if (urlParams.has('inviteLinkToken')) {
-          join();
-          return res.data;
-        }
         if (urlParams.has('inviteMailToken') && inviteEmailInfo) {
           Router.redirect(Navigation.WORKBENCH, {
             params: { spaceId: inviteEmailInfo.data.spaceId },

@@ -20,7 +20,6 @@ import { Typography, useThemeColors } from '@apitable/components';
 import { IField, ILinkField, Selectors, Strings, t } from '@apitable/core';
 import { Switch } from 'antd';
 import classNames from 'classnames';
-import { NodeIcon } from 'pc/components/catalog/tree/node_icon';
 import { LinkJump } from 'pc/components/common';
 import { SearchPanel } from 'pc/components/datasheet_search_panel';
 import { Dispatch, memo, SetStateAction, useState } from 'react';
@@ -111,7 +110,6 @@ export const FormateLink: React.FC<React.PropsWithChildren<IFormateLinkProps>> =
                 <Typography ellipsis={{
                   tooltip: (foreignDatasheet && foreignDatasheet.name) || t(Strings.choose_datasheet_to_link)
                 }} variant="body2" onClick={onDatasheetClick} className={styles.linkTitle}>
-                  <NodeIcon nodeId="foreignDatasheetIcon" icon={foreignDatasheet?.icon} editable={false} size={16} />
                   {
                     (foreignDatasheet && foreignDatasheet.name) ||
                     t(Strings.choose_datasheet_to_link)

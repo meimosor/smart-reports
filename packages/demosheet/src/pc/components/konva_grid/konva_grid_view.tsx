@@ -21,7 +21,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { useCreation, useUpdate } from 'ahooks';
 import { useSetState } from 'pc/hooks';
 import { FC, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { CellType, ConfigConstant, Field, ICell, IGridViewProperty, KONVA_DATASHEET_ID, RowHeightLevel, Selectors } from '@apitable/core';
+import { CellType, Field, ICell, IGridViewProperty, KONVA_DATASHEET_ID, RowHeightLevel, Selectors } from '@apitable/core';
 import { useAllowDownloadAttachment } from 'pc/components/upload_modal/preview_item';
 import { useDispatch } from 'pc/hooks';
 import { useCacheScroll } from 'pc/context';
@@ -67,7 +67,6 @@ import {
 } from 'pc/components/konva_grid';
 import { useTheme } from '@apitable/components';
 import { autoSizerCanvas } from '../konva_components';
-import { getFieldLock } from '../field_permission';
 
 interface IGridViewProps {
   height: number;
@@ -288,19 +287,13 @@ export const KonvaGridView: FC<React.PropsWithChildren<IGridViewProps>> = memo(p
         realLastLineWidth += (FIELD_HEAD_ICON_SIZE_MAP[FieldHeadIconType.Error] + FIELD_HEAD_ICON_GAP_SIZE);
       }
 
-      const fieldRole = Selectors.getFieldRoleByFieldId(fieldPermissionMap, fieldId);
-      if (
-        fieldPermissionMap && fieldRole &&
-        getFieldLock(fieldPermissionMap[fieldId].manageable ? ConfigConstant.Role.Manager : fieldRole)
-      ) {
-        realLastLineWidth += (FIELD_HEAD_ICON_SIZE_MAP[FieldHeadIconType.Permission] + FIELD_HEAD_ICON_GAP_SIZE);
-      }
+      realLastLineWidth += (FIELD_HEAD_ICON_SIZE_MAP[FieldHeadIconType.Permission] + FIELD_HEAD_ICON_GAP_SIZE);
 
       const finalHeight = realLastLineWidth > textWidth ? height + 32 : height + 8;
       return finalHeight > prev ? finalHeight : prev;
     }, GRID_FIELD_HEAD_HEIGHT);
     return fieldHeight;
-  }, [autoHeadHeight, columnIndicesMap, fieldMap, fieldPermissionMap, visibleColumns]);
+  }, [autoHeadHeight, columnIndicesMap, fieldMap, visibleColumns]);
 
   const firstColumnWidth = columnIndicesMap[0];
   const originFrozenColumnCount = (view as IGridViewProperty).frozenColumnCount;

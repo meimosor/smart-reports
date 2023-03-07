@@ -46,6 +46,8 @@ import { useFocusEffect } from '../hooks/use_focus_effect';
 
 export interface IEditorProps extends IBaseEditorProps {
   style: React.CSSProperties;
+  linkId?: any;
+  unitMap?: any;
   editing: boolean;
   recordId: string;
   toggleEditing?: (next?: boolean) => void;

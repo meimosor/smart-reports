@@ -23,7 +23,6 @@ import { Select, Button, useThemeColors } from '@apitable/components';
 import { Dispatch, SetStateAction } from 'react';
 import * as React from 'react';
 import styles from './styles.module.less';
-import { EMOJI_SIZE } from '../../catalog/tree/tree';
 import classNames from 'classnames';
 import { EmojiPicker } from 'pc/components/common/emoji_picker';
 import { ComponentDisplay, ScreenSize } from 'pc/components/common/component_display';
@@ -66,7 +65,7 @@ export const FormateRating: React.FC<React.PropsWithChildren<IFormateRatingProps
         <div className={styles.horizontalItemTitle}>{t(Strings.icon_setting)}</div>
         <EmojiPicker onSelect={onSelect}>
           <Button style={btnStyle} className={styles.emojiBtn} suffixIcon={<ChevronDownOutlined size={16} color={colors.fourthLevelText} />}>
-            <Emoji emoji={props.currentField.property.icon} set="apple" size={EMOJI_SIZE} />
+            <Emoji emoji={props.currentField.property.icon} set="apple" size={23} />
           </Button>
         </EmojiPicker>
       </div>

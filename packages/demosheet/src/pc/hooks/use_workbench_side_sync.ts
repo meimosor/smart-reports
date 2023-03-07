@@ -29,7 +29,6 @@ import { WorkbenchSideContext } from 'pc/components/common_side/workbench_side/w
 import { useAppDispatch } from 'pc/hooks/use_app_dispatch';
 import { NotificationStore } from 'pc/notification_store';
 import { store } from 'pc/store';
-import { getNodeTypeByNodeId, getResourceTypeByNodeType } from 'pc/utils';
 import { useContext, useEffect } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { batchActions } from 'redux-batched-actions';
@@ -289,7 +288,6 @@ export const useWorkbenchSideSync = () => {
     }
     // Show error message page
     if (activeNodeId && idsArray.includes(activeNodeId)) {
-      dispatch(StoreActions.resetResource(nodeId, getResourceTypeByNodeType(treeNodesMap[activeNodeId].type)));
       popErrorModal(activeNodeId, ErrorType.Delete, treeNodesMap[activeNodeId].type);
     }
   };
@@ -346,7 +344,6 @@ export const useWorkbenchSideSync = () => {
         if (!treeNodesMap[nodeId]) {
           dispatch(StoreActions.addNodeToMap([data[0]]));
           dispatch(StoreActions.datasheetErrorCode(nodeId, null));
-          syncErrorCode(nodeId, getNodeTypeByNodeId(nodeId), null);
           dispatch(StoreActions.setActiveNodeError(false));
           datasheetMapKeys.includes(nodeId) && updateResourceRole([data[0]]);
           return;

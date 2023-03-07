@@ -17,8 +17,6 @@
  */
 
 import { useState } from 'react';
-import { useCatalog } from './use_catalog';
-import { ConfigConstant } from '@apitable/core';
 
 interface IPanelInfo {
   folderId: string;
@@ -28,13 +26,8 @@ interface IPanelInfo {
 export const useSearchPanel = () => {
   const [panelVisible, setPanelVisible] = useState(false);
   const [panelInfo, setPanelInfo] = useState<IPanelInfo | null>(null);
-  const { addTreeNode } = useCatalog();
-  const onChange = ({ datasheetId, viewId, viewName }: { datasheetId?: string, viewId?: string, viewName?: string }) => {
+  const onChange = () => {
     setPanelVisible(false);
-    addTreeNode(panelInfo?.folderId, ConfigConstant.NodeType.FORM, {
-      datasheetId,
-      viewId,
-    }, viewName);
   };
 
   return {

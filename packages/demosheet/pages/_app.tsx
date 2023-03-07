@@ -52,7 +52,6 @@ import 'pc/components/common/button_plus/button_plus.less';
 import 'pc/components/common/emoji/emoji.less';
 import 'pc/components/editors/date_time_editor/date_picker/date_picker.less';
 import 'pc/components/editors/date_time_editor/time_picker_only/time_picker.less';
-import 'pc/components/invite/invite.common.less';
 import { Router } from 'pc/components/route_manager/router';
 import { initEventListen } from 'pc/events';
 import { getPageParams, getRegResult, LOGIN_SUCCESS, shareIdReg, spaceIdReg } from 'pc/hooks';
@@ -344,7 +343,7 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
         updateUserTimeZone(timeZone, () => {
           Modal.warning({
             title: t(Strings.notify_time_zone_change_title),
-            content: t(Strings.notify_time_zone_change_desc, { time_zone: `UTC${offset > 0  ? '+' : ''}${offset}(${timeZone})` }),
+            content: t(Strings.notify_time_zone_change_desc, { time_zone: `UTC${offset > 0 ? '+' : ''}${offset}(${timeZone})` }),
           });
         });
       }

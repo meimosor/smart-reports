@@ -16,14 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { findNode, Selectors, Strings, t } from '@apitable/core';
+import { Selectors, Strings, t } from '@apitable/core';
 import { Drawer } from 'antd';
 import Image from 'next/image';
 import { DashboardPanel } from 'pc/components/dashboard_panel';
 import { DataSheetPane } from 'pc/components/datasheet_pane';
-import { FolderShowcase } from 'pc/components/folder_showcase';
 import { FormPanel } from 'pc/components/form_panel';
-import { MirrorRoute } from 'pc/components/mirror/mirror_route';
 import { ViewListBox } from 'pc/components/mobile_bar/view_list_box';
 import { useSideBarVisible } from 'pc/hooks';
 import * as React from 'react';
@@ -41,7 +39,7 @@ export interface IShareMobileProps extends IShareMenu {
 }
 
 export const ShareMobile: React.FC<React.PropsWithChildren<IShareMobileProps>> = props => {
-  const { shareId, datasheetId, folderId, formId, dashboardId, mirrorId } = useSelector(state => state.pageParams);
+  const { shareId, datasheetId, formId, dashboardId } = useSelector(state => state.pageParams);
   const [viewListStatus, setViewListStatus] = useState(false);
   const [shareGuideStatus, setShareGuideStatus] = useState(false);
   const [descModalStatus, setDescModal] = useState(false);
@@ -70,29 +68,13 @@ export const ShareMobile: React.FC<React.PropsWithChildren<IShareMobileProps>> =
     if (!shareNode) {
       return;
     }
-    if (mirrorId) {
-      return <MirrorRoute />;
-    } else if (datasheetId) {
+    if (datasheetId) {
       return <DataSheetPane />;
     } else if (formId) {
       return <FormPanel loading={props.loading} />;
     } else if (dashboardId) {
       return <DashboardPanel />;
-    } else if (folderId) {
-      const parentNode = findNode([shareNode], folderId);
-      const childNodes = (parentNode && parentNode.children) ?? [];
-      return (
-        <FolderShowcase
-          nodeInfo={{
-            name: shareNode.nodeName,
-            id: shareNode.nodeId,
-            icon: shareNode.icon,
-          }}
-          childNodes={childNodes}
-          readOnly
-        />
-      );
-    }
+    } 
     return null;
   };
 

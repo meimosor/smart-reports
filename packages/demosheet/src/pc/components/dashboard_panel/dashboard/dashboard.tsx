@@ -24,7 +24,6 @@ import {
 } from '@apitable/core';
 import { AddOutlined, CodeFilled, DeleteOutlined, EditOutlined, GotoOutlined, SettingOutlined } from '@apitable/icons';
 import { useLocalStorageState, useMount, useUpdateEffect } from 'ahooks';
-import { Drawer } from 'antd';
 import classNames from 'classnames';
 // @ts-ignore
 import { isDingtalkSkuPage } from 'enterprise';
@@ -50,7 +49,6 @@ import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { useSelector } from 'react-redux';
 import { useTrackMissWidgetAndDep } from '../hooks';
-import { RecommendWidgetPanel } from '../recommend_widget_panel';
 import { TabBar } from '../tab_bar';
 import styles from './style.module.less';
 import { WidgetContextProvider } from 'pc/components/widget/context';
@@ -290,6 +288,7 @@ export const Dashboard = () => {
     expandWidgetCenter(InstallPosition.Dashboard);
   };
 
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   const onLayout = (__currentLayout: any, allLayouts: { [x: string]: any; }) => {
     if (!dashboardLayout || readonly) {
       return;
@@ -451,34 +450,6 @@ export const Dashboard = () => {
           </div>
         </WidgetContextProvider>
       </div>
-      {
-        !embedId && <Drawer
-          placement={'bottom'}
-          closable={false}
-          onClose={() => {
-            setVisibleRecommend(false);
-          }}
-          visible={isMobile || !manageable ? false : visibleRecommend}
-          key={'bottom'}
-          getContainer={false}
-          mask={false}
-          height={312}
-          style={{
-            position: 'absolute',
-            borderRadius: '8px 8px 0 0',
-            boxShadow: '0px 2px 12px rgba(38, 38, 38, 0.1)',
-            overflow: 'hidden',
-          }}
-          zIndex={11}
-        >
-          <RecommendWidgetPanel
-            setVisibleRecommend={setVisibleRecommend}
-            visibleRecommend={visibleRecommend}
-            readonly={!manageable}
-            installedWidgetHandle={installedWidgetHandle}
-          />
-        </Drawer>
-      }
 
       <ContextMenu overlay={flatContextData(menuData, true)} menuId={WIDGET_MENU} onShown={({ props }) => setActiveMenuWidget(props?.widget)} />
     </div>

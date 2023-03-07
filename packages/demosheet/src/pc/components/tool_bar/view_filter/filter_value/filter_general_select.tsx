@@ -23,9 +23,7 @@ import classNames from 'classnames';
 import { ComponentDisplay, ScreenSize } from 'pc/components/common/component_display';
 import { Popup } from 'pc/components/common/mobile/popup';
 import { OptionList } from 'pc/components/list';
-import { MemberOptionList } from 'pc/components/list/member_option_list';
 import { CellCreatedBy } from 'pc/components/multi_grid/cell/cell_created_by';
-import { CellMember } from 'pc/components/multi_grid/cell/cell_member';
 import { useThemeColors } from '@apitable/components';
 import Trigger from 'rc-trigger';
 import { useRef, useState } from 'react';
@@ -53,13 +51,8 @@ export const FilterGeneralSelect: React.FC<React.PropsWithChildren<IFilterGenera
   let TriggerComponent: any;
 
   switch (field.type) {
-    case FieldType.Member:
-      TriggerComponent = MemberOptionList;
-      DisplayComponent = CellMember;
-      break;
     case FieldType.CreatedBy:
     case FieldType.LastModifiedBy:
-      TriggerComponent = MemberOptionList;
       DisplayComponent = CellCreatedBy;
       break;
     default:

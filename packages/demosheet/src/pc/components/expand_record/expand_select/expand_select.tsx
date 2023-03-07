@@ -26,7 +26,6 @@ import { CollaCommandName, ICellValue, IMemberField, IUnitMap } from '@apitable/
 import { resourceService } from 'pc/resource_service';
 import { KeyCode, printableKey, stopPropagation } from 'pc/utils';
 import { CellMember } from 'pc/components/multi_grid/cell/cell_member';
-import { MemberEditor } from 'pc/components/editors/member_editor/member_editor';
 import { useClickAway } from 'ahooks';
 import styles from '../style.module.less';
 import { ComponentDisplay, ScreenSize } from 'pc/components/common/component_display';
@@ -159,7 +158,7 @@ export const ExpandSelect: React.FC<React.PropsWithChildren<IExpandSelectProps>>
   };
 
   const Cell = isMemberField ? CellMember : CellOptions;
-  const CellEditor = isMemberField ? MemberEditor : OptionsEditor;
+  const CellEditor = OptionsEditor;
 
   return (
     <>

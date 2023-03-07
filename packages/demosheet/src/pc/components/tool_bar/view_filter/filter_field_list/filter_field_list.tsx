@@ -25,7 +25,6 @@ import {
   IFieldMap,
   IFilterCondition,
   IViewColumn,
-  Selectors,
   Strings,
   t,
 } from '@apitable/core';
@@ -41,8 +40,6 @@ import { ExecuteFilterFn } from '../interface';
 import classNames from 'classnames';
 import styles from './style.module.less';
 import { IOption, Select, useThemeColors } from '@apitable/components';
-import { FieldPermissionLock } from 'pc/components/field_permission';
-import { useSelector } from 'react-redux';
 import { Tooltip } from 'pc/components/common';
 import { ChevronDownOutlined, WarnCircleFilled } from '@apitable/icons';
 
@@ -61,7 +58,6 @@ interface IFilterFieldListProps {
 const FilterFieldListBase: React.FC<React.PropsWithChildren<IFilterFieldListProps>> = props => {
   const { conditionIndex, changeFilter, condition, fieldMap, columns, warnTextObj, isCryptoField, fieldNotFound } = props;
   const colors = useThemeColors();
-  const fieldPermissionMap = useSelector(Selectors.getFieldPermissionMap);
 
   const { screenIsAtMost } = useResponsive();
   const isMobile = screenIsAtMost(ScreenSize.md);
@@ -96,9 +92,6 @@ const FilterFieldListBase: React.FC<React.PropsWithChildren<IFilterFieldListProp
   }
 
   const getSuffixIcon = (fieldId: string, warnText?: string) => {
-    if (fieldPermissionMap && fieldPermissionMap[fieldId]) {
-      return <FieldPermissionLock fieldId={fieldId} tooltip={t(Strings.field_permission_view_lock_tips)} />;
-    }
     return renderComputeFieldError(fieldMap[fieldId], t(Strings.error_configuration_and_invalid_filter_option), isMobile, warnText);
   };
 
@@ -127,12 +120,6 @@ const FilterFieldListBase: React.FC<React.PropsWithChildren<IFilterFieldListProp
       });
       return;
     }
-    options.push({
-      value: condition.fieldId,
-      label: t(Strings.crypto_field),
-      disabled: true,
-      suffixIcon: <FieldPermissionLock fieldId={condition.fieldId} tooltip={t(Strings.field_permission_view_lock_tips)} />,
-    });
   }, [condition.fieldId, isCryptoField, fieldNotFound, options]);
 
   if (isMobile) {

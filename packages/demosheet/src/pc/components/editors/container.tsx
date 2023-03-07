@@ -67,7 +67,6 @@ import { EnhanceTextEditor } from './enhance_text_editor';
 import { useCellEditorVisibleStyle } from './hooks';
 import { IContainerEdit, IEditor } from './interface';
 import { LinkEditor } from './link_editor';
-import { MemberEditor } from './member_editor';
 import { autoTaskScheduling } from 'pc/components/gantt_view/utils/auto_task_line_layout';
 
 // Editors
@@ -806,23 +805,6 @@ const EditorContainerBase: React.ForwardRefRenderFunction<IContainerEdit, Editor
             cellValue={cellValue}
             field={field}
             toggleEditing={toggleEditing}
-          />
-        );
-      case FieldType.Member:
-        const state = store.getState();
-        const unitMap = Selectors.getUnitMap(state);
-        const linkId = Selectors.getLinkId(state);
-        return (
-          <MemberEditor
-            style={editorRect}
-            ref={editorRef}
-            {...commonProps}
-            field={field}
-            cellValue={cellValue}
-            unitMap={unitMap}
-            linkId={linkId}
-            toggleEditing={toggleEditing}
-            recordId={record.id}
           />
         );
       default:

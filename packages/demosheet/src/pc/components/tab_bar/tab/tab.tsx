@@ -18,7 +18,7 @@
 
 import { Typography, useThemeColors } from '@apitable/components';
 import {
-  CollaCommandName, ConfigConstant, getMaxViewCountPerSheet, IReduxState, isIdassPrivateDeployment, IViewProperty, PREVIEW_DATASHEET_ID, ResourceType,
+  CollaCommandName, ConfigConstant, getMaxViewCountPerSheet, IReduxState, IViewProperty, PREVIEW_DATASHEET_ID, ResourceType,
   Selectors
 } from '@apitable/core';
 import classNames from 'classnames';
@@ -26,7 +26,6 @@ import { get } from 'lodash';
 import { NodeInfoBar } from 'pc/components/common/node_info_bar';
 import { NetworkStatus } from 'pc/components/network_status';
 import { CollaboratorStatus } from 'pc/components/tab_bar/collaboration_status';
-import { TemplateUseButton } from 'pc/components/template_centre/template_use_button';
 // import { ToolHandleType } from 'pc/components/tool_bar/interface';
 import { changeView, usePrevious, useSideBarVisible } from 'pc/hooks';
 import { useNetwork } from 'pc/hooks/use_network';
@@ -254,14 +253,6 @@ export const Tab: FC<React.PropsWithChildren<ITabStateProps>> = memo(props => {
           <CollaboratorStatus resourceId={datasheetId!} resourceType={ResourceType.Datasheet} />
           <NetworkStatus currentStatus={status} />
         </div>
-      }
-      {
-        templateId && !isIdassPrivateDeployment() &&
-        <TemplateUseButton
-          block={false}
-          style={{ marginRight: 12 }}
-          showIcon
-        />
       }
     </div>
   );

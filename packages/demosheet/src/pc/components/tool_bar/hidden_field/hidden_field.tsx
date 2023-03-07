@@ -47,7 +47,6 @@ import { Switch, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { Message } from 'pc/components/common';
 import { ComponentDisplay, ScreenSize } from 'pc/components/common/component_display';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { getCoverFields } from 'pc/components/gallery_view/utils';
 import { HighlightWords } from 'pc/components/highlight_words';
 import { LineSearchInput } from 'pc/components/list/common_list/line_search_input';
@@ -93,7 +92,6 @@ const FieldItem = ({
   index,
   disabledDrag,
   keyword,
-  fieldPermissionMap,
   fieldMap,
   onChange,
   isMobile,
@@ -102,7 +100,6 @@ const FieldItem = ({
   modalClose,
 }: IFieldItem) => {
   const colors = useThemeColors();
-  const fieldRole = Selectors.getFieldRoleByFieldId(fieldPermissionMap, item.fieldId);
   const { name, type } = fieldMap[item.fieldId];
 
   const activeCell = useSelector(state => Selectors.getActiveCell(state));
@@ -127,7 +124,6 @@ const FieldItem = ({
               <HighlightWords keyword={keyword} words={name} />
             </div>
           </div>
-          {fieldRole && <FieldPermissionLock isLock />}
           <Switch
             checked={!item[hiddenProp]}
             onClick={(_checked, e) => {

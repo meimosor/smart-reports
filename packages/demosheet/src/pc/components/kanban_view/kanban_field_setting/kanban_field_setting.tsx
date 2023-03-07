@@ -23,7 +23,6 @@ import { useClickAway } from 'ahooks';
 import { Modal, Radio } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import classNames from 'classnames';
-import { FieldPermissionLock } from 'pc/components/field_permission';
 import { getFieldTypeIcon } from 'pc/components/multi_grid/field_setting';
 import { DATASHEET_VIEW_CONTAINER_ID } from 'pc/components/view';
 import { resourceService } from 'pc/resource_service';
@@ -179,7 +178,6 @@ export const KanbanFieldSettingModal: React.FC<React.PropsWithChildren<IKanbanFi
                       {!isCryptoField && getFieldTypeIcon(field.type)}
                       {field.name}
                     </Radio>
-                    <FieldPermissionLock fieldId={field.id} />
                   </div>;
                 })
               }

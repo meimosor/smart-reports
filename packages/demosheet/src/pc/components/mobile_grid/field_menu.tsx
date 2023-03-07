@@ -29,7 +29,6 @@ import {
 import { Message, MobileContextMenu } from 'pc/components/common';
 import { notifyWithUndo } from 'pc/components/common/notify';
 import { NotifyKey } from 'pc/components/common/notify/notify.interface';
-import { expandFieldPermission } from 'pc/components/field_permission';
 import { getShowFieldName } from 'pc/components/multi_grid/context_menu/utils';
 import { useAppDispatch } from 'pc/hooks/use_app_dispatch';
 import { resourceService } from 'pc/resource_service';
@@ -239,7 +238,6 @@ export const FieldMenu: React.FC<React.PropsWithChildren<IFieldMenu>> = (
         icon: <LockOutlined color={colors.thirdLevelText} />,
         text: t(Strings.config_field_permission),
         onClick: () => {
-          expandFieldPermission(field);
         },
         disabled: !fieldPermissionManageable || !getEnvVariables().FIELD_PERMISSION_VISIBLE ,
         hidden(arg: any) {

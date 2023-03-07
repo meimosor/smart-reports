@@ -21,7 +21,6 @@ import axios from 'axios';
 import { getCustomConfig } from 'config';
 import { ActionConstants } from '../../../../exports/store';
 import { IApp, IEnvs, IReduxState, ISpaceBasicInfo, ISpaceErr, ISpaceFeatures, ISpaceInfo } from '../../../../exports/store/interfaces';
-import { initCatalogTree } from './catalog_tree';
 import { getUserMe } from '../../../user/store/actions/user';
 
 /**
@@ -84,7 +83,6 @@ export const quitSpace = (spaceId: string) => {
       const { success } = res.data;
       if (success) {
         dispatch(setQuitSpaceId(''));
-        dispatch(initCatalogTree());
         dispatch(getUserMe());
       }
     });
