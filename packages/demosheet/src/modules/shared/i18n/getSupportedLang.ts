@@ -60,7 +60,8 @@ export const getSupportedLang = (lang: string) => {
         zh: 'zh-CN',
         en: 'en-US'
       },
-      defaultLng: 'en-US'
+      // 默认语言： 中文
+      defaultLng: 'zh-CN'
     }
   );
 };

@@ -19,7 +19,7 @@
 import { I18nParser, I18nTranslation } from 'nestjs-i18n';
 
 export const DEFAULT_LANGUAGE = 'zh-CN';
-export const SUPPORTED_LANGUAGES = [DEFAULT_LANGUAGE, 'en-US'];
+export const SUPPORTED_LANGUAGES = [DEFAULT_LANGUAGE, 'zh-CN'];
 
 export class I18nJsonParser extends I18nParser {
   constructor() {

@@ -37,7 +37,7 @@ describe('DashboardService', () => {
   const nodeInfo: NodeInfo = Object.assign({ id: knownDashboardId, name: 'Test Dashboard', role: Role.Editor, nodeFavorite: false, permissions });
   const unknownDashboard = `dst${Math.floor(Math.random()*10000).toString()}`;
   const token = process.env.BEARER_TOKEN||'';
-  const cookie = 'lang=en-US;';
+  const cookie = 'lang=zh-CN;';
   const auth = { token, cookie };
   const meta: IResourceMeta = {
     views: [

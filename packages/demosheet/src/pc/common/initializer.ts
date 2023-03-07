@@ -70,7 +70,7 @@ function hasUrlIgnore(curUrl: string | undefined): boolean {
   return false;
 }
 
-function initAxios(store:  Store<IReduxState>) {
+function initAxios(store: Store<IReduxState>) {
   axios.defaults.paramsSerializer = (params) => {
     return Object.keys(params).filter(it => {
       return params.hasOwnProperty(it);
@@ -128,6 +128,9 @@ function initAxios(store:  Store<IReduxState>) {
     if (success || hasUrlIgnore(response.config.url)) {
       return response;
     }
+    console.log('code And Data is:', code);
+    console.log('code And Data is:', data);
+    
     switch (code) {
       case StatusCode.UN_AUTHORIZED: {
         if (window.location.pathname !== '/login') {
