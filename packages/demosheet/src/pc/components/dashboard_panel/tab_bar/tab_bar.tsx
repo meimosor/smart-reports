@@ -71,7 +71,6 @@ export const TabBar: React.FC<React.PropsWithChildren<ITabBarProps>> = (props) =
     dashboardName,
     role,
     dashboardIcon,
-    nodePermissions,
   } = useSelector(state => {
     const dashboard = Selectors.getDashboard(state);
     return {

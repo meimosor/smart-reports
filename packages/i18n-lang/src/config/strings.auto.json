@@ -379,19 +379,19 @@
             "zh_HK": "添加小組"
         },
         "add_widget": {
-            "zh_CN": "添加小程序",
+            "zh_CN": "添加小部件",
             "en_US": "New widget",
-            "zh_HK": "添加小程序"
+            "zh_HK": "添加小部件"
         },
         "add_widget_panel": {
-            "zh_CN": "创建小程序面板",
+            "zh_CN": "创建小部件面板",
             "en_US": "New widget board",
-            "zh_HK": "創建小程序面板"
+            "zh_HK": "創建小部件面板"
         },
         "add_widget_success": {
-            "zh_CN": "添加小程序成功",
+            "zh_CN": "添加小部件成功",
             "en_US": "Widget added",
-            "zh_HK": "添加小程序成功"
+            "zh_HK": "添加小部件成功"
         },
         "added_not_yet": {
             "zh_CN": "未加入",
@@ -3471,9 +3471,9 @@
             "zh_HK": "生成視圖的神奇表單"
         },
         "create_widget": {
-            "zh_CN": "创建小程序",
+            "zh_CN": "创建小部件",
             "en_US": "Create widget",
-            "zh_HK": "創建小程序"
+            "zh_HK": "創建小部件"
         },
         "create_widget_step_tooltip": {
             "zh_CN": "查看文档",
@@ -3481,7 +3481,7 @@
             "zh_HK": "查看文檔"
         },
         "create_widget_success": {
-            "zh_CN": "创建小程序成功",
+            "zh_CN": "创建小部件成功",
             "en_US": "Create widget success",
             "zh_HK": "創建小程式成功"
         },
@@ -3681,9 +3681,9 @@
             "zh_HK": "儀錶盤"
         },
         "dashboard_editor_label": {
-            "zh_CN": "在「只可阅读」基础上，还可以编辑小程序和分享仪表盘",
+            "zh_CN": "在「只可阅读」基础上，还可以编辑小部件和分享仪表盘",
             "en_US": "In addition to \"Read-only\", can also edit widget and share dashboard",
-            "zh_HK": "在「只可閱讀」基礎上，還可以編輯小程序和分享儀錶盤"
+            "zh_HK": "在「只可閱讀」基礎上，還可以編輯小部件和分享儀錶盤"
         },
         "dashboard_manager_label": {
             "zh_CN": "在「可以编辑」基础上，还可以删除和配置仪表盘",
@@ -3726,9 +3726,9 @@
             "zh_HK": "在「只可更新」基礎上，還可以刪除記錄和增刪視圖"
         },
         "datasheet_exist_widget": {
-            "zh_CN": "此表包含的小程序：",
+            "zh_CN": "此表包含的小部件：",
             "en_US": "The datasheet has installed these widgets:",
-            "zh_HK": "此表包含的小程序："
+            "zh_HK": "此表包含的小部件："
         },
         "datasheet_experience_label": {
             "zh_CN": "当前处于模板体验中，需要使用模板才能正常写入数据",
@@ -4069,24 +4069,24 @@
             "zh_HK": "刪除視圖成功"
         },
         "delete_widget_content": {
-            "zh_CN": "小程序删除后无法恢复，确定要删除吗？",
+            "zh_CN": "小部件删除后无法恢复，确定要删除吗？",
             "en_US": "The widget can't be restored after deletion. Continue?",
-            "zh_HK": "小程序刪除後無法恢復，確定要刪除嗎？"
+            "zh_HK": "小部件刪除後無法恢復，確定要刪除嗎？"
         },
         "delete_widget_panel_content": {
-            "zh_CN": "当前小程序面板内的小程序会一起被删除且无法恢复",
+            "zh_CN": "当前小部件面板内的小部件会一起被删除且无法恢复",
             "en_US": "All the widgets in the widget board will be deleted and can't be restored. Continue?",
-            "zh_HK": "當前小程序面板內的小程序會一起被刪除且無法恢復"
+            "zh_HK": "當前小部件面板內的小部件會一起被刪除且無法恢復"
         },
         "delete_widget_panel_title": {
-            "zh_CN": "删除小程序面板",
+            "zh_CN": "删除小部件面板",
             "en_US": "Delete widget board",
-            "zh_HK": "刪除小程序面板"
+            "zh_HK": "刪除小部件面板"
         },
         "delete_widget_title": {
-            "zh_CN": "删除小程序",
+            "zh_CN": "删除小部件",
             "en_US": "Delete widget",
-            "zh_HK": "刪除小程序"
+            "zh_HK": "刪除小部件"
         },
         "delete_workspace_succeed": {
             "zh_CN": "该空间站删除成功",
@@ -7933,14 +7933,14 @@
             "zh_HK": "導出視圖數據成功"
         },
         "import_widget": {
-            "zh_CN": "导入小程序",
+            "zh_CN": "导入小部件",
             "en_US": "Import widget",
-            "zh_HK": "導入小程序"
+            "zh_HK": "導入小部件"
         },
         "import_widget_success": {
-            "zh_CN": "导入小程序成功",
+            "zh_CN": "导入小部件成功",
             "en_US": "Widget imported",
-            "zh_HK": "導入小程序成功"
+            "zh_HK": "導入小部件成功"
         },
         "improving_info": {
             "zh_CN": "完善个人信息",
@@ -8090,9 +8090,9 @@
             "zh_HK": "我受邀的空間站"
         },
         "intro_widget_tips": {
-            "zh_CN": "什么是小程序？",
+            "zh_CN": "什么是小部件？",
             "en_US": "What is widget?",
-            "zh_HK": "什麼是小程序？"
+            "zh_HK": "什麼是小部件？"
         },
         "introduction": {
             "zh_CN": "简介",
@@ -8303,14 +8303,14 @@
             "zh_HK": "為空"
         },
         "is_empty_widget_panel_mobile": {
-            "zh_CN": "小程序面板暂未添加小程序，请前往 PC 端添加",
+            "zh_CN": "小部件面板暂未添加小部件，请前往 PC 端添加",
             "en_US": "No widgets, please add widgets on the PC",
-            "zh_HK": "小程序面板暫未添加小程序，請前往 PC 端添加"
+            "zh_HK": "小部件面板暫未添加小部件，請前往 PC 端添加"
         },
         "is_empty_widget_panel_pc": {
-            "zh_CN": "小程序面板暂未添加小程序",
+            "zh_CN": "小部件面板暂未添加小部件",
             "en_US": "No widgets",
-            "zh_HK": "小程序面板暫未添加小程序"
+            "zh_HK": "小部件面板暫未添加小部件"
         },
         "is_not_empty": {
             "zh_CN": "不为空",
@@ -9255,9 +9255,9 @@
             "zh_HK": "模板中心管理"
         },
         "manage_widget_center": {
-            "zh_CN": "小程序中心管理",
+            "zh_CN": "小部件中心管理",
             "en_US": "Manage widgets",
-            "zh_HK": "小程序中心管理"
+            "zh_HK": "小部件中心管理"
         },
         "manage_workbench": {
             "zh_CN": "工作台设置",
@@ -9653,9 +9653,9 @@
             "zh_HK": "墨西哥"
         },
         "miniprogram_code_fail": {
-            "zh_CN": "小程序码失效\n请点击刷新",
+            "zh_CN": "小部件码失效\n请点击刷新",
             "en_US": "Invalid mini-program code. Please click to refresh.",
-            "zh_HK": "小程序碼失效\n請點擊刷新"
+            "zh_HK": "小部件碼失效\n請點擊刷新"
         },
         "minute": {
             "zh_CN": "分钟",
@@ -9841,9 +9841,9 @@
             "zh_HK": "更多詳情"
         },
         "more_widget": {
-            "zh_CN": "更多小程序",
+            "zh_CN": "更多小部件",
             "en_US": "More widgets",
-            "zh_HK": "更多小程序"
+            "zh_HK": "更多小部件"
         },
         "morocco": {
             "zh_CN": "摩洛哥",
@@ -11472,9 +11472,9 @@
             "zh_HK": "當前格式圖片暫不支持預覽"
         },
         "preview_widget": {
-            "zh_CN": "预览小程序",
+            "zh_CN": "预览小部件",
             "en_US": "Preview widget",
-            "zh_HK": "預覽小程序"
+            "zh_HK": "預覽小部件"
         },
         "previous_month": {
             "zh_CN": "上月",
@@ -11656,9 +11656,9 @@
             "zh_HK": "立即開啟免費體驗"
         },
         "quick_import_widget": {
-            "zh_CN": "快速导入已有的小程序",
+            "zh_CN": "快速导入已有的小部件",
             "en_US": "Import installed widgets",
-            "zh_HK": "快速導入已有的小程序"
+            "zh_HK": "快速導入已有的小部件"
         },
         "quick_login": {
             "zh_CN": "快捷登录方式",
@@ -11701,14 +11701,14 @@
             "zh_HK": "該郵箱好像輸入重複了～"
         },
         "reach_dashboard_installed_limit": {
-            "zh_CN": "仪表盘最多允许安装 ${count} 个小程序",
+            "zh_CN": "仪表盘最多允许安装 ${count} 个小部件",
             "en_US": "The maximum number of widgets has been installed",
-            "zh_HK": "儀錶盤最多允許安裝 ${count} 個小程序"
+            "zh_HK": "儀錶盤最多允許安裝 ${count} 個小部件"
         },
         "reach_limit_installed_widget": {
-            "zh_CN": "小程序安装数量已达到上限30个",
+            "zh_CN": "小部件安装数量已达到上限30个",
             "en_US": "You have installed the maximum number of widgets",
-            "zh_HK": "小程序安裝數量已達到上限30個"
+            "zh_HK": "小部件安裝數量已達到上限30個"
         },
         "real_estate": {
             "zh_CN": "房地产",
@@ -11731,9 +11731,9 @@
             "zh_HK": "收到一個新文檔"
         },
         "recent_installed_widget": {
-            "zh_CN": "最近添加的小程序（${count} 个）",
+            "zh_CN": "最近添加的小部件（${count} 个）",
             "en_US": "Recently installed widgets (${count})",
-            "zh_HK": "最近添加的小程序（${count} 個）"
+            "zh_HK": "最近添加的小部件（${count} 個）"
         },
         "recently_used_files": {
             "zh_CN": "最近访问的文件夹",
@@ -13608,9 +13608,9 @@
             "zh_HK": "Enter 發送"
         },
         "send_widget_to_dashboard_success": {
-            "zh_CN": "小程序发送到仪表盘成功",
+            "zh_CN": "小部件发送到仪表盘成功",
             "en_US": "Widget sent to the dashboard",
-            "zh_HK": "小程序發送到儀錶盤成功"
+            "zh_HK": "小部件發送到儀錶盤成功"
         },
         "send_widget_to_dashboard_success_link": {
             "zh_CN": "send_widget_to_dashboard_success",
@@ -14290,9 +14290,9 @@
             "zh_HK": "空間站配置"
         },
         "space_exist_dashboard": {
-            "zh_CN": "将小程序发送至仪表盘",
+            "zh_CN": "将小部件发送至仪表盘",
             "en_US": "Send widget to dashboard",
-            "zh_HK": "將小程序發送至儀錶盤"
+            "zh_HK": "將小部件發送至儀錶盤"
         },
         "space_has_been_deleted": {
             "zh_CN": "空间站「<a class=\"spaceName\"></a>」已被删除",
@@ -14681,14 +14681,14 @@
             "zh_HK": "{USER_NAME}申請加入空間站「{SPACE_NAME}」"
         },
         "subject_transfer_widget_notify": {
-            "zh_CN": "你已被移除小程序「{WIDGET_NAME}」的发布权",
+            "zh_CN": "你已被移除小部件「{WIDGET_NAME}」的发布权",
             "en_US": "The ownership of your widget \"{WIDGET_NAME}\" has been transferred",
-            "zh_HK": "你已被移除小程序「{WIDGET_NAME}」的發布權"
+            "zh_HK": "你已被移除小部件「{WIDGET_NAME}」的發布權"
         },
         "subject_unpublish_widget_notify": {
-            "zh_CN": "你发布的小程序「{WIDGET_NAME}」已下架",
+            "zh_CN": "你发布的小部件「{WIDGET_NAME}」已下架",
             "en_US": "Your widget \"{WIDGET_NAME}\" has been unpublished",
-            "zh_HK": "你發布的小程序「{WIDGET_NAME}」已下架"
+            "zh_HK": "你發布的小部件「{WIDGET_NAME}」已下架"
         },
         "submit": {
             "zh_CN": "确定",
@@ -14766,9 +14766,9 @@
             "zh_HK": "從下方視圖讀取數據"
         },
         "summary_widget_setting": {
-            "zh_CN": "配置小程序",
+            "zh_CN": "配置小部件",
             "en_US": "Widget settings",
-            "zh_HK": "配置小程序"
+            "zh_HK": "配置小部件"
         },
         "summary_widget_setting_help_tips": {
             "zh_CN": "配置教程",
@@ -15498,9 +15498,9 @@
             "zh_HK": "切換開發模式"
         },
         "toggle_widget_panel": {
-            "zh_CN": "展开小程序",
+            "zh_CN": "展开小部件",
             "en_US": "Expand widget",
-            "zh_HK": "展開小程序"
+            "zh_HK": "展開小部件"
         },
         "togo": {
             "zh_CN": "多哥",
@@ -16349,34 +16349,34 @@
             "zh_HK": "數據挂件"
         },
         "widget_center": {
-            "zh_CN": "小程序中心",
+            "zh_CN": "小部件中心",
             "en_US": "Widget Center",
-            "zh_HK": "小程序中心"
+            "zh_HK": "小部件中心"
         },
         "widget_center_create_modal_desc": {
-            "zh_CN": "首先为你的小程序取个名字，然后选择从哪个小程序模板开始开发 <a href=\"\">了解更多</a>",
+            "zh_CN": "首先为你的小部件取个名字，然后选择从哪个小部件模板开始开发 <a href=\"\">了解更多</a>",
             "en_US": "First give your widget a name, and then choose which component template to start developing < a href = \"\" /> learn more",
-            "zh_HK": "首先為你的小程序取個名字，然後選擇從哪個小程序模板開始開發 <a href=\"\">了解更多</a>"
+            "zh_HK": "首先為你的小部件取個名字，然後選擇從哪個小部件模板開始開發 <a href=\"\">了解更多</a>"
         },
         "widget_center_create_modal_title": {
-            "zh_CN": "创建一个新的小程序",
+            "zh_CN": "创建一个新的小部件",
             "en_US": "Create a widget",
-            "zh_HK": "創建一個新的小程序"
+            "zh_HK": "創建一個新的小部件"
         },
         "widget_center_create_modal_widget_name": {
-            "zh_CN": "小程序名称",
+            "zh_CN": "小部件名称",
             "en_US": "Widget name",
-            "zh_HK": "小程序名稱"
+            "zh_HK": "小部件名稱"
         },
         "widget_center_create_modal_widget_name_placeholder": {
-            "zh_CN": "请输入小程序的名字",
+            "zh_CN": "请输入小部件的名字",
             "en_US": "Enter a widget name",
-            "zh_HK": "請輸入小程序的名字"
+            "zh_HK": "請輸入小部件的名字"
         },
         "widget_center_create_modal_widget_template": {
-            "zh_CN": "选择小程序模板",
+            "zh_CN": "选择小部件模板",
             "en_US": "Start from a widget template",
-            "zh_HK": "選擇小程序模板"
+            "zh_HK": "選擇小部件模板"
         },
         "widget_center_create_modal_widget_template_link": {
             "zh_CN": "查看源码",
@@ -16389,19 +16389,19 @@
             "zh_HK": "幫助文檔"
         },
         "widget_center_menu_transfer": {
-            "zh_CN": "移交小程序的发布权",
+            "zh_CN": "移交小部件的发布权",
             "en_US": "Transfer widget ownership",
-            "zh_HK": "移交小程序的發布權"
+            "zh_HK": "移交小部件的發布權"
         },
         "widget_center_menu_unpublish": {
-            "zh_CN": "下架小程序",
+            "zh_CN": "下架小部件",
             "en_US": "Unpublish widget",
-            "zh_HK": "下架小程序"
+            "zh_HK": "下架小部件"
         },
         "widget_center_official_introduction": {
-            "zh_CN": "官方推荐的小程序由官方认证的开发者发布，所有空间站皆可安装使用",
+            "zh_CN": "官方推荐的小部件由官方认证的开发者发布，所有空间站皆可安装使用",
             "en_US": "Recommended widgets are published by officially certified developers and can be installed in all Spaces",
-            "zh_HK": "官方推薦的小程序由官方認證的開發者發布，所有空間站皆可安裝使用"
+            "zh_HK": "官方推薦的小部件由官方認證的開發者發布，所有空間站皆可安裝使用"
         },
         "widget_center_publisher": {
             "zh_CN": "发布者：",
@@ -16414,14 +16414,14 @@
             "zh_HK": "官方推薦"
         },
         "widget_collapse_tooltip": {
-            "zh_CN": "折叠小程序",
+            "zh_CN": "折叠小部件",
             "en_US": "Collapse widget",
-            "zh_HK": "折疊小程序"
+            "zh_HK": "折疊小部件"
         },
         "widget_connect_error": {
-            "zh_CN": "无法连接到你的本地小程序，请确认地址无误，或者确认 widget-cli 工具已是最新版",
+            "zh_CN": "无法连接到你的本地小部件，请确认地址无误，或者确认 widget-cli 工具已是最新版",
             "en_US": "Unable to connect to your local widget. Please make sure the address is correct",
-            "zh_HK": "無法連接到你的本地小程序，請確認地址無誤，或者確認 widget-cli 工具已是最新版"
+            "zh_HK": "無法連接到你的本地小部件，請確認地址無誤，或者確認 widget-cli 工具已是最新版"
         },
         "widget_continue_develop": {
             "zh_CN": "进入开发模式",
@@ -16444,9 +16444,9 @@
             "zh_HK": "綁定的關聯表被刪除"
         },
         "widget_dev_config_content": {
-            "zh_CN": "请先前往你的小程序文件夹，执行${startCmd}命令，将返回的小程序开发地址粘贴到下方",
+            "zh_CN": "请先前往你的小部件文件夹，执行${startCmd}命令，将返回的小部件开发地址粘贴到下方",
             "en_US": "Please go to the project folder of your widget first, then execute the ${startCmd} command, and paste the returned URL below",
-            "zh_HK": "請先前往你的小程序文件夾，執行${startCmd}命令，將返回的小程序開發地址粘貼到下方"
+            "zh_HK": "請先前往你的小部件文件夾，執行${startCmd}命令，將返回的小部件開發地址粘貼到下方"
         },
         "widget_dev_url": {
             "zh_CN": "开发地址：",
@@ -16469,14 +16469,14 @@
             "zh_HK": "進入全屏"
         },
         "widget_env_error": {
-            "zh_CN": "该小程序不支持在${errorEnv}使用，请前往${expectEnv}使用",
+            "zh_CN": "该小部件不支持在${errorEnv}使用，请前往${expectEnv}使用",
             "en_US": "This applet is not supported in ${errorEnv}, please go to ${expectEnv}",
-            "zh_HK": "該小程序不支持在${errorEnv}使用，請前往${expectEnv}使用"
+            "zh_HK": "該小部件不支持在${errorEnv}使用，請前往${expectEnv}使用"
         },
         "widget_expand_tooltip": {
-            "zh_CN": "展开小程序",
+            "zh_CN": "展开小部件",
             "en_US": "Expand widget",
-            "zh_HK": "展開小程序"
+            "zh_HK": "展開小部件"
         },
         "widget_filter_add_filter": {
             "zh_CN": "添加筛选条件",
@@ -16489,14 +16489,14 @@
             "zh_HK": "{FILTER_NUM} 個篩選條件"
         },
         "widget_filter_tips": {
-            "zh_CN": "被筛选过滤的数据不会被小程序读取",
+            "zh_CN": "被筛选过滤的数据不会被小部件读取",
             "en_US": "Filtered data is not read by widget",
-            "zh_HK": "被篩選過濾的數據不會被小程序讀取"
+            "zh_HK": "被篩選過濾的數據不會被小部件讀取"
         },
         "widget_has_be_delete": {
-            "zh_CN": "该小程序已被删除，无法查看",
+            "zh_CN": "该小部件已被删除，无法查看",
             "en_US": "The widget has been deleted",
-            "zh_HK": "該小程序已被刪除，無法查看"
+            "zh_HK": "該小部件已被刪除，無法查看"
         },
         "widget_hide_settings_tooltip": {
             "zh_CN": "隐藏设置面板",
@@ -16504,9 +16504,9 @@
             "zh_HK": "隱藏設置面板"
         },
         "widget_homepage_tooltip": {
-            "zh_CN": "小程序主页",
+            "zh_CN": "小部件主页",
             "en_US": "Widget homepage",
-            "zh_HK": "小程序主頁"
+            "zh_HK": "小部件主頁"
         },
         "widget_import_from_airtable_done": {
             "zh_CN": "导入成功，本次共导入 ${ROW_NUM} 行数据",
@@ -16549,9 +16549,9 @@
             "zh_HK": "2. 請選擇字段類型"
         },
         "widget_import_from_airtable_step_2_waring_file_upload": {
-            "zh_CN": "检测到正在导入附件列，当前小程序仅支持导入不超过 10MB 的文件，超出的文件将被跳过，是否继续？",
+            "zh_CN": "检测到正在导入附件列，当前小部件仅支持导入不超过 10MB 的文件，超出的文件将被跳过，是否继续？",
             "en_US": "The attachment column is detected. The widget currently only supports the import of files that do not exceed 10MB. Do you continue?",
-            "zh_HK": "檢測到正在導入附件列，當前小程序僅支持導入不超過 10MB 的文件，超出的文件將被跳過，是否繼續？"
+            "zh_HK": "檢測到正在導入附件列，當前小部件僅支持導入不超過 10MB 的文件，超出的文件將被跳過，是否繼續？"
         },
         "widget_import_from_airtable_step_3_button": {
             "zh_CN": "中止导入",
@@ -16574,9 +16574,9 @@
             "zh_HK": "修改配置"
         },
         "widget_install_error_env": {
-            "zh_CN": "该小程序不支持在表内${errorEnv}安装使用，请前往${expectEnv}安装使用",
+            "zh_CN": "该小部件不支持在表内${errorEnv}安装使用，请前往${expectEnv}安装使用",
             "en_US": "This applet does not support the installation and use of ${errorEnv} in the table. Please go to ${expectEnv} for installation and use",
-            "zh_HK": "該小程序不支持在表內${errorEnv}安裝使用，請前往${expectEnv}安裝使用"
+            "zh_HK": "該小部件不支持在表內${errorEnv}安裝使用，請前往${expectEnv}安裝使用"
         },
         "widget_install_error_title": {
             "zh_CN": "安装失败",
@@ -16594,14 +16594,14 @@
             "zh_HK": "⁣已與服務器斷開連接，請重新執行 widget-cli start 命令，點擊右上角的刷新後，即可繼續開發"
         },
         "widget_load_error_ban_content": {
-            "zh_CN": "该小程序违反相关条约已被封禁暂时无法使用",
+            "zh_CN": "该小部件违反相关条约已被封禁暂时无法使用",
             "en_US": "The widget violates relevant treaties and has been banned and temporarily unavailable",
-            "zh_HK": "該小程序違反相關條約已被封禁暫時無法使用"
+            "zh_HK": "該小部件違反相關條約已被封禁暫時無法使用"
         },
         "widget_load_error_ban_title": {
-            "zh_CN": "该小程序已被封禁",
+            "zh_CN": "该小部件已被封禁",
             "en_US": "The widget is banned",
-            "zh_HK": "該小程序已被封禁"
+            "zh_HK": "該小部件已被封禁"
         },
         "widget_load_error_load_error": {
             "zh_CN": "已与服务器断开连接，请重新执行 widget-cli start 命令，刷新后即可继续开发",
@@ -16609,24 +16609,24 @@
             "zh_HK": "已與服務器斷開連接，請重新執行 widget-cli start 命令，刷新後即可繼續開發"
         },
         "widget_load_error_not_match": {
-            "zh_CN": "本地小程序包 ID 与当前小程序面板的小程序包 ID 不一致，请确认你没有修改本地代码中的 packageId 参数值",
+            "zh_CN": "本地小部件包 ID 与当前小部件面板的小部件包 ID 不一致，请确认你没有修改本地代码中的 packageId 参数值",
             "en_US": "The local component package ID is inconsistent with the component package ID of the current component board. Please confirm that you have not modified the parameter value of packageId in the local code",
-            "zh_HK": "本地小程序包 ID 與當前小程序面板的小程序包 ID 不一致，請確認你沒有修改本地代碼中的 packageId 參數值"
+            "zh_HK": "本地小部件包 ID 與當前小部件面板的小部件包 ID 不一致，請確認你沒有修改本地代碼中的 packageId 參數值"
         },
         "widget_load_error_published": {
-            "zh_CN": "请联系该小程序发布者 @${authorName} 排查问题",
+            "zh_CN": "请联系该小部件发布者 @${authorName} 排查问题",
             "en_US": "Please contact the widget publisher @${authorName} for troubleshooting",
-            "zh_HK": "請聯繫該小程序發布者 @${authorName} 排查問題"
+            "zh_HK": "請聯繫該小部件發布者 @${authorName} 排查問題"
         },
         "widget_load_error_title": {
-            "zh_CN": "运行小程序时出错",
+            "zh_CN": "运行小部件时出错",
             "en_US": "Error occurred when running the widget",
-            "zh_HK": "運行小程序時出錯"
+            "zh_HK": "運行小部件時出錯"
         },
         "widget_load_url_error_not_match": {
-            "zh_CN": "无法连接到本地小程序，请排查代码是否有错误，或者确认代码中的 packageId 与当前小程序的包 ID (${widgetPackageId}) 保持一致",
+            "zh_CN": "无法连接到本地小部件，请排查代码是否有错误，或者确认代码中的 packageId 与当前小部件的包 ID (${widgetPackageId}) 保持一致",
             "en_US": "Unable to connect to the local widget, please check if there are any errors in your code, or make sure the packageId in your code is \"${widgetPackageId}\"",
-            "zh_HK": "無法連接到本地小程序，請排查代碼是否有錯誤，或者確認代碼中的 packageId 與當前小程序的包 ID (${widgetPackageId}) 保持一致"
+            "zh_HK": "無法連接到本地小部件，請排查代碼是否有錯誤，或者確認代碼中的 packageId 與當前小部件的包 ID (${widgetPackageId}) 保持一致"
         },
         "widget_loader_developing_content": {
             "zh_CN": "你可以点击下面按钮继续开发",
@@ -16634,14 +16634,14 @@
             "zh_HK": "你可以點擊下面按鈕繼續開發"
         },
         "widget_loader_developing_title": {
-            "zh_CN": "此小程序未发布",
+            "zh_CN": "此小部件未发布",
             "en_US": "This widget is not published",
-            "zh_HK": "此小程序未發布"
+            "zh_HK": "此小部件未發布"
         },
         "widget_loader_error_cret_invalid": {
-            "zh_CN": "请先解除浏览器对于加载本地代码的安全限制，否则小程序无法顺利加载",
+            "zh_CN": "请先解除浏览器对于加载本地代码的安全限制，否则小部件无法顺利加载",
             "en_US": "Please first release the browser's security restrictions on loading local code, otherwise the widget cannot be loaded smoothly",
-            "zh_HK": "請先解除瀏覽器對於加載本地代碼的安全限制，否則小程序無法順利加載"
+            "zh_HK": "請先解除瀏覽器對於加載本地代碼的安全限制，否則小部件無法順利加載"
         },
         "widget_loader_error_cret_invalid_action_text": {
             "zh_CN": "如何解除",
@@ -16659,19 +16659,19 @@
             "zh_HK": "更多設置"
         },
         "widget_name_length_error": {
-            "zh_CN": "小程序的名称在 1~30 个字符之间",
+            "zh_CN": "小部件的名称在 1~30 个字符之间",
             "en_US": "The name must be between 1 and 30 characters in length",
-            "zh_HK": "小程序的名稱在 1~30 個字符之間"
+            "zh_HK": "小部件的名稱在 1~30 個字符之間"
         },
         "widget_num": {
-            "zh_CN": "${count} 个小程序",
+            "zh_CN": "${count} 个小部件",
             "en_US": "${count} widget(s)",
-            "zh_HK": "${count} 個小程序"
+            "zh_HK": "${count} 個小部件"
         },
         "widget_operate_delete": {
-            "zh_CN": "删除小程序",
+            "zh_CN": "删除小部件",
             "en_US": "Delete widget",
-            "zh_HK": "刪除小程序"
+            "zh_HK": "刪除小部件"
         },
         "widget_operate_enter_dev": {
             "zh_CN": "进入开发模式",
@@ -16684,19 +16684,19 @@
             "zh_HK": "退出開發模式"
         },
         "widget_operate_publish_help": {
-            "zh_CN": "如何发布小程序",
+            "zh_CN": "如何发布小部件",
             "en_US": "How to publish widget",
-            "zh_HK": "如何發布小程序"
+            "zh_HK": "如何發布小部件"
         },
         "widget_operate_refresh": {
-            "zh_CN": "刷新小程序",
+            "zh_CN": "刷新小部件",
             "en_US": "Refresh widget",
-            "zh_HK": "刷新小程序"
+            "zh_HK": "刷新小部件"
         },
         "widget_operate_rename": {
-            "zh_CN": "重命名小程序",
+            "zh_CN": "重命名小部件",
             "en_US": "Rename widget",
-            "zh_HK": "重命名小程序"
+            "zh_HK": "重命名小部件"
         },
         "widget_operate_send_dashboard": {
             "zh_CN": "发送到仪表盘",
@@ -16704,29 +16704,29 @@
             "zh_HK": "發送到儀錶盤"
         },
         "widget_operate_setting": {
-            "zh_CN": "配置小程序",
+            "zh_CN": "配置小部件",
             "en_US": "Configure widget",
-            "zh_HK": "配置小程序"
+            "zh_HK": "配置小部件"
         },
         "widget_panel": {
-            "zh_CN": "小程序面板",
+            "zh_CN": "小部件面板",
             "en_US": "Widget board",
-            "zh_HK": "小程序面板"
+            "zh_HK": "小部件面板"
         },
         "widget_panel_count_limit": {
-            "zh_CN": "小程序面板数量达到上限",
+            "zh_CN": "小部件面板数量达到上限",
             "en_US": "This datasheet has the maximum number of widget boards.",
-            "zh_HK": "小程序面板數量達到上限"
+            "zh_HK": "小部件面板數量達到上限"
         },
         "widget_panel_title": {
-            "zh_CN": "小程序面板 ${count}",
+            "zh_CN": "小部件面板 ${count}",
             "en_US": "Widget board ${count}",
-            "zh_HK": "小程序面板 ${count}"
+            "zh_HK": "小部件面板 ${count}"
         },
         "widget_publish_help_desc": {
-            "zh_CN": "发布成功后，空间站成员即可在小程序中心安装此小程序",
+            "zh_CN": "发布成功后，空间站成员即可在小部件中心安装此小部件",
             "en_US": "After the widget is published, members in your Space can install it in the Widget Center",
-            "zh_HK": "發布成功後，空間站成員即可在小程序中心安裝此小程序"
+            "zh_HK": "發布成功後，空間站成員即可在小部件中心安裝此小部件"
         },
         "widget_publish_help_step1": {
             "zh_CN": "1、开发完成并预览无误后，先在终端输入 ${cmd} 退出运行状态",
@@ -16739,14 +16739,14 @@
             "zh_HK": "2、再執行下列命令進行發布："
         },
         "widget_publish_modal_content": {
-            "zh_CN": "在终端执行完 release 命令后的结果 + 在小程序中心出现发布后的小程序",
+            "zh_CN": "在终端执行完 release 命令后的结果 + 在小部件中心出现发布后的小部件",
             "en_US": "The result after the release command is executed on the terminal + the released widget appears in the component center",
-            "zh_HK": "在終端執行完 release 命令後的結果 + 在小程序中心出現發布後的小程序"
+            "zh_HK": "在終端執行完 release 命令後的結果 + 在小部件中心出現發布後的小部件"
         },
         "widget_publish_modal_title": {
-            "zh_CN": "如何发布小程序",
+            "zh_CN": "如何发布小部件",
             "en_US": "How to publish widget",
-            "zh_HK": "如何發布小程序"
+            "zh_HK": "如何發布小部件"
         },
         "widget_reference": {
             "zh_CN": "来源「${dst_name}」",
@@ -16809,14 +16809,14 @@
             "zh_HK": "預覽"
         },
         "widget_step_dev_content_label": {
-            "zh_CN": "输入小程序开发地址：",
+            "zh_CN": "输入小部件开发地址：",
             "en_US": "Enter the widget development address:",
-            "zh_HK": "輸入小程序開發地址："
+            "zh_HK": "輸入小部件開發地址："
         },
         "widget_step_dev_desc": {
-            "zh_CN": "通过本地服务的 URL 地址，你可以动态查看小程序的效果",
+            "zh_CN": "通过本地服务的 URL 地址，你可以动态查看小部件的效果",
             "en_US": "With the URL address of the local service, you can preview the widget in real time",
-            "zh_HK": "通過本地服務的 URL 地址，你可以動態查看小程序的效果"
+            "zh_HK": "通過本地服務的 URL 地址，你可以動態查看小部件的效果"
         },
         "widget_step_dev_title": {
             "zh_CN": "实时预览",
@@ -16839,9 +16839,9 @@
             "zh_HK": "在終端中繼續執行下列命令："
         },
         "widget_step_init_title": {
-            "zh_CN": "初始化小程序",
+            "zh_CN": "初始化小部件",
             "en_US": "Initialize widget",
-            "zh_HK": "初始化小程序"
+            "zh_HK": "初始化小部件"
         },
         "widget_step_install": {
             "zh_CN": "安装",
@@ -16859,14 +16859,14 @@
             "zh_HK": "2、在終端中執行下列命令"
         },
         "widget_step_install_desc": {
-            "zh_CN": "小程序开发工具可以用来初始化、运行、发布、下架小程序",
+            "zh_CN": "小部件开发工具可以用来初始化、运行、发布、下架小部件",
             "en_US": "You can use the widget CLI  tool to initialize, run, publish, and unpublish widgets",
-            "zh_HK": "小程序開發工具可以用來初始化、運行、發布、下架小程序"
+            "zh_HK": "小部件開發工具可以用來初始化、運行、發布、下架小部件"
         },
         "widget_step_install_title": {
-            "zh_CN": "安装小程序开发工具",
+            "zh_CN": "安装小部件开发工具",
             "en_US": "Install widget CLI",
-            "zh_HK": "安裝小程序開發工具"
+            "zh_HK": "安裝小部件開發工具"
         },
         "widget_step_start": {
             "zh_CN": "启动",
@@ -16879,39 +16879,39 @@
             "zh_HK": "注意：該命令會生成一個 URL，供下一步使用"
         },
         "widget_step_start_content_label1": {
-            "zh_CN": "1、前往小程序的项目文件夹，开始开发",
+            "zh_CN": "1、前往小部件的项目文件夹，开始开发",
             "en_US": "1. Go to the project folder of the new widget and start development:",
-            "zh_HK": "1、前往小程序的項目文件夾，開始開發"
+            "zh_HK": "1、前往小部件的項目文件夾，開始開發"
         },
         "widget_step_start_content_label2": {
-            "zh_CN": "2、开发完毕后，在终端中执行下列命令，运行小程序",
+            "zh_CN": "2、开发完毕后，在终端中执行下列命令，运行小部件",
             "en_US": "2. After development, execute the following command to start the widget",
-            "zh_HK": "2、開發完畢後，在終端中執行下列命令，運行小程序"
+            "zh_HK": "2、開發完畢後，在終端中執行下列命令，運行小部件"
         },
         "widget_step_start_desc": {
-            "zh_CN": "跟随下列步骤，启动小程序的本地服务，进入开发模式",
+            "zh_CN": "跟随下列步骤，启动小部件的本地服务，进入开发模式",
             "en_US": "Follow the steps below to start the widget's local service and enter development mode",
-            "zh_HK": "跟隨下列步驟，啟動小程序的本地服務，進入開發模式"
+            "zh_HK": "跟隨下列步驟，啟動小部件的本地服務，進入開發模式"
         },
         "widget_step_start_title": {
-            "zh_CN": "启动小程序",
+            "zh_CN": "启动小部件",
             "en_US": "Start widget",
-            "zh_HK": "啟動小程序"
+            "zh_HK": "啟動小部件"
         },
         "widget_tip": {
-            "zh_CN": "小程序",
+            "zh_CN": "小部件",
             "en_US": "Widget",
-            "zh_HK": "小程序"
+            "zh_HK": "小部件"
         },
         "widget_transfer_modal_content": {
-            "zh_CN": "<ul><li><p>当前发布者：${oldOwner}</p><p>该成员不能再通过命令行工具进行小程序的发布、下架等操作</p></li><li> <p>新的发布者：${newOwner}</p> <p>该成员能够通过命令行工具进行该小程序的发布、下架等操作</p></li></ul>",
+            "zh_CN": "<ul><li><p>当前发布者：${oldOwner}</p><p>该成员不能再通过命令行工具进行小部件的发布、下架等操作</p></li><li> <p>新的发布者：${newOwner}</p> <p>该成员能够通过命令行工具进行该小部件的发布、下架等操作</p></li></ul>",
             "en_US": "<ul><li><p>Current publisher: ${oldOwner}</p><p>The member can no longer publish or unpublish the widget in the Widget Center via the CLI tool.</p></li><li> <p>New publisher: ${newOwner}</p> <p>The member can publish and unpublish the widget in the Widget Center via the CLI tool.</p></li></ul>",
-            "zh_HK": "<ul><li><p>當前發布者：${oldOwner}</p><p>該成員不能再通過命令行工具進行小程序的發布、下架等操作</p></li><li> <p>新的發布者：${newOwner}</p> <p>該成員能夠通過命令行工具進行該小程序的發布、下架等操作</p></li></ul>"
+            "zh_HK": "<ul><li><p>當前發布者：${oldOwner}</p><p>該成員不能再通過命令行工具進行小部件的發布、下架等操作</p></li><li> <p>新的發布者：${newOwner}</p> <p>該成員能夠通過命令行工具進行該小部件的發布、下架等操作</p></li></ul>"
         },
         "widget_transfer_modal_title": {
-            "zh_CN": "移交「${widgetPackageName}」小程序的发布权",
+            "zh_CN": "移交「${widgetPackageName}」小部件的发布权",
             "en_US": "Transfer ownership of \"${widgetPackageName}\"",
-            "zh_HK": "移交「${widgetPackageName}」小程序的發布權"
+            "zh_HK": "移交「${widgetPackageName}」小部件的發布權"
         },
         "widget_transfer_success": {
             "zh_CN": "移交成功",
@@ -16924,14 +16924,14 @@
             "zh_HK": "未知錯誤 ${info}"
         },
         "widget_unpublish_modal_content": {
-            "zh_CN": "确定下架小程序？",
+            "zh_CN": "确定下架小部件？",
             "en_US": "Are you sure to unpublish the widget?",
-            "zh_HK": "確定下架小程序？"
+            "zh_HK": "確定下架小部件？"
         },
         "widget_website": {
-            "zh_CN": "小程序网址",
+            "zh_CN": "小部件网址",
             "en_US": "Widget website",
-            "zh_HK": "小程序網址"
+            "zh_HK": "小部件網址"
         },
         "widgets_per_dashboard": {
             "zh_CN": "数据报表图版数",

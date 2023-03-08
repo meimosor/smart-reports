@@ -18,12 +18,12 @@
 
 import { ContextMenu, Message, useThemeColors } from '@apitable/components';
 import {
-  CollaCommandName, Events, IWidget, Navigation, PermissionType, Player, Selectors, StoreActions, Strings, t, WidgetApi,
+  CollaCommandName, Events, IWidget, Navigation, PermissionType, Player, Selectors, Strings, t, 
   WidgetPackageStatus,
   WidgetReleaseType,
 } from '@apitable/core';
 import { AddOutlined, CodeFilled, DeleteOutlined, EditOutlined, GotoOutlined, SettingOutlined } from '@apitable/icons';
-import { useLocalStorageState, useMount, useUpdateEffect } from 'ahooks';
+import { useLocalStorageState, useMount } from 'ahooks';
 import classNames from 'classnames';
 // @ts-ignore
 import { isDingtalkSkuPage } from 'enterprise';
@@ -44,7 +44,7 @@ import { resourceService } from 'pc/resource_service';
 import { store } from 'pc/store';
 import { flatContextData } from 'pc/utils';
 import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import { useSelector } from 'react-redux';
@@ -68,7 +68,6 @@ export const Dashboard = () => {
   const dashboardLayout = useSelector(Selectors.getDashboardLayout);
   const { dashboardId, templateId, shareId, widgetId, embedId } = useSelector(state => state.pageParams);
   const { editable, manageable } = useSelector(Selectors.getDashboardPermission);
-  const spaceId = useSelector(state => state.space.activeId);
   const widgetMap = useSelector(state => state.widgetMap);
   const embedInfo = useSelector(state => Selectors.getEmbedInfo(state));
 
@@ -87,41 +86,10 @@ export const Dashboard = () => {
   const isMobile = screenIsAtMost(ScreenSize.md);
   const hideReadonlyEmbedItem = !!(embedInfo && embedInfo.permissionType === PermissionType.READONLY);
   const readonly = isMobile || !editable || hideReadonlyEmbedItem;
-  const connect = dashboardPack?.connected;
-  const hasOpenRecommend = useRef(false);
   const purchaseToken = query.get('purchaseToken') || '';
   const isSkuPage = isDingtalkSkuPage?.(purchaseToken);
 
   const installedWidgetInDashboard = Boolean(dashboardLayout && dashboardLayout.length);
-
-  const decisionOpenRecommend = () => {
-    if (hasOpenRecommend.current) {
-      return;
-    }
-    hasOpenRecommend.current = true;
-    const dashboardIsEmpty = !(dashboardLayout && dashboardLayout.length);
-    if (!dashboardIsEmpty || !manageable) {
-      return;
-    }
-    WidgetApi.getRecentInstalledWidgets(spaceId!).then(res => {
-      const { data, success } = res.data;
-      if (success) {
-        store.getState();
-        const isEditing = store.getState().catalogTree.editNodeId === dashboardId;
-        setVisibleRecommend(Boolean(data.length));
-        /**
-         * TODO：Upgrading the antd version of the drawer to support a non-autofocus configuration will solve this, here is a temporary solution
-         * If the current dashboard is in the process of being renamed
-         * Because the current version of antd
-         * The drawer will autofocus causing the renaming to be out of focus
-         * So use the time delay to focus back in
-         */
-        setTimeout(() => {
-          isEditing && dashboardId && store.dispatch(StoreActions.setEditNodeId(dashboardId));
-        }, 0);
-      }
-    });
-  };
 
   useEffect(() => {
     window.dispatchEvent(new Event('resize'));
@@ -144,13 +112,6 @@ export const Dashboard = () => {
   useMount(() => {
     Player.doTrigger(Events.datasheet_dashboard_panel_shown);
   });
-
-  useUpdateEffect(() => {
-    if (!connect) {
-      return;
-    }
-    decisionOpenRecommend();
-  }, [connect]);
 
   const renameWidget = (arg: any) => {
     const {

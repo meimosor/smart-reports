@@ -16,12 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Button, IconButton, Tooltip, useThemeColors } from '@apitable/components';
+import { Button, IconButton, useThemeColors } from '@apitable/components';
 import { ConfigConstant, IWidgetPackage, ResourceType, Strings, t, WidgetInstallEnv, WidgetPackageStatus, WidgetReleaseType } from '@apitable/core';
-import { AddOutlined, LinkOutlined, MoreOutlined, WarnFilled } from '@apitable/icons';
+import { AddOutlined, MoreOutlined, WarnFilled } from '@apitable/icons';
 import classNames from 'classnames';
 import Image from 'next/image';
-import { Avatar, AvatarSize, Message, UserCardTrigger } from 'pc/components/common';
+import { Message } from 'pc/components/common';
 import { Modal } from 'pc/components/common/modal/modal/modal';
 import { InstallPosition } from 'pc/components/widget/widget_center/enum';
 import { installToDashboard, installToPanel, installWidget } from 'pc/components/widget/widget_center/install_utils';
@@ -39,8 +39,8 @@ type IWidgetPackageItemProps = IWidgetPackage & IWidgetPackageItemBase;
 
 const WidgetPackageItemBase = (props: IWidgetPackageItemProps) => {
   const {
-    cover, name, releaseType, description, widgetPackageId, installPosition, onModalClose, authorIcon, authorName, icon, showMenu, status,
-    ownerUuid, ownerMemberId, extras, version, installEnv,
+    cover, name, releaseType, description, widgetPackageId, installPosition, onModalClose, authorName, icon, showMenu, status,
+    ownerUuid, ownerMemberId, version, installEnv,
   } = props;
   const colors = useThemeColors();
   const isOwner = useSelector(state => state.user.info?.uuid === ownerUuid);
@@ -138,7 +138,7 @@ const WidgetPackageItemBase = (props: IWidgetPackageItemProps) => {
         size='small'
         block
       >
-        {t(Strings.install_widget)}
+        安装小部件
       </Button>
     </WrapperTooltip>;
   };
@@ -154,25 +154,6 @@ const WidgetPackageItemBase = (props: IWidgetPackageItemProps) => {
           alt={''}
           onClick={() => isReview && expandReviewInfo(props)}
         />
-        <div className={styles.authorIconWrap}>
-          <div className={styles.arcBoxLeft} />
-          <div className={styles.avatarWrap}>
-            <Avatar
-              className={styles.avatar}
-              style={{ border: 0 }}
-              id={icon}
-              src={icon}
-              title={authorName}
-              size={AvatarSize.Size24}
-            />
-          </div>
-          <div className={styles.arcBoxRight} />
-        </div>
-        {extras?.website && <Tooltip content={t(Strings.widget_homepage_tooltip)} placement='top-center'>
-          <a href={extras?.website} target='_blank' className={styles.website} rel='noreferrer'>
-            <IconButton className={styles.iconButton} icon={() => <LinkOutlined color={'#696969'} />} variant='background' />
-          </a>
-        </Tooltip>}
       </div>
       <div className={styles.itemContent}>
         <h3>{name}</h3>
@@ -180,19 +161,8 @@ const WidgetPackageItemBase = (props: IWidgetPackageItemProps) => {
           {description}
         </p>
         <div className={styles.developerWrap}>
-          <span>{t(Strings.widget_center_publisher)}</span>
-          <div className={styles.avatarWrap}>
-            <Avatar
-              style={{ border: 0 }}
-              id={authorIcon}
-              src={authorIcon}
-              title={authorName}
-              size={AvatarSize.Size20}
-            />
-          </div>
-          <span>{authorName}</span>
+          <span>部件版本:{version}</span>
         </div>
-        {isReview && <div>{version}</div>}
         <InstallButton />
       </div>
     </div>
@@ -221,27 +191,6 @@ const WidgetPackageItemBase = (props: IWidgetPackageItemProps) => {
       </p>
       <div className={styles.developerWrap}>
         <span>{t(Strings.widget_center_publisher)}</span>
-        <UserCardTrigger
-          popupAlign={{
-            points: ['bl', 'tl'],
-            offset: [0, -8],
-          }}
-          userId={ownerUuid}
-          permissionVisible={false}
-        >
-          <div className={styles.triggerWrap}>
-            <div className={styles.avatarWrap}>
-              <Avatar
-                style={{ border: 0 }}
-                id={ownerUuid}
-                src={authorIcon}
-                title={authorName}
-                size={AvatarSize.Size20}
-              />
-            </div>
-            <span>{authorName}</span>
-          </div>
-        </UserCardTrigger>
       </div>
       <InstallButton />
     </div>

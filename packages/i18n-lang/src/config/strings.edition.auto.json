@@ -1205,14 +1205,14 @@
             "zh_CN": "成员无法将工作目录中的表格或者视图数据导出到本地"
         },
         "select_wdget_Import_widget": {
-            "zh_HK": "選擇你要導入小程序的表格",
+            "zh_HK": "選擇你要導入小部件的表格",
             "en_US": "Select a datasheet to import widget",
-            "zh_CN": "选择你要导入小程序的表格"
+            "zh_CN": "选择你要导入小部件的表格"
         },
         "select_widget_Import_widget": {
-            "zh_HK": "從下方表格導入小程序",
+            "zh_HK": "從下方表格導入小部件",
             "en_US": "Import widget from the datasheet below",
-            "zh_CN": "从下方表格导入小程序"
+            "zh_CN": "从下方表格导入小部件"
         },
         "grid_view": {
             "zh_HK": "表格視圖",
@@ -1305,9 +1305,9 @@
             "zh_CN": "{MEMBER_NAME}在表格内提及了你"
         },
         "tooltip_cannot_create_widget_from_dashboard": {
-            "zh_HK": "無法從儀錶盤創建小程序，請前往一張表格創建小程序",
+            "zh_HK": "無法從儀錶盤創建小部件，請前往一張表格創建小部件",
             "en_US": "You can only create a widget from a datasheet rather than a dashboard",
-            "zh_CN": "无法从仪表盘创建小程序，请前往一张表格创建小程序"
+            "zh_CN": "无法从仪表盘创建小部件，请前往一张表格创建小部件"
         },
         "api_datasheet_not_exist": {
             "zh_HK": "找不到指定的表格",

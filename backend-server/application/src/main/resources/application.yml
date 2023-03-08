@@ -62,7 +62,7 @@ spring:
 cookie:
   domain-name: ${DOMAIN_NAME:}
 const:
-  language-tag: ${DEFAULT_LOCALE:en-US}
+  language-tag: zh-CN
   server-domain: ${SERVER_DOMAIN:}
   callback-domain: ${CALLBACK_DOMAIN:}
   oss-image-audit-creatable: ${OSS_IMAGE_AUDIT_CREATABLE:false}

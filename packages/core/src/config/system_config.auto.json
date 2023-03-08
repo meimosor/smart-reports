@@ -1420,7 +1420,7 @@
             "when": "!isRecordExpanding",
             "id": "cmd+shift+o",
             "command": "ToggleWidgetPanel",
-            "description": "展开小程序",
+            "description": "展开小部件",
             "type": [
                 "global_shortcuts"
             ]
@@ -5372,7 +5372,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \"#DATASHEET_WIDGET_BTN\",\n\"placement\": \"bottomRight\",\n \"title\": \"新功能\", \n\"description\": \"小程序上线！想要让沉淀下来的数据得到更好的运用吗？那就赶紧来体验一下吧\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \"#DATASHEET_WIDGET_BTN\",\n\"placement\": \"bottomRight\",\n \"title\": \"新功能\", \n\"description\": \"小部件上线！想要让沉淀下来的数据得到更好的运用吗？那就赶紧来体验一下吧\", \"children\":\"\" \n}"
             },
             "48": {
                 "uiConfigId": "player_step_ui_config_48",
@@ -5391,7 +5391,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \".style_widgetPanelContainer__1l2ZV\",\n\"placement\": \"leftCenter\",\n \"title\": \"什么是小程序\", \n\"description\": \"维格小程序是维格表的一种扩展应用，可实现数据可视化、数据传输、数据清洗等等额外功能。通过在小程序面板安装适合团队的小程序，可以让工作事半功倍\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \".style_widgetPanelContainer__1l2ZV\",\n\"placement\": \"leftCenter\",\n \"title\": \"什么是小部件\", \n\"description\": \"维格小部件是维格表的一种扩展应用，可实现数据可视化、数据传输、数据清洗等等额外功能。通过在小部件面板安装适合团队的小部件，可以让工作事半功倍\", \"children\":\"\" \n}"
             },
             "50": {
                 "uiConfigId": "player_step_ui_config_50",
@@ -5404,7 +5404,7 @@
                 "byEvent": [
                     "datasheet_widget_center_modal_shown"
                 ],
-                "uiConfig": "{\n \"element\": \".style_widgetModal__eXmdB\",\n\"placement\": \"leftTop\",\n \"title\": \"小程序中心\", \n\"description\": \"官方推荐和空间站自建的小程序会发布到这里。你可以根据场景，在这里挑选合适的小程序放置到仪表盘或小程序面板里\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \".style_widgetModal__eXmdB\",\n\"placement\": \"leftTop\",\n \"title\": \"小部件中心\", \n\"description\": \"官方推荐和空间站自建的小部件会发布到这里。你可以根据场景，在这里挑选合适的小部件放置到仪表盘或小部件面板里\", \"children\":\"\" \n}"
             },
             "51": {
                 "uiConfigId": "player_step_ui_config_51",
@@ -5414,7 +5414,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \".style_widgetModal__eXmdB .style_widgetItem__3Pl-1 button\",\n\"placement\": \"rightBottom\",\n \"title\": \"安装小程序\", \n\"description\": \"我们安装这个「图表」小程序看看吧\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \".style_widgetModal__eXmdB .style_widgetItem__3Pl-1 button\",\n\"placement\": \"rightBottom\",\n \"title\": \"安装小部件\", \n\"description\": \"我们安装这个「图表」小部件看看吧\", \"children\":\"\" \n}"
             },
             "52": {
                 "uiConfigId": "player_step_ui_config_52",
@@ -5433,7 +5433,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \".style_widgetPanelContainer__1l2ZV\",\n\"placement\": \"leftCenter\",\n\"description\": \"安装成功，同时我们也为你创建了一个小程序面板，一个维格表的所有小程序都会放置在这个区域\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \".style_widgetPanelContainer__1l2ZV\",\n\"placement\": \"leftCenter\",\n\"description\": \"安装成功，同时我们也为你创建了一个小部件面板，一个维格表的所有小部件都会放置在这个区域\", \"children\":\"\" \n}"
             },
             "54": {
                 "uiConfigId": "player_step_ui_config_54",
@@ -5443,7 +5443,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \".style_widgetPanelContainer__1l2ZV .style_panelHeader__3X0pG\",\n\"placement\": \"bottom\",\n \"title\": \"小程序面板\", \n\"description\": \"小程序面板是用于装载小程序的容器，可以通过创建多个小程序面板来给你的小程序进行分类\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \".style_widgetPanelContainer__1l2ZV .style_panelHeader__3X0pG\",\n\"placement\": \"bottom\",\n \"title\": \"小部件面板\", \n\"description\": \"小部件面板是用于装载小部件的容器，可以通过创建多个小部件面板来给你的小部件进行分类\", \"children\":\"\" \n}"
             },
             "55": {
                 "uiConfigId": "player_step_ui_config_55",
@@ -5453,7 +5453,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"placement\": \"bottomLeft\",\n  \"description\": \"仪表盘作为维格表的一种文件类型，添加/导入小程序后，可视化能力提升。你可以通过数据统计和图表分析，更好地进行判断和决策\"\n}"
+                "uiConfig": "{\n \"placement\": \"bottomLeft\",\n  \"description\": \"仪表盘作为维格表的一种文件类型，添加/导入小部件后，可视化能力提升。你可以通过数据统计和图表分析，更好地进行判断和决策\"\n}"
             },
             "56": {
                 "uiConfigId": "player_step_ui_config_56",
@@ -5463,7 +5463,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \"#DASHBOARD_PANEL_ID .style_tabRight__4YAkM button:nth-of-type(1)\",\n\"placement\": \"bottom\",\n \"title\": \"添加小程序\", \n\"description\": \"在这里有两种方法添加小程序，一种是从小程序中心添加，一种是从已有的小程序中导入进去\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \"#DASHBOARD_PANEL_ID .style_tabRight__4YAkM button:nth-of-type(1)\",\n\"placement\": \"bottom\",\n \"title\": \"添加小部件\", \n\"description\": \"在这里有两种方法添加小部件，一种是从小部件中心添加，一种是从已有的小部件中导入进去\", \"children\":\"\" \n}"
             },
             "57": {
                 "uiConfigId": "player_step_ui_config_57",
@@ -5478,7 +5478,7 @@
                 "uiType": "popover",
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \".style_addWidgetMenu__29bIe .style_menuItem__3Ugjz:nth-of-type(1)\",\n\"placement\": \"bottom\",\n \"title\": \"添加小程序\", \n\"description\": \"让我们来尝试一下，添加一个小程序到仪表盘吧\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \".style_addWidgetMenu__29bIe .style_menuItem__3Ugjz:nth-of-type(1)\",\n\"placement\": \"bottom\",\n \"title\": \"添加小部件\", \n\"description\": \"让我们来尝试一下，添加一个小部件到仪表盘吧\", \"children\":\"\" \n}"
             },
             "59": {
                 "uiConfigId": "player_step_ui_config_59",
@@ -5488,7 +5488,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \"#DASHBOARD_PANEL_ID .style_widgetContainer__2HwEf\",\n\"placement\": \"rightTop\",\n \"title\": \"关联维格表\", \n\"description\": \"由于部分小程序需要依赖维格表的数据，所以安装小程序之后还需要选择一个维格表进行关联\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \"#DASHBOARD_PANEL_ID .style_widgetContainer__2HwEf\",\n\"placement\": \"rightTop\",\n \"title\": \"关联维格表\", \n\"description\": \"由于部分小部件需要依赖维格表的数据，所以安装小部件之后还需要选择一个维格表进行关联\", \"children\":\"\" \n}"
             },
             "60": {
                 "uiConfigId": "player_step_ui_config_60",
@@ -5501,7 +5501,7 @@
                 "byEvent": [
                     "datasheet_search_panel_shown"
                 ],
-                "uiConfig": "{\n \"element\": \".style_searchPanelContainer__1_iOe\",\n\"placement\": \"rightTop\",\n \"title\": \"关联维格表\", \n\"description\": \"在这里选择你需要关联的维格表，以供小程序访问数据\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \".style_searchPanelContainer__1_iOe\",\n\"placement\": \"rightTop\",\n \"title\": \"关联维格表\", \n\"description\": \"在这里选择你需要关联的维格表，以供小部件访问数据\", \"children\":\"\" \n}"
             },
             "61": {
                 "uiConfigId": "player_step_ui_config_61",
@@ -5514,7 +5514,7 @@
                 "byEvent": [
                     "datasheet_search_panel_hidden"
                 ],
-                "uiConfig": "{\n \"placement\": \"bottomLeft\",\n  \"description\": \"恭喜你，已掌握了仪表盘和添加小程序的基本使用方法。接下来，你可以根据业务场景去搭建专属的仪表盘了\"\n}"
+                "uiConfig": "{\n \"placement\": \"bottomLeft\",\n  \"description\": \"恭喜你，已掌握了仪表盘和添加小部件的基本使用方法。接下来，你可以根据业务场景去搭建专属的仪表盘了\"\n}"
             },
             "62": {
                 "uiConfigId": "player_step_ui_config_62",
@@ -5586,7 +5586,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \"div[data-guide-id=WIDGET_ITEM_WRAPPER]:last-child\",\n\"placement\": \"leftCenter\",\n \"title\": \"开发模式\", \n\"description\": \"开发模式下，你可以预览小程序的最新本地改动\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \"div[data-guide-id=WIDGET_ITEM_WRAPPER]:last-child\",\n\"placement\": \"leftCenter\",\n \"title\": \"开发模式\", \n\"description\": \"开发模式下，你可以预览小部件的最新本地改动\", \"children\":\"\" \n}"
             },
             "69": {
                 "uiConfigId": "player_step_ui_config_69",
@@ -5606,7 +5606,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \"div[data-guide-id=WIDGET_ITEM_WRAPPER]:last-child [data-guide-id=WIDGET_ITEM_MORE]\",\n\"placement\": \"topRight\",\n \"title\": \"退出开发模式\", \n\"description\": \"点击此处选择「退出开发模式」，将断开与本地服务的连接，恢复至上一个版本的小程序状态\", \"children\":\"\"\n}"
+                "uiConfig": "{\n \"element\": \"div[data-guide-id=WIDGET_ITEM_WRAPPER]:last-child [data-guide-id=WIDGET_ITEM_MORE]\",\n\"placement\": \"topRight\",\n \"title\": \"退出开发模式\", \n\"description\": \"点击此处选择「退出开发模式」，将断开与本地服务的连接，恢复至上一个版本的小部件状态\", \"children\":\"\"\n}"
             },
             "71": {
                 "uiConfigId": "player_step_ui_config_71",
@@ -5654,7 +5654,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n \"element\": \"div[data-guide-id=WIDGET_ITEM_WRAPPER]:last-child\",\n\"placement\": \"leftCenter\",\n \"title\": \"未发布的小程序\", \n\"description\": \"当前小程序未发布到空间站，只能在开发模式下预览小程序效果\", \"children\":\"\" \n}"
+                "uiConfig": "{\n \"element\": \"div[data-guide-id=WIDGET_ITEM_WRAPPER]:last-child\",\n\"placement\": \"leftCenter\",\n \"title\": \"未发布的小部件\", \n\"description\": \"当前小部件未发布到空间站，只能在开发模式下预览小部件效果\", \"children\":\"\" \n}"
             },
             "76": {
                 "uiConfigId": "player_step_ui_config_76",
@@ -5845,7 +5845,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\"title\":\"🌟星球居民们🌟\",\"children\":\"<h3>🔒 视图锁</h3>\\n<p>在视图标签栏中开启「视图锁」，其他协作者将无权对视图进行筛选、分组、排序等操作，稳稳保住数据呈现效果。</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2021/12/23/831976472d6c491599ff92076045bb89\\\" alt=\\\"https://s1.vika.cn/space/2021/12/23/831976472d6c491599ff92076045bb89\\\"></p>\\n<h3>💬&nbsp;记录评论</h3>\\n<p>记录评论不仅支持引用指定评论进行回复，还可以用表情 👌&nbsp;和 👍&nbsp;表示知会和认可，让工作琐碎事事有响应。</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2021/12/23/694dcfc45bb94cbb91437cd8119d4af2\\\" alt=\\\"https://s1.vika.cn/space/2021/12/23/694dcfc45bb94cbb91437cd8119d4af2\\\"></p>\\n<h3>其他优化</h3>\\n<p>支持只读权限成员进行视图配置，可随心进行筛选、排序等操作，不用担心影响到其他人。</p>\\n<p>维格小组件全面更名为「维格小程序」，组件板和组件中心同步更名为「小程序面板」、「小程序中心」。</p>\"}"
+                "uiConfig": "{\"title\":\"🌟星球居民们🌟\",\"children\":\"<h3>🔒 视图锁</h3>\\n<p>在视图标签栏中开启「视图锁」，其他协作者将无权对视图进行筛选、分组、排序等操作，稳稳保住数据呈现效果。</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2021/12/23/831976472d6c491599ff92076045bb89\\\" alt=\\\"https://s1.vika.cn/space/2021/12/23/831976472d6c491599ff92076045bb89\\\"></p>\\n<h3>💬&nbsp;记录评论</h3>\\n<p>记录评论不仅支持引用指定评论进行回复，还可以用表情 👌&nbsp;和 👍&nbsp;表示知会和认可，让工作琐碎事事有响应。</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2021/12/23/694dcfc45bb94cbb91437cd8119d4af2\\\" alt=\\\"https://s1.vika.cn/space/2021/12/23/694dcfc45bb94cbb91437cd8119d4af2\\\"></p>\\n<h3>其他优化</h3>\\n<p>支持只读权限成员进行视图配置，可随心进行筛选、排序等操作，不用担心影响到其他人。</p>\\n<p>维格小组件全面更名为「维格小部件」，组件板和组件中心同步更名为「小部件面板」、「小部件中心」。</p>\"}"
             },
             "97": {
                 "uiConfigId": "player_step_ui_config_97",
@@ -5885,7 +5885,7 @@
                 ],
                 "next": "好的",
                 "nextId": "okay",
-                "uiConfig": "{\n  \"title\": \"🌟星球居民们🌟\",\n  \"children\": \"<p>2022 年首版更新已送达，希望每个细节体验都能在「辞旧迎新」中为你提供更多便利与舒心。</p>\\n<h3>📅 日期输入更包容</h3>\\n<p>日期字段体验优化，单元格输入 1-14、1/14 后智能补全为 2022/01/14，想你所想</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2022/01/13/97f2bfa8572a43b58f83517e54fe7317\\\" alt=\\\"\\\"></p>\\n<h3>📅  日历展示更清晰</h3>\\n<p>优化日历视图展示效果，同一日期中的记录超出 5 条时自动折叠，保持页面简洁</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2022/01/12/8173324f1f6b4cd78bb0827e21bbda71\\\" alt=\\\"\\\"></p>\\n<h3>🎮 小程序能力拓展</h3>\\n<p>小程序能力进一步开放，vika 实验室实力出道，本期练习生：抽奖幸运儿、word 文档生成器</p>\\n<p>由 Liam 研发的「抽奖幸运儿」在 2022 维格年会上首次亮相，界面简约、操作简单，出场即是焦点，承担 5 万行数据不在话下，关键还免费</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2022/01/13/4121f5d7ff45473785842026811bae1a\\\" alt=\\\"\\\"></p>\\n<p>由 Kelvin 研发的「Word 文档生成器」，一键即可批量填充字段并合成新的 Word 文档，减少大量重复性工作，为职场工具人的效率而生</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2022/01/13/50f6ff15fdd84b46a03f9a501d555d0f\\\" alt=\\\"\\\"></p>\\n<p>*两款小程序由 vika 实验室发布，欢迎前往维格社区与开发者互动交流</p>\\n<p>👉  <a target=\\\"_blank\\\" href=\\\"https://bbs.vika.cn/topic/7\\\">https://bbs.vika.cn/topic/7</a></p>\"\n}"
+                "uiConfig": "{\n  \"title\": \"🌟星球居民们🌟\",\n  \"children\": \"<p>2022 年首版更新已送达，希望每个细节体验都能在「辞旧迎新」中为你提供更多便利与舒心。</p>\\n<h3>📅 日期输入更包容</h3>\\n<p>日期字段体验优化，单元格输入 1-14、1/14 后智能补全为 2022/01/14，想你所想</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2022/01/13/97f2bfa8572a43b58f83517e54fe7317\\\" alt=\\\"\\\"></p>\\n<h3>📅  日历展示更清晰</h3>\\n<p>优化日历视图展示效果，同一日期中的记录超出 5 条时自动折叠，保持页面简洁</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2022/01/12/8173324f1f6b4cd78bb0827e21bbda71\\\" alt=\\\"\\\"></p>\\n<h3>🎮 小部件能力拓展</h3>\\n<p>小部件能力进一步开放，vika 实验室实力出道，本期练习生：抽奖幸运儿、word 文档生成器</p>\\n<p>由 Liam 研发的「抽奖幸运儿」在 2022 维格年会上首次亮相，界面简约、操作简单，出场即是焦点，承担 5 万行数据不在话下，关键还免费</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2022/01/13/4121f5d7ff45473785842026811bae1a\\\" alt=\\\"\\\"></p>\\n<p>由 Kelvin 研发的「Word 文档生成器」，一键即可批量填充字段并合成新的 Word 文档，减少大量重复性工作，为职场工具人的效率而生</p>\\n<p><img src=\\\"https://s1.vika.cn/space/2022/01/13/50f6ff15fdd84b46a03f9a501d555d0f\\\" alt=\\\"\\\"></p>\\n<p>*两款小部件由 vika 实验室发布，欢迎前往维格社区与开发者互动交流</p>\\n<p>👉  <a target=\\\"_blank\\\" href=\\\"https://bbs.vika.cn/topic/7\\\">https://bbs.vika.cn/topic/7</a></p>\"\n}"
             },
             "100": {
                 "uiConfigId": "player_step_ui_config_100",
@@ -5973,7 +5973,7 @@
                 ],
                 "next": "查看更多",
                 "nextId": "see_more",
-                "uiConfig": "{\n  \"headerImg\": \"https://s1.vika.cn/space/2022/03/02/38faa635d13f4c158f0e91c3659af653?attname=Update_cover%402x.png\",\n  \"readMoreUrl\": \"https://bbs.vika.cn/article/136\",\n  \"children\": \"<ul style=\\\"margin-top: 10px;\\\"><li>透视表小程序来啦，多维度的数据分析更简单</li><li>单/多选列支持设置默认值，数据录入更工整规范</li><li>仪表盘的小程序拖动更加丝滑流畅，排列组合更便捷</li><li>API创建记录和更新记录接口支持指定 viewId 参数</li></ul>\"\n}",
+                "uiConfig": "{\n  \"headerImg\": \"https://s1.vika.cn/space/2022/03/02/38faa635d13f4c158f0e91c3659af653?attname=Update_cover%402x.png\",\n  \"readMoreUrl\": \"https://bbs.vika.cn/article/136\",\n  \"children\": \"<ul style=\\\"margin-top: 10px;\\\"><li>透视表小部件来啦，多维度的数据分析更简单</li><li>单/多选列支持设置默认值，数据录入更工整规范</li><li>仪表盘的小部件拖动更加丝滑流畅，排列组合更便捷</li><li>API创建记录和更新记录接口支持指定 viewId 参数</li></ul>\"\n}",
                 "onClose": [
                     "set_wizard_completed({\"curWizard\": true})",
                     "open_guide_next_step({\"clearAllPrevUi\":true})"
@@ -6031,7 +6031,7 @@
                 ],
                 "next": "查看更多",
                 "nextId": "see_more",
-                "uiConfig": "{\n\"headerImg\":\"https://s1.vika.cn/space/2022/03/17/f85104a4c8c145acb83379e13cfea0dd?attname=Update_cover%402x%202.png\",\n  \"readMoreUrl\": \"https://bbs.vika.cn/article/151\",\n  \"children\": \"<h3>🚀  本次更新内容</h3><ul><li>小程序新品上架，支持 Excel 追加导入数据和网址字段快速预览</li><li>架构视图新增横向布局，竖向和横向布局自由选择</li><li>小程序 SDK 更新，支持创建/删除字段</li><li>维格表安卓客户端上线，支持安卓系统手机安装使用</li></ul>\"\n}",
+                "uiConfig": "{\n\"headerImg\":\"https://s1.vika.cn/space/2022/03/17/f85104a4c8c145acb83379e13cfea0dd?attname=Update_cover%402x%202.png\",\n  \"readMoreUrl\": \"https://bbs.vika.cn/article/151\",\n  \"children\": \"<h3>🚀  本次更新内容</h3><ul><li>小部件新品上架，支持 Excel 追加导入数据和网址字段快速预览</li><li>架构视图新增横向布局，竖向和横向布局自由选择</li><li>小部件 SDK 更新，支持创建/删除字段</li><li>维格表安卓客户端上线，支持安卓系统手机安装使用</li></ul>\"\n}",
                 "onClose": [
                     "set_wizard_completed({\"curWizard\": true})",
                     "open_guide_next_step({\"clearAllPrevUi\":true})"
@@ -6045,7 +6045,7 @@
                 ],
                 "next": "查看更多",
                 "nextId": "see_more",
-                "uiConfig": "{\n\"headerImg\":\"https://s1.vika.cn/space/2022/03/31/bb9cf7f3453e457c9473def81b081080?attname=%E4%BB%BB%E5%8A%A1%E5%88%B0%E6%9C%9F%E6%8F%90%E9%86%92.png\",\n  \"readMoreUrl\": \"https://bbs.vika.cn/article/153\",\n  \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul>\\n<li>在日期单元格里轻轻一点，即可开启到期提醒</li>\\n<li>维格视图支持冻结多列</li>\\n<li>镜像支持导出 Excel 文件</li>\\n<li>新增 API 接口，可创建新的维格表</li>\\n<li>开发者自建小程序可申请上架「官方推荐」</li>\\n</ul>\"\n}",
+                "uiConfig": "{\n\"headerImg\":\"https://s1.vika.cn/space/2022/03/31/bb9cf7f3453e457c9473def81b081080?attname=%E4%BB%BB%E5%8A%A1%E5%88%B0%E6%9C%9F%E6%8F%90%E9%86%92.png\",\n  \"readMoreUrl\": \"https://bbs.vika.cn/article/153\",\n  \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul>\\n<li>在日期单元格里轻轻一点，即可开启到期提醒</li>\\n<li>维格视图支持冻结多列</li>\\n<li>镜像支持导出 Excel 文件</li>\\n<li>新增 API 接口，可创建新的维格表</li>\\n<li>开发者自建小部件可申请上架「官方推荐」</li>\\n</ul>\"\n}",
                 "onClose": [
                     "set_wizard_completed({\"curWizard\": true})",
                     "open_guide_next_step({\"clearAllPrevUi\":true})"
@@ -6083,7 +6083,7 @@
                 ],
                 "next": "查看更多",
                 "nextId": "see_more",
-                "uiConfig": "{\n\"headerImg\":\"https://s1.vika.cn/space/2022/04/15/5769ab6bf20943fc8119f74f498a7cfe?attname=%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%94%AF%E6%8C%81%E5%85%B3%E6%B3%A8%E6%8F%90%E9%86%92.png\",\n  \"readMoreUrl\": \"https://bbs.vika.cn/article/156\",\n  \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul>\\n<li>主动关注行数据，发生变化时立即提醒</li>\\n<li>小程序支持全屏显示，还可以URL分享同事好友</li>\\n<li>新增两个 API 接口，创建字段和删除字段</li>\\n<li>若干模板更新升级，支持更多新功能特性</li>\\n<li>福利来了，完成空间站认证送免费附件容量</li></ul>\"\n}",
+                "uiConfig": "{\n\"headerImg\":\"https://s1.vika.cn/space/2022/04/15/5769ab6bf20943fc8119f74f498a7cfe?attname=%E8%A1%8C%E6%95%B0%E6%8D%AE%E6%94%AF%E6%8C%81%E5%85%B3%E6%B3%A8%E6%8F%90%E9%86%92.png\",\n  \"readMoreUrl\": \"https://bbs.vika.cn/article/156\",\n  \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul>\\n<li>主动关注行数据，发生变化时立即提醒</li>\\n<li>小部件支持全屏显示，还可以URL分享同事好友</li>\\n<li>新增两个 API 接口，创建字段和删除字段</li>\\n<li>若干模板更新升级，支持更多新功能特性</li>\\n<li>福利来了，完成空间站认证送免费附件容量</li></ul>\"\n}",
                 "onClose": [
                     "set_wizard_completed({\"curWizard\": true})",
                     "open_guide_next_step({\"clearAllPrevUi\":true})"
@@ -6097,7 +6097,7 @@
                 ],
                 "next": "查看更多",
                 "nextId": "see_more",
-                "uiConfig": "{\n    \"headerImg\": \"https://s1.vika.cn/space/2022/04/27/6a2167ddd8074078a6b13f04fa6a3f1c?attname=v0.12.7Update_cover%402x.png\",\n    \"readMoreUrl\": \"https://bbs.vika.cn/article/158\",\n    \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul>\\n<li>甘特图支持设置工作日，日期和星期可同时显示</li>\\n<li>转化分析好帮手，漏斗图小程序上架</li>\\n<li>统计栏数据支持复制，右键即可获取数据</li>\\n<li>优化新增行的操作体验，防止误增空白行</li>\\n<li>日期字段支持指定接收提醒的成员或小组</li>\\n<li>维格表已上架苹果App Store 和各大安卓应用商店</li>\\n</ul>\"\n}",
+                "uiConfig": "{\n    \"headerImg\": \"https://s1.vika.cn/space/2022/04/27/6a2167ddd8074078a6b13f04fa6a3f1c?attname=v0.12.7Update_cover%402x.png\",\n    \"readMoreUrl\": \"https://bbs.vika.cn/article/158\",\n    \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul>\\n<li>甘特图支持设置工作日，日期和星期可同时显示</li>\\n<li>转化分析好帮手，漏斗图小部件上架</li>\\n<li>统计栏数据支持复制，右键即可获取数据</li>\\n<li>优化新增行的操作体验，防止误增空白行</li>\\n<li>日期字段支持指定接收提醒的成员或小组</li>\\n<li>维格表已上架苹果App Store 和各大安卓应用商店</li>\\n</ul>\"\n}",
                 "onClose": [
                     "set_wizard_completed({\"curWizard\": true})",
                     "open_guide_next_step({\"clearAllPrevUi\":true})"
@@ -6147,7 +6147,7 @@
                 ],
                 "next": "查看详情",
                 "nextId": "check_detail",
-                "uiConfig": "{\n    \"headerImg\": \"https://s1.vika.cn/space/2022/05/12/988aad1e382d49f88119873473c2ffe9\",\n    \"readMoreUrl\": \"https://bbs.vika.cn/article/180\",\n    \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul>\\n<li>腾讯云HiFlow场景连接器，办公自动化流程小程序上线</li>\\n<li>甘特图自定义显示字段数量，任务条更清爽</li><li>神奇表单支持修改配置信息，提升表单编辑效率</li><li>镜像功能再升级，镜像也可以对外分享</li></ul>\"\n}",
+                "uiConfig": "{\n    \"headerImg\": \"https://s1.vika.cn/space/2022/05/12/988aad1e382d49f88119873473c2ffe9\",\n    \"readMoreUrl\": \"https://bbs.vika.cn/article/180\",\n    \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul>\\n<li>腾讯云HiFlow场景连接器，办公自动化流程小部件上线</li>\\n<li>甘特图自定义显示字段数量，任务条更清爽</li><li>神奇表单支持修改配置信息，提升表单编辑效率</li><li>镜像功能再升级，镜像也可以对外分享</li></ul>\"\n}",
                 "onClose": [
                     "set_wizard_completed({\"curWizard\": true})",
                     "open_guide_next_step({\"clearAllPrevUi\":true})"
@@ -6203,7 +6203,7 @@
                 ],
                 "next": "查看详情",
                 "nextId": "check_detail",
-                "uiConfig": "{\n    \"headerImg\": \"https://s1.vika.cn/space/2022/07/23/ad9d1b758e7f46e6839b0e6791a8fb31\",\n    \"readMoreUrl\": \"https://bbs.vika.cn/article/209\",\n    \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul><li>网址字段升级，可自动获取网页标题</li><li>「隐藏列」列名称支持点击快速在表格里高亮定位</li><li>管理员可禁止成员在根目录下创建文件</li><li>手机端支持查看和使用表格里的小程序</li><li>「坐标地图」、「Airtable 导入」两款小程序上架</li></ul>\"\n}",
+                "uiConfig": "{\n    \"headerImg\": \"https://s1.vika.cn/space/2022/07/23/ad9d1b758e7f46e6839b0e6791a8fb31\",\n    \"readMoreUrl\": \"https://bbs.vika.cn/article/209\",\n    \"children\": \"<h3>🚀 本次更新内容</h3>\\n<ul><li>网址字段升级，可自动获取网页标题</li><li>「隐藏列」列名称支持点击快速在表格里高亮定位</li><li>管理员可禁止成员在根目录下创建文件</li><li>手机端支持查看和使用表格里的小部件</li><li>「坐标地图」、「Airtable 导入」两款小部件上架</li></ul>\"\n}",
                 "onClose": [
                     "set_wizard_completed({\"curWizard\": true})",
                     "open_guide_next_step({\"clearAllPrevUi\":true})"
