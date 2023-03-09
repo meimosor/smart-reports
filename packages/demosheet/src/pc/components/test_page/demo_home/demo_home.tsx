@@ -20,12 +20,11 @@ import { Button, useThemeColors } from '@apitable/components';
 import { ResourceType, Selectors } from '@apitable/core';
 import { WorkbenchOutlined } from '@apitable/icons';
 import { ShortcutActionManager, ShortcutActionName } from 'modules/shared/shortcut_key';
-import { ViewContainer } from 'pc/components/view_container';
 import { SideBarClickType, useSideBar } from 'pc/context';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './style.module.less';
-
+import { WidgetPanel } from '../../widget';
 export enum InstallPosition {
   WidgetPanel,
   Dashboard
@@ -39,9 +38,9 @@ const DemoHome: FC<React.PropsWithChildren<unknown>> = () => {
     const datasheet = Selectors.getDatasheet(state);
     console.log('datasheet', datasheet);
 
-    // const { datasheetId } = state.pageParams;
+    const { datasheetId } = state.pageParams;
     const resourceType = ResourceType.Datasheet;
-    const resourceId = 'dstSBwl88qfp2Uuwk8' || '';
+    const resourceId = datasheetId || '';
 
     console.log('++++++++++++++++++++++++state+++++++++++++++++++++++');
     console.log(state, resourceId, resourceType);
@@ -51,8 +50,8 @@ const DemoHome: FC<React.PropsWithChildren<unknown>> = () => {
   });
 
   const widgetCount = useSelector(state => {
-    // const { datasheetId } = state.pageParams;
-    const resourceId = 'dstSBwl88qfp2Uuwk8';
+    const { datasheetId } = state.pageParams;
+    const resourceId = datasheetId;
     const resourceType = ResourceType.Datasheet;
 
     if (!resourceId) {
@@ -64,8 +63,6 @@ const DemoHome: FC<React.PropsWithChildren<unknown>> = () => {
       return 0;
     }
 
-    console.log('widgetPanel------------------------', widgetPanel);
-    
     return widgetPanel.reduce((total, item) => total + item.widgets.length, 0);
   });
 
@@ -91,18 +88,19 @@ const DemoHome: FC<React.PropsWithChildren<unknown>> = () => {
     <div className={styles.noMatch}>
       <div className={styles.wrapper}>
         <div style={{ width: 140 }}>
-          <ViewContainer loading={false} >
-            <Button
-              variant='fill'
-              color='primary'
-              prefixIcon={<WorkbenchOutlined size={15} color={colors.black[50]} />}
-              onClick={() => handleToggleRightBar(ShortcutActionName.ToggleWidgetPanel)}
-              block
-            >
+          <Button
+            variant='fill'
+            color='primary'
+            prefixIcon={<WorkbenchOutlined size={15} color={colors.black[50]} />}
+            onClick={() => handleToggleRightBar(ShortcutActionName.ToggleWidgetPanel)}
+            block
+          >
             设计图表
-            </Button>
-          </ViewContainer>
-         
+          </Button>
+          <div style={{ width: '100%', height: '100%' }}>
+            <WidgetPanel />
+            {/* {isRobotPanelOpen && <RobotPanel />} */}
+          </div>
         </div>
       </div>
     </div>
