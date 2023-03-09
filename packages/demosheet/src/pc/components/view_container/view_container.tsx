@@ -42,6 +42,7 @@ export const ViewContainerBase = (props: ITableViewProps) => {
 export const ViewContainer = connect((state: IReduxState) => {
   const datasheet = Selectors.getDatasheet(state);
   const viewPrepared = Selectors.getViewDerivatePrepared(state);
+  console.log('datasheet', datasheet);
 
   return {
     loading: !datasheet || datasheet.isPartOfData || !viewPrepared,

@@ -16,17 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Skeleton } from '@apitable/components';
 import {
   Events, Player, PREVIEW_DATASHEET_ID, ResourceType, Selectors, StatusCode, StoreActions, Strings, SystemConfig, t
 } from '@apitable/core';
 import { useToggle } from 'ahooks';
 import classNames from 'classnames';
-// @ts-ignore
-import { WeixinShareWrapper } from 'enterprise';
 import { get } from 'lodash';
 import { ShortcutActionManager, ShortcutActionName } from 'modules/shared/shortcut_key';
-import dynamic from 'next/dynamic';
 import { VikaSplitPanel } from 'pc/components/common';
 import { useMountWidgetPanelShortKeys } from 'pc/components/widget/hooks';
 import { SideBarClickType, SideBarType, useSideBar } from 'pc/context';
@@ -44,21 +40,20 @@ import { ServerError } from '../invalid_page/server_error';
 import { MobileToolBar } from '../mobile_tool_bar';
 import { NoPermission } from '../no_permission';
 import { SuspensionPanel } from '../suspension_panel';
-import { TabBar } from '../tab_bar';
 import { ViewContainer } from '../view_container';
 import { WidgetPanel } from '../widget';
 import styles from './style.module.less';
 
-const RobotPanel = dynamic(() => import('pc/components/robot/robot_panel/robot_panel'), {
-  ssr: false,
-  loading: () => (
-    <div className={styles.loading}>
-      <Skeleton count={1} width='38%' />
-      <Skeleton count={2} />
-      <Skeleton count={1} width='61%' />
-    </div>
-  ),
-});
+// const RobotPanel = dynamic(() => import('pc/components/robot/robot_panel/robot_panel'), {
+//   ssr: false,
+//   loading: () => (
+//     <div className={styles.loading}>
+//       <Skeleton count={1} width='38%' />
+//       <Skeleton count={2} />
+//       <Skeleton count={1} width='61%' />
+//     </div>
+//   ),
+// });
 
 interface IDatasheetMain {
   loading: boolean;
@@ -90,7 +85,7 @@ const DatasheetMain = (props: IDatasheetMain) => {
             {!mirrorId && (
               <>
                 {isShowViewbar && <ComponentDisplay minWidthCompatible={ScreenSize.md}>
-                  <TabBar loading={loading}/>
+                  {/* <TabBar loading={loading}/> */}
                 </ComponentDisplay>}
                 <ComponentDisplay maxWidthCompatible={ScreenSize.md}>
                   <MobileToolBar loading={loading} />
@@ -339,7 +334,7 @@ const DataSheetPaneBase: FC<React.PropsWithChildren<{ panelLeft?: JSX.Element }>
               <div style={{ width: '100%', height: '100%' }}>
                 {isSideRecordOpen && <ExpandRecordPanel />}
                 <WidgetPanel />
-                {isRobotPanelOpen && <RobotPanel />}
+                {/* {isRobotPanelOpen && <RobotPanel />} */}
               </div>
             }
             primary='second'
@@ -363,11 +358,7 @@ const DataSheetPaneBase: FC<React.PropsWithChildren<{ panelLeft?: JSX.Element }>
   return (
     <>
       {
-        WeixinShareWrapper ? (
-          <WeixinShareWrapper>
-            {childComponent}
-          </WeixinShareWrapper>
-        ) : childComponent
+        childComponent
       }
     </>
   );

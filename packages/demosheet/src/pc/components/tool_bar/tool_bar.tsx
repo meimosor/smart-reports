@@ -131,6 +131,7 @@ const ToolbarBase = () => {
   });
   const widgetCount = useSelector(state => {
     const { datasheetId, mirrorId } = state.pageParams;
+
     const resourceId = mirrorId || datasheetId;
     const resourceType = mirrorId ? ResourceType.Mirror : ResourceType.Datasheet;
 
@@ -138,6 +139,9 @@ const ToolbarBase = () => {
       return 0;
     }
 
+    console.log('++++++++++++++++++++++++state2222+++++++++++++++++++++++');
+    console.log(state, resourceId, resourceType);
+    console.log('++++++++++++++++++++++++state222+++++++++++++++++++++++');
     const widgetPanel = Selectors.getResourceWidgetPanels(state, resourceId, resourceType);
     if (!widgetPanel) {
       return 0;
@@ -336,6 +340,8 @@ const ToolbarBase = () => {
   // Mutually exclusive with the right-hand area.
   const handleToggleRightBar = async(toggleKey: ShortcutActionName) => {
     // Close sidebar.
+    console.log('我被点击啦啦啦啦啦啦啦啦', toggleKey);
+    
     if (isSideRecordOpen) {
       store.dispatch(StoreActions.toggleSideRecord(false));
       await closeAllExpandRecord();
