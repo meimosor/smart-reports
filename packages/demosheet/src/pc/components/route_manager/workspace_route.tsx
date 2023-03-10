@@ -22,7 +22,7 @@ import * as React from 'react';
 import { FC } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 import { DashboardPanel } from '../dashboard_panel';
-import { DataSheetPane } from '../datasheet_pane';
+// import { DataSheetPane } from '../datasheet_pane';
 import { FormPanel } from '../form_panel';
 import { NoPermission } from '../no_permission';
 import DemoHome from '../test_page/demo_home/demo_home';
