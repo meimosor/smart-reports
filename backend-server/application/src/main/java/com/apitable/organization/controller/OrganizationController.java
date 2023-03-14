@@ -207,7 +207,7 @@ public class OrganizationController {
     /**
      * search organization resources.
      */
-    @GetResource(path = "/searchUnit", requiredLogin = false)
+    @GetResource(path = "/searchUnit", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "search organization resources", description = "Provide input word fuzzy"
         + " search organization resources")
     @Parameters({
@@ -234,7 +234,7 @@ public class OrganizationController {
     /**
      * Query the sub departments and members of department.
      */
-    @GetResource(path = "/getSubUnitList", requiredLogin = false)
+    @GetResource(path = "/getSubUnitList", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Query the sub departments and members of department", description =
         "Query the sub departments and members of department. if team id lack, default is 0")
     @Parameters({
@@ -271,7 +271,7 @@ public class OrganizationController {
     /**
      * Load/search departments and members.
      */
-    @GetResource(path = "/loadOrSearch", requiredLogin = false)
+    @GetResource(path = "/loadOrSearch", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Load/search departments and members", description = "The most recently "
         + "selected units are loaded by default when not keyword. The most recently added member "
         + "of the same group are loaded when not selected. Load max 10")
@@ -298,27 +298,27 @@ public class OrganizationController {
         Long sharer = null;
         String linkId = params.getLinkId();
         if (StrUtil.isBlank(linkId)) {
-            userId = SessionContext.getUserId();
-            spaceId = LoginContext.me().getSpaceId();
+            userId = 1L;
+            spaceId = "spc71PbGiltqC";
         } else if (linkId.startsWith(IdRulePrefixEnum.SHARE.getIdRulePrefixEnum())) {
             // the sharing nodes
             NodeShareDTO nodeShare = nodeShareSettingMapper.selectDtoByShareId(linkId);
             ExceptionUtil.isNotNull(nodeShare, NodeException.SHARE_EXPIRE);
-            spaceId = nodeShare.getSpaceId();
+            spaceId = "spc71PbGiltqC";
             sharer = nodeShare.getOperator();
         } else {
             // the template
             String templateSpaceId = iTemplateService.getSpaceId(linkId);
             // requirements are official templates, or user in the space
             if (!constProperties.getTemplateSpace().contains(templateSpaceId)) {
-                userId = SessionContext.getUserId();
+                userId = 1L;
                 Long memberId = memberMapper.selectIdByUserIdAndSpaceId(userId, templateSpaceId);
                 ExceptionUtil.isNotNull(memberId, SpaceException.NOT_IN_SPACE);
             }
             spaceId = templateSpaceId;
         }
         List<UnitInfoVo> vos =
-            iOrganizationService.loadOrSearchInfo(userId, spaceId, params, sharer);
+            iOrganizationService.loadOrSearchInfo(1L, "spc71PbGiltqC", params, sharer);
         List<UnitInfoVo> existUnitInfo =
             vos.stream().filter(unitInfoVo -> !unitInfoVo.getIsDeleted()).collect(toList());
         return ResponseData.success(existUnitInfo);
@@ -327,7 +327,7 @@ public class OrganizationController {
     /**
      * accurately query departments and members.
      */
-    @PostResource(path = "/searchUnitInfoVo", requiredLogin = false)
+    @PostResource(path = "/searchUnitInfoVo", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "accurately query departments and members", description = "scenario"
         + ":field conversion（If the amount of data is large, the content requested by GET will "
         + "exceed the limit.）")

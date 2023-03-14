@@ -51,7 +51,7 @@ public class TemplateAlbumController {
     /**
      * Get The Template Album Content.
      */
-    @GetResource(path = "/template/albums/{albumId}", requiredLogin = false)
+    @GetResource(path = "/template/albums/{albumId}", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get The Template Album Content")
     @Parameter(name = "albumId", description = "Template Album ID", schema = @Schema(type = "string"),
         in = ParameterIn.PATH, example = "albnafuwa2snc")
@@ -62,7 +62,7 @@ public class TemplateAlbumController {
     /**
      * Get Recommended Template Albums.
      */
-    @GetResource(path = "/template/albums/recommend", requiredLogin = false)
+    @GetResource(path = "/template/albums/recommend", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get Recommended Template Albums")
     @Parameters({
         @Parameter(name = "excludeAlbumId", description = "Exclude Album", schema =

@@ -25,14 +25,13 @@ import { DashboardPanel } from '../dashboard_panel';
 // import { DataSheetPane } from '../datasheet_pane';
 import { FormPanel } from '../form_panel';
 import { NoPermission } from '../no_permission';
-import DemoHome from '../test_page/demo_home/demo_home';
+import { DemoHome } from '../test_page/demo_home/demo_home';
 import { Welcome } from '../workspace/welcome';
 
 const WorkspaceRoute: FC<React.PropsWithChildren<unknown>> = () => {
   const activeNodeError = useSelector(state => state.catalogTree.activeNodeError);
   
   const { datasheetId, formId, dashboardId } = useSelector((state: IReduxState) => {
-    console.log('statexxxxxxxxxx', state);
     return {
       datasheetId: state.pageParams.datasheetId,
       folderId: state.pageParams.folderId,

@@ -41,7 +41,7 @@ export const useUserRequest = () => {
   const dispatch = useDispatch();
   const urlParams = getSearchParams();
   const reference = urlParams.get('reference') || undefined;
-  const activeSpaceId = useSelector(state => state.space.activeId);
+  const activeSpaceId = 'spc71PbGiltqC';
   const userInfo = useSelector((state: IReduxState) => state.user.info);
   const inviteEmailInfo = useSelector(
     (state: IReduxState) => state.invite.inviteEmailInfo

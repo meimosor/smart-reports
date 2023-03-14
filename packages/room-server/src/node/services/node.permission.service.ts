@@ -28,7 +28,6 @@ import { RestService } from 'shared/services/rest/rest.service';
 import { getConnection } from 'typeorm';
 import { Logger } from 'winston';
 import { NodeRepository } from '../repositories/node.repository';
-import { UserService } from 'user/services/user.service';
 import { NodeShareSettingService } from './node.share.setting.service';
 
 @Injectable()
@@ -36,7 +35,6 @@ export class NodePermissionService {
   constructor(
     private readonly restService: RestService,
     @InjectLogger() private readonly logger: Logger,
-    private readonly userService: UserService,
     private readonly nodeShareSettingService: NodeShareSettingService,
     private readonly nodeRepository: NodeRepository,
   ) {}
@@ -74,22 +72,22 @@ export class NodePermissionService {
       this.logger.info('template access');
       return { hasRole: true, role: ConfigConstant.permission.templateVisitor, ...DEFAULT_READ_ONLY_PERMISSION };
     }
-    const hasLogin = await this.userService.session(auth.cookie!);
-    // Unlogged-in, anonymous user permission
-    if (!hasLogin) {
-      this.logger.info('Share acces, user state: unlogged-in');
-      const fieldPermissionMap = await this.restService.getFieldPermission(auth, nodeId, origin.shareId);
-      if (origin.main) {
-        // Main datasheet returns read-only permission
-        return { hasRole: true, role: ConfigConstant.permission.anonymous, fieldPermissionMap, ...DEFAULT_READ_ONLY_PERMISSION };
-      }
-      // Check if linked datasheet is in sharing
-      const props = await this.nodeShareSettingService.getNodeShareProps(origin.shareId, nodeId);
-      if (props) {
-        return { hasRole: true, role: ConfigConstant.permission.anonymous, fieldPermissionMap, ...DEFAULT_READ_ONLY_PERMISSION };
-      }
-      return { hasRole: true, role: ConfigConstant.permission.anonymous, fieldPermissionMap, ...DEFAULT_PERMISSION };
-    }
+    // const hasLogin = await this.userService.session(auth.cookie!);
+    // // Unlogged-in, anonymous user permission
+    // if (!hasLogin) {
+    //   this.logger.info('Share acces, user state: unlogged-in');
+    //   const fieldPermissionMap = await this.restService.getFieldPermission(auth, nodeId, origin.shareId);
+    //   if (origin.main) {
+    //     // Main datasheet returns read-only permission
+    //     return { hasRole: true, role: ConfigConstant.permission.anonymous, fieldPermissionMap, ...DEFAULT_READ_ONLY_PERMISSION };
+    //   }
+    //   // Check if linked datasheet is in sharing
+    //   const props = await this.nodeShareSettingService.getNodeShareProps(origin.shareId, nodeId);
+    //   if (props) {
+    //     return { hasRole: true, role: ConfigConstant.permission.anonymous, fieldPermissionMap, ...DEFAULT_READ_ONLY_PERMISSION };
+    //   }
+    //   return { hasRole: true, role: ConfigConstant.permission.anonymous, fieldPermissionMap, ...DEFAULT_PERMISSION };
+    // }
     this.logger.info('Share access, user state: logged-in');
     return await this.getNodeRole(nodeId, auth, origin.shareId);
   }

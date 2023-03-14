@@ -49,7 +49,7 @@ export class BootstrapConstants {
    *
    * NEST_GRPC_URL => ROOM_GRPC_URL（For compatibility）
    */
-  public static readonly NEST_GRPC_URL = process.env.NEST_GRPC_URL || `0.0.0.0:${this.NEST_GRPC_PORT}`;
+  public static readonly NEST_GRPC_URL = process.env.NEST_GRPC_URL || `127.0.0.1:${this.NEST_GRPC_PORT}`;
 
   public static readonly ROOM_GRPC_PORT: number = parseInt(process.env.ROOM_GRPC_PORT!) || this.NEST_GRPC_PORT;
   public static readonly ROOM_GRPC_URL: string = process.env.ROOM_GRPC_URL || this.NEST_GRPC_URL;
@@ -58,9 +58,9 @@ export class BootstrapConstants {
 
   /* Socket Module */
 
-  public static readonly SOCKET_GRPC_URL: string = process.env.SOCKET_GRPC_URL || '0.0.0.0:3007';
+  public static readonly SOCKET_GRPC_URL: string = process.env.SOCKET_GRPC_URL || '127.0.0.1:3007';
 
-  public static readonly BACKEND_GRPC_URL: string = process.env.SOCKET_BACKEND_GRPC_URL || '0.0.0.0:8083';
+  public static readonly BACKEND_GRPC_URL: string = process.env.SOCKET_BACKEND_GRPC_URL || '127.0.0.1:8083';
 
   /* Socket Module */
 }

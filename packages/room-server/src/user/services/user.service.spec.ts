@@ -21,8 +21,8 @@ import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify
 import { Test, TestingModule } from '@nestjs/testing';
 import { resolve } from 'path';
 import { EnvConfigKey } from 'shared/common';
-import { CommonException, ServerException } from 'shared/exception';
-import { IAuthHeader, IOssConfig, IUserBaseInfo } from 'shared/interfaces';
+import { CommonException } from 'shared/exception';
+import { IOssConfig, IUserBaseInfo } from 'shared/interfaces';
 import { EnvConfigService } from 'shared/services/config/env.config.service';
 import { RestService } from 'shared/services/rest/rest.service';
 import { UserEntity } from 'user/entities/user.entity';
@@ -99,13 +99,10 @@ describe('user service', () => {
       return await Promise.resolve(false);
     });
 
-    jest.spyOn(restService, 'fetchMe').mockImplementation(async(headers: IAuthHeader) => {
-      if (headers && headers.cookie?.includes(loggedSession)) {
-        const userBaseInfo: IUserBaseInfo = { userId: knownUserId.toString(),
-          uuid: knownUuid };
-        return await Promise.resolve(userBaseInfo);
-      }
-      throw new ServerException(CommonException.UNAUTHORIZED);
+    jest.spyOn(restService, 'fetchMe').mockImplementation(async() => {
+      const userBaseInfo: IUserBaseInfo = { userId: '1',
+        uuid: 'aa8ad2e78a254eb5853a3a388a925faa' };
+      return await Promise.resolve(userBaseInfo);
     });
 
   });

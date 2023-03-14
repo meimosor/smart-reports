@@ -44,7 +44,7 @@ public class LabsFeatureController {
     /**
      * Get Lab Function List.
      */
-    @GetResource(name = "Get Lab Function List", path = "/features", requiredPermission = false)
+    @GetResource(name = "Get Lab Function List", path = "/features", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get Lab Function List")
     public ResponseData<UserSpaceLabsFeatureVo> showAvailableLabsFeatures() {
         // Get a list of available experiments

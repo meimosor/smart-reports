@@ -84,7 +84,7 @@ limit:
   dsb-widget-max-count: ${DSB_WIDGET_MAX_COUNT:30}
   dst-robot-max-count: ${DST_ROBOT_MAX_COUNT:10}
 socket:
-  domain: http://192.168.1.5:3001/socket
+  domain: http://127.0.0.1:3001/socket
 
 email:
   personal: ${EMAIL_PERSONAL:APITable}
@@ -92,7 +92,7 @@ email:
 starter:
   socketio:
     client:
-      url: http://192.168.1.5:3002
+      url: http://127.0.0.1:3002
       path: /notification
       reconnection-attempts: 2
       reconnection-delay: 1000
@@ -159,7 +159,7 @@ grpc:
     port: ${BACKEND_GRPC_PORT:0}
   client:
     nest-grpc-server:
-      address: static://192.168.1.5:3334
+      address: static://127.0.0.1:3334
     dingtalk-grpc-server:
       address: ${DINGTALK_GRPC_ADDRESS:}
       security:

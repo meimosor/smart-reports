@@ -328,7 +328,7 @@ const WidgetCreateModalStep: React.FC<React.PropsWithChildren<IExpandWidgetCreat
         label: t(Strings.widget_step_init_content_label), type: 'info',
         value:
           widgetCliCmd({
-            apiToken: userInfo?.apiKey, spaceId: userInfo?.spaceId, env: window.location.origin, widgetName, widgetPackageId,
+            apiToken: userInfo?.apiKey, spaceId: 'spc71PbGiltqC', env: window.location.origin, widgetName, widgetPackageId,
             templateUrl: isPrivateDeployment() ? `${window.location.origin}${sourceCodeUrl}` : sourceCodeUrl,
           }),
         desc: !userInfo?.apiKey && !userInfo?.spaceId && parser(t(Strings.widget_step_init_content_desc)),

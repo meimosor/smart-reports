@@ -123,7 +123,7 @@ public class TemplateController {
     /**
      * Template Global Search.
      */
-    @GetResource(path = "/template/global/search", requiredLogin = false)
+    @GetResource(path = "/template/global/search", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Template Global Search")
     @Parameters({
         @Parameter(name = "keyword", description = "Search Keyword", required = true,
@@ -151,7 +151,7 @@ public class TemplateController {
     /**
      * Get Template Recommend Content.
      */
-    @GetResource(path = "/template/recommend", requiredLogin = false)
+    @GetResource(path = "/template/recommend", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get Template Recommend Content")
     public ResponseData<RecommendVo> recommend() {
         String lang = LoginContext.me().getLocaleStrWithUnderLine();
@@ -162,7 +162,7 @@ public class TemplateController {
     /**
      * Get Template Category List.
      */
-    @GetResource(path = "/template/categoryList", requiredLogin = false)
+    @GetResource(path = "/template/categoryList", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get Template Category List")
     public ResponseData<List<TemplateCategoryMenuVo>> getCategoryList() {
         String lang = LoginContext.me().getLocaleStrWithUnderLine();
@@ -173,7 +173,7 @@ public class TemplateController {
     /**
      * Get The Template Category Content.
      */
-    @GetResource(path = "/template/categories/{categoryCode}", requiredLogin = false)
+    @GetResource(path = "/template/categories/{categoryCode}", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get The Template Category Content")
     @Parameter(name = "categoryCode", description = "Template Category Code", schema =
         @Schema(type = "string"), in = ParameterIn.PATH, example = "tpcEm7VDcbnnr")
@@ -201,7 +201,7 @@ public class TemplateController {
     /**
      * Get Template Directory Info.
      */
-    @GetResource(path = "/template/directory", requiredLogin = false)
+    @GetResource(path = "/template/directory", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get Template Directory Info")
     @Parameters({
         @Parameter(name = "categoryCode", description = "Official Template Category Code",

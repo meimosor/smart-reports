@@ -80,7 +80,7 @@ public class AssetController {
     /**
      * Upload resources.
      */
-    @PostResource(name = "Upload resources", path = "/upload", requiredLogin = false)
+    @PostResource(name = "Upload resources", path = "/upload", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Upload resources", description = "Upload resource files, any file type "
         + "is unlimited")
     public ResponseData<AssetUploadResult> upload(@Valid AttachOpRo data) throws IOException {

@@ -53,7 +53,7 @@ public class InternalOrganizationController {
     /**
      * Load/search departments and members.
      */
-    @GetResource(path = "/loadOrSearch", requiredLogin = false)
+    @GetResource(path = "/loadOrSearch", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Load/search departments and members", description = "The most recently "
         + "selected units are loaded by default when not keyword. The most recently added member "
         + "of the same group are loaded when not selected. Load max 10")

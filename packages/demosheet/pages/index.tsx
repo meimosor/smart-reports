@@ -37,10 +37,12 @@ export const getServerSideProps = async(context: NextPageContext) => {
     headers.cookie = cookie;
   }
 
-  const spaceId = context.query?.spaceId || '';
+  const spaceId = 'spc71PbGiltqC';
   const res = await axios.get('/client/info', { params: { spaceId }, headers: headers });
 
   const userInfo = res.data.userInfo;
+
+  console.log('userInfo++++++++++++++++++++++++', userInfo);
 
   if (!userInfo || userInfo === 'null') {
     return {

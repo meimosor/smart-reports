@@ -17,15 +17,14 @@
  */
 
 import { credentials } from '@grpc/grpc-js';
-import { HttpService } from '@nestjs/axios';
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { ClientGrpcProxy } from '@nestjs/microservices';
 import { InvalidGrpcServiceException } from '@nestjs/microservices/errors/invalid-grpc-service.exception';
 import { GrpcOptions } from '@nestjs/microservices/interfaces';
 import { Cron } from '@nestjs/schedule';
 import { isDevMode } from 'app.environment';
-import { filter, get, isEmpty, isFunction, split } from 'lodash';
-import { lastValueFrom, Observable } from 'rxjs';
+import { filter, isEmpty, isFunction, split } from 'lodash';
+import { Observable } from 'rxjs';
 import { randomNum } from 'shared/common';
 import { BootstrapConstants } from 'shared/common/constants/bootstrap.constants';
 import { HealthConstants, RedisConstants, SocketConstants } from 'shared/common/constants/socket.module.constants';
@@ -36,7 +35,6 @@ export class GrpcClientProxy extends ClientGrpcProxy implements OnApplicationBoo
   private _currentClientUrl?: string;
 
   protected readonly redisService: RedisService;
-  private readonly httpService: HttpService;
   protected readonly clientCredentials;
   private clientIps: Set<string>;
 
@@ -45,7 +43,6 @@ export class GrpcClientProxy extends ClientGrpcProxy implements OnApplicationBoo
     this.redisService = props['proxyClient'];
     this.clientCredentials = credentials.createInsecure();
     this.clientIps = new Set();
-    this.httpService = props['httpService'];
   }
 
   async onApplicationBootstrap(): Promise<any> {
@@ -209,88 +206,89 @@ export class GrpcClientProxy extends ClientGrpcProxy implements OnApplicationBoo
     this.clientIps = new Set(validHealthyClient as string[]);
   }
 
-  private checkRoomClient(address: string): Promise<string | undefined> {
-    const config = {
-      timeout: HealthConstants.NEST_HEALTH_CHECK_TIMEOUT,
-    };
-    return new Promise(async resolve => {
-      const { roomClientAddress, checkRoomClientAddress } = this.splitAddress(address);
+  private checkRoomClient(_address: string): Promise<string | undefined> {
+    // const config = {
+    //   timeout: HealthConstants.NEST_HEALTH_CHECK_TIMEOUT,
+    // };
+    return new Promise(resolve => {
+      // const { roomClientAddress, checkRoomClientAddress } = this.splitAddress(address);
       let result: string | undefined;
-      try {
-        const response: any = await lastValueFrom(this.httpService.get(`http://${checkRoomClientAddress}/actuator/health`, config));
-        if (response.status === 200) {
-          result = await this.handleHealthy(address, response.data);
-        } else {
-          await this.handleUnhealthy(address);
-        }
-      } catch (e) {
-        const error: any = e as any;
-        this.logger.error(`ping room client :[${roomClientAddress}] timeout, ping code:[${error.code}]`, error?.stack);
-        await this.handleUnhealthy(address, this.isServerReachable(error.code));
-      } finally {
-        resolve(result);
-      }
+      // try {
+      //   const response: any = await lastValueFrom(this.httpService.get(`http://${checkRoomClientAddress}/actuator/health`, config));
+      //   if (response.status === 200) {
+      //     result = await this.handleHealthy(address, response.data);
+      //   } else {
+      //     await this.handleUnhealthy(address);
+      //   }
+      // } catch (e) {
+      //   const error: any = e as any;
+      //   this.logger.error(`ping room client :[${roomClientAddress}] timeout, ping code:[${error.code}]`, error?.stack);
+      //   await this.handleUnhealthy(address, this.isServerReachable(error.code));
+      // } finally {
+      //   resolve(result);
+      // }
+      resolve(result);
     });
   }
 
-  private async handleHealthy(address: string, checkResult: any): Promise<string> {
-    const { roomClientAddress } = this.splitAddress(address);
-    const redisClient = this.redisService.getClient();
+  // private async handleHealthy(address: string, checkResult: any): Promise<string> {
+  //   const { roomClientAddress } = this.splitAddress(address);
+  //   const redisClient = this.redisService.getClient();
 
-    // Machine total memory
-    // const _totalMem:number = get(checkResult,'data.info.memory_rss.totalMem')
-    // Machine used memory
-    const memoryUsageMem: number = get(checkResult, 'data.info.memory_heap.memoryUsageMem');
-    // Calculate health score - no past CPU, currently use used memory as score
-    const healthScore = Math.floor(memoryUsageMem);
+  //   // Machine total memory
+  //   // const _totalMem:number = get(checkResult,'data.info.memory_rss.totalMem')
+  //   // Machine used memory
+  //   const memoryUsageMem: number = get(checkResult, 'data.info.memory_heap.memoryUsageMem');
+  //   // Calculate health score - no past CPU, currently use used memory as score
+  //   const healthScore = Math.floor(memoryUsageMem);
 
-    // Add healthy IP while removing unhealthy IP
-    this.clientIps.add(roomClientAddress);
-    await redisClient.pipeline()
-      .zadd(RedisConstants.ROOM_POOL_LOAD_HEALTHY_KEY, healthScore, address)
-      .hdel(RedisConstants.ROOM_POOL_LOAD_UNHEALTHY_KEY, address)
-      .exec(error => {
-        if (error) {
-          this.logger.error('grpc handleHealthy error', error);
-        }
-      });
-    return roomClientAddress;
-  }
+  //   // Add healthy IP while removing unhealthy IP
+  //   this.clientIps.add(roomClientAddress);
+  //   await redisClient.pipeline()
+  //     .zadd(RedisConstants.ROOM_POOL_LOAD_HEALTHY_KEY, healthScore, address)
+  //     .hdel(RedisConstants.ROOM_POOL_LOAD_UNHEALTHY_KEY, address)
+  //     .exec(error => {
+  //       if (error) {
+  //         this.logger.error('grpc handleHealthy error', error);
+  //       }
+  //     });
+  //   return roomClientAddress;
+  // }
 
-  private async handleUnhealthy(address: string, available = true) {
-    const { roomClientAddress } = this.splitAddress(address);
-    const redisClient = this.redisService.getClient();
+  // private async handleUnhealthy(address: string, available = true) {
+  //   const { roomClientAddress } = this.splitAddress(address);
+  //   const redisClient = this.redisService.getClient();
 
-    // Mark unhealthy IPs and remove healthy IPs at the same time
-    const latestOfflineNum: number = await redisClient.hincrby(RedisConstants.ROOM_POOL_LOAD_UNHEALTHY_KEY, address, 1);
-    await redisClient.zrem(RedisConstants.ROOM_POOL_LOAD_HEALTHY_KEY, address);
-    this.logger.log(`Check Room Address:「${roomClientAddress}」. Status:offline. Offline times: ${latestOfflineNum}`);
+  //   // Mark unhealthy IPs and remove healthy IPs at the same time
+  //   const latestOfflineNum: number = await redisClient.hincrby(RedisConstants.ROOM_POOL_LOAD_UNHEALTHY_KEY, address, 1);
+  //   await redisClient.zrem(RedisConstants.ROOM_POOL_LOAD_HEALTHY_KEY, address);
+  //   this.logger.log(`Check Room Address:「${roomClientAddress}」. Status:offline. Offline times: ${latestOfflineNum}`);
 
-    // In the case of unreachable service, room is forced to restart, and there is no pub message before restart
-    if (!available || latestOfflineNum >= HealthConstants.ROOM_MAX_OFFLINE_TIMES) {
-      // Need to delete the local
-      this.clientIps.delete(roomClientAddress);
-      await redisClient.pipeline()
-        // Removal from the pool to be detected
-        .srem(RedisConstants.ROOM_POOL_LOAD_KEY, address)
-        // Removal from Healthy Pool
-        .zrem(RedisConstants.ROOM_POOL_LOAD_HEALTHY_KEY, address)
-        // Removed from Unhealthy pool
-        .hdel(RedisConstants.ROOM_POOL_LOAD_UNHEALTHY_KEY, address)
-        .exec(error => {
-          if (error) {
-            this.logger.error('grpc handleHealthy error', error);
-          }
-        });
+  //   // In the case of unreachable service, room is forced to restart, and there is no pub message before restart
+  //   if (!available || latestOfflineNum >= HealthConstants.ROOM_MAX_OFFLINE_TIMES) {
+  //     // Need to delete the local
+  //     this.clientIps.delete(roomClientAddress);
+  //     await redisClient.pipeline()
+  //       // Removal from the pool to be detected
+  //       .srem(RedisConstants.ROOM_POOL_LOAD_KEY, address)
+  //       // Removal from Healthy Pool
+  //       .zrem(RedisConstants.ROOM_POOL_LOAD_HEALTHY_KEY, address)
+  //       // Removed from Unhealthy pool
+  //       .hdel(RedisConstants.ROOM_POOL_LOAD_UNHEALTHY_KEY, address)
+  //       .exec(error => {
+  //         if (error) {
+  //           this.logger.error('grpc handleHealthy error', error);
+  //         }
+  //       });
 
-      this.logger.log(`Check Room Address:「${roomClientAddress}」. Status:out`);
-    }
-  }
+  //     this.logger.log(`Check Room Address:「${roomClientAddress}」. Status:out`);
+  //   }
+  // }
 
-  private isServerReachable(code: string) {
-    const unreachableCodes = ['ETIMEDOUT', 'ECONNREFUSED', 'EHOSTUNREACH'];
-    return !unreachableCodes.includes(code);
-  }
+  // private isServerReachable(code: string) {
+  //   const unreachableCodes = ['ETIMEDOUT', 'ECONNREFUSED', 'EHOSTUNREACH'];
+  //   return !unreachableCodes.includes(code);
+  // }
 
   async handleNestMessage(message: ISubscribeRoomAddressMessage) {
     const redisClient = this.redisService.getClient();

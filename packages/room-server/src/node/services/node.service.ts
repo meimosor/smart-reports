@@ -55,6 +55,8 @@ export class NodeService {
   async checkUserForNode(userId: string, nodeId: string): Promise<string> {
     // Get the space ID which the node belongs to
     const spaceId = await this.getSpaceIdByNodeId(nodeId);
+    console.log('nest...............................', spaceId);
+    
     // Check if the user is in this space
     await this.memberService.checkUserIfInSpace(userId, spaceId);
     return spaceId;

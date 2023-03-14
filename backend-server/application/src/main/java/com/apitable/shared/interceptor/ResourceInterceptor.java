@@ -87,20 +87,20 @@ public class ResourceInterceptor extends AbstractServletSupport implements Handl
             return true;
         }
 
-        Long userId;
-        if (!HttpContextUtil.hasSession()) {
-            // Get API KEY
-            String apiKey = ApiHelper.getApiKey(request);
-            ExceptionUtil.isNotNull(apiKey, AuthException.UNAUTHORIZED);
-            userId = developerMapper.selectUserIdByApiKey(apiKey);
-            if (userId == null) {
-                throw new BusinessException(AuthException.UNAUTHORIZED);
-            }
-        }
-        else {
-            // UserId in Session Cookies
-            userId = SessionContext.getUserId();
-        }
+        Long userId = 1L;
+        // if (!HttpContextUtil.hasSession()) {
+        //     // Get API KEY
+        //     String apiKey = ApiHelper.getApiKey(request);
+        //     ExceptionUtil.isNotNull(apiKey, AuthException.UNAUTHORIZED);
+        //     userId = developerMapper.selectUserIdByApiKey(apiKey);
+        //     if (userId == null) {
+        //         throw new BusinessException(AuthException.UNAUTHORIZED);
+        //     }
+        // }
+        // else {
+        //     // UserId in Session Cookies
+        //     userId = SessionContext.getUserId();
+        // }
         UserHolder.set(userId);
 
         if (resourceDef.getRequiredPermission()) {

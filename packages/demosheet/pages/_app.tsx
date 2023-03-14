@@ -27,7 +27,6 @@ import {
   SystemConfig,
   t,
   IUserInfo,
-  getTimeZoneOffsetByUtc,
 } from '@apitable/core';
 import { Scope } from '@sentry/browser';
 import * as Sentry from '@sentry/nextjs';
@@ -186,12 +185,14 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
     const getUser = async() => {
       const res = await axios.get('/client/info');
       let userInfo = JSON.parse(res.data.userInfo);
+      console.log('userinfo///////////////////////', userInfo);
+      
       setUserData(userInfo);
 
       const pathUrl = window.location.pathname;
       const { nodeId } = getPageParams(pathUrl || '');
-      const query = new URLSearchParams(window.location.search);
-      const spaceId = query.get('spaceId') || '';
+      const spaceId = 'spc71PbGiltqC';
+      console.log('nodeId///////////////////////', nodeId);
       let userInfoError: IUserInfoError | undefined;
 
       /**
@@ -213,6 +214,7 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
         const spaceId = getRegResult(pathUrl, spaceIdReg);
         const res = await Api.getUserMe({ nodeId, spaceId }, false);
         const { data, success, message, code } = res.data;
+        console.log('res.................', res);
 
         if (success) {
           userInfo = data;
@@ -255,6 +257,8 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
         StoreActions.setLoading(false),
         StoreActions.updateUserInfoErr(null),
       ];
+      console.log(pathUrl, shareIdReg);
+
       if (!getRegResult(pathUrl, shareIdReg)) {
         // This is to avoid initializing the space resource more than once under the share route
         _batchActions.push(StoreActions.setActiveSpaceId(userInfo.spaceId));
@@ -315,46 +319,6 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
     descMeta.content = t(Strings.client_meta_label_desc);
   }, []);
 
-  const curTimezone = userData?.timeZone;
-  const updateUserTimeZone = (timeZone: string, cb?: () => void) => {
-    Api.updateUser({ timeZone }).then((res: any) => {
-      const { success } = res.data;
-      if (success) {
-        store.dispatch(StoreActions.setUserTimeZone(timeZone));
-        setUserData({
-          ...userData!,
-          timeZone,
-        });
-        cb?.();
-      }
-    });
-  };
-
-  useEffect(() => {
-    const checkTimeZoneChange = () => {
-      // https://github.com/iamkun/dayjs/blob/dev/src/plugin/timezone/index.js#L143
-      const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const offset = getTimeZoneOffsetByUtc(timeZone)!;
-      if (!timeZone) return;
-      // set default timeZone
-      if (curTimezone === null) {
-        updateUserTimeZone(timeZone);
-      } else if (curTimezone && curTimezone !== timeZone) { // update timeZone while client timeZone change
-        updateUserTimeZone(timeZone, () => {
-          Modal.warning({
-            title: t(Strings.notify_time_zone_change_title),
-            content: t(Strings.notify_time_zone_change_desc, { time_zone: `UTC${offset > 0 ? '+' : ''}${offset}(${timeZone})` }),
-          });
-        });
-      }
-    };
-    checkTimeZoneChange();
-    const interval = setInterval(checkTimeZoneChange, 30 * 1000);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [curTimezone]);
-
   return <>
     <Head>
       <title />
@@ -386,32 +350,6 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
           })
         `}
     </Script>}
-    {/*Baidu Statistics*/}
-    {env.BAIDU_ANALYSE_ID && <Script id={'baiduAnalyse'}>
-      {`
-          var _hmt = _hmt || [];
-          (function() {
-            var hm = document.createElement("script");
-            hm.src = "https://hm.baidu.com/hm.js?${env.BAIDU_ANALYSE_ID}";
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(hm, s);
-          })();
-        `}
-    </Script>}
-    {env.DINGTALK_MONITOR_PLATFORM_ID && <Script id={'userAgent'}>
-      {`
-          if (navigator.userAgent.toLowerCase().includes('dingtalk')) {
-            !(function(c,i,e,b){var h=i.createElement("script");
-            var f=i.getElementsByTagName("script")[0];
-            h.type="text/javascript";
-            h.crossorigin=true;
-            h.onload=function(){c[b]||(c[b]=new c.wpkReporter({bid:"${env.DINGTALK_MONITOR_PLATFORM_ID}"}));
-            c[b].installAll()};
-            f.parentNode.insertBefore(h,f);
-            h.src=e})(window,document,"https://g.alicdn.com/woodpeckerx/jssdk??wpkReporter.js","__wpk");
-          }
-        `}
-    </Script>}
     {/* script loading js */}
     <Script id={'loadingAnimation'} strategy='lazyOnload'>
       {`
@@ -433,13 +371,6 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
           })
         `}
     </Script>
-    {!env.DISABLE_AWSC &&
-      <>
-        <Script src='https://res.wx.qq.com/open/js/jweixin-1.2.0.js' referrerPolicy='origin' />
-        <Script src='https://open.work.weixin.qq.com/wwopen/js/jwxwork-1.0.0.js' referrerPolicy='origin' />
-      </>
-    }
-    {env.DINGTALK_MONITOR_PLATFORM_ID && <Script src='https://g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js' />}
     {<Sentry.ErrorBoundary fallback={ErrorPage} beforeCapture={beforeCapture}>
       <div className={'__next_main'}>
         {!userLoading && <div style={{ opacity: loading !== LoadingStatus.Complete ? 0 : 1 }} onScroll={onScroll}>
@@ -463,20 +394,6 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
         }
       </div>
     </Sentry.ErrorBoundary>}
-    {
-      env.GOOGLE_ANALYTICS_ID &&
-      <>
-        <Script async src={`https://www.googletagmanager.com/gtag/js?id=${env.GOOGLE_ANALYTICS_ID}`} />
-        <Script id={'googleTag'}>
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', window.__initialization_data__.envVars.GOOGLE_ANALYTICS_ID);
-          `}
-        </Script>
-      </>
-    }
   </>;
 }
 

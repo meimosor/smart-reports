@@ -126,7 +126,7 @@ public class SpaceLinkController {
     /**
      * Valid invite link token.
      */
-    @PostResource(name = "Valid invite link token", path = "/valid", requiredLogin = false)
+    @PostResource(name = "Valid invite link token", path = "/valid", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Valid invite link token", description = "After the verification is "
         + "successful, it can obtain related invitation information")
     public ResponseData<SpaceLinkInfoVo> valid(@RequestBody @Valid InviteValidRo data) {

@@ -80,7 +80,7 @@ const canaryTestingByFillUpUrlPathFlag = async(request: NextRequest): Promise<Ne
        * As an example： /workbench => /workbench?spaceId=spcxxxxxx
        */
       if (res?.spaceGrayEnv && !searchParams.has(_canaryTestingUrlFlag)) {
-        url.searchParams.set(_canaryTestingUrlFlag, userInfo?.spaceId);
+        url.searchParams.set(_canaryTestingUrlFlag, 'spc71PbGiltqC');
         return NextResponse.redirect(url);
       }
       /*

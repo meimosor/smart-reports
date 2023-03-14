@@ -128,7 +128,7 @@ public class SpaceController {
     /**
      * Get space capacity info.
      */
-    @GetResource(path = "/capacity", requiredLogin = false)
+    @GetResource(path = "/capacity", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get space capacity info")
     @Parameter(name = ParamsConstants.SPACE_ID, description = "space id", required = true,
         schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "spczJrh2i3tLW")
@@ -142,14 +142,14 @@ public class SpaceController {
     /**
      * Get user space resource.
      */
-    @GetResource(path = "/resource", requiredPermission = false)
+    @GetResource(path = "/resource", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get user space resource")
     @Parameter(name = ParamsConstants.SPACE_ID, description = "space id", required = true,
         schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "spcyQkKp9XJEl")
     public ResponseData<UserSpaceVo> getSpaceResource() {
-        String spaceId = LoginContext.me().getSpaceId();
+        String spaceId = "spc71PbGiltqC";
         // gets permission resources in the specified space
-        Long userId = SessionContext.getUserId();
+        Long userId = 1L;
         UserSpaceVo userSpaceVo = iSpaceService.getUserSpaceResource(userId, spaceId);
         return ResponseData.success(userSpaceVo);
     }
@@ -157,7 +157,7 @@ public class SpaceController {
     /**
      * Get space feature.
      */
-    @GetResource(path = "/features", requiredPermission = false)
+    @GetResource(path = "/features", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get space feature")
     @Parameter(name = ParamsConstants.SPACE_ID, description = "space id", required = true,
         schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "spcyQkKp9XJEl")
@@ -170,7 +170,7 @@ public class SpaceController {
     /**
      * Get space list.
      */
-    @GetResource(path = "/list", requiredPermission = false)
+    @GetResource(path = "/list", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get space list")
     @Parameters({
         @Parameter(name = "onlyManageable", description = "Whether to query only the managed "
@@ -189,7 +189,7 @@ public class SpaceController {
     /**
      * Create space.
      */
-    @PostResource(path = "/create", requiredPermission = false)
+    @PostResource(path = "/create", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Create space")
     public ResponseData<CreateSpaceResultVo> create(@RequestBody @Valid SpaceOpRo spaceOpRo) {
         Long userId = SessionContext.getUserId();

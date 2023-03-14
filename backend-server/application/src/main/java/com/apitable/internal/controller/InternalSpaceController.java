@@ -59,7 +59,7 @@ public class InternalSpaceController {
     /**
      * Get attachment capacity information for a space.
      */
-    @GetResource(path = "/space/{spaceId}/capacity", requiredLogin = false)
+    @GetResource(path = "/space/{spaceId}/capacity", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "get attachment capacity information for a space")
     @Parameter(name = "spaceId", description = "space id", required = true, schema =
         @Schema(type = "string"), in = ParameterIn.PATH, example = "spczJrh2i3tLW")
@@ -73,7 +73,7 @@ public class InternalSpaceController {
     /**
      * Get subscription information for a space.
      */
-    @GetResource(path = "/space/{spaceId}/subscription", requiredLogin = false)
+    @GetResource(path = "/space/{spaceId}/subscription", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "get subscription information for a space")
     @Parameter(name = "spaceId", description = "space id", required = true, schema =
         @Schema(type = "string"), in = ParameterIn.PATH, example = "spczJrh2i3tLW")
@@ -85,7 +85,7 @@ public class InternalSpaceController {
     /**
      * Get space used usage information.
      */
-    @GetResource(path = "/space/{spaceId}/usages", requiredLogin = false)
+    @GetResource(path = "/space/{spaceId}/usages", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "get space used usage information")
     @Parameter(name = "spaceId", description = "space id", required = true, schema =
         @Schema(type = "string"), in = ParameterIn.PATH, example = "spczJrh2i3tLW")

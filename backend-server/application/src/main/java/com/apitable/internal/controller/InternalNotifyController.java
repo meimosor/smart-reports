@@ -46,7 +46,7 @@ public class InternalNotifyController {
     /**
      * Send a message.
      */
-    @PostResource(name = "send a message", path = "/create", requiredLogin = false)
+    @PostResource(name = "send a message", path = "/create", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "send a message", description = "send a message")
     public ResponseData<Void> create(
         @Valid @RequestBody List<NotificationCreateRo> notificationCreateRoList) {

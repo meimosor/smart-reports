@@ -173,6 +173,9 @@ public class NodeController {
     private MemberMapper memberMapper;
 
     @Resource
+    private IMemberService iMemberService;
+
+    @Resource
     private INodeRelService iNodeRelService;
 
     @Resource
@@ -196,7 +199,7 @@ public class NodeController {
     /**
      * Fuzzy search node.
      */
-    @GetResource(path = "/search")
+    @GetResource(path = "/search", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Fuzzy search node", description =
         "Enter the search term to search for the node of the working directory." + ROLE_DESC)
     @Parameters({
@@ -222,7 +225,7 @@ public class NodeController {
     /**
      * Query tree node.
      */
-    @GetResource(path = "/tree")
+    @GetResource(path = "/tree", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Query tree node", description =
         "Query the node tree of workbench, restricted to two levels." + ROLE_DESC)
     @Parameters({
@@ -234,8 +237,9 @@ public class NodeController {
     })
     public ResponseData<NodeInfoTreeVo> getTree(
         @RequestParam(name = "depth", defaultValue = "2") @Valid @Min(0) @Max(2) Integer depth) {
-        String spaceId = LoginContext.me().getSpaceId();
-        Long memberId = LoginContext.me().getMemberId();
+        String spaceId = "spc71PbGiltqC";
+        Long memberId =
+                iMemberService.getMemberIdByUserIdAndSpaceId(1L, spaceId);
         String rootNodeId = iNodeService.getRootNodeIdBySpaceId(spaceId);
         NodeInfoTreeVo tree = iNodeService.getNodeTree(spaceId, rootNodeId, memberId, depth);
         return ResponseData.success(tree);
@@ -244,7 +248,7 @@ public class NodeController {
     /**
      * Get nodes of the specified type.
      */
-    @GetResource(path = "/list")
+    @GetResource(path = "/list", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get nodes of the specified type", description = "scenario: query an "
         + "existing dashboard")
     @Parameters({
@@ -257,8 +261,9 @@ public class NodeController {
     })
     public ResponseData<List<NodeInfo>> list(@RequestParam(value = "type") Integer type,
         @RequestParam(value = "role", required = false, defaultValue = "manager") String role) {
-        String spaceId = LoginContext.me().getSpaceId();
-        Long memberId = LoginContext.me().getMemberId();
+        String spaceId = "spc71PbGiltqC";
+        Long memberId =
+                iMemberService.getMemberIdByUserIdAndSpaceId(1L, spaceId);
         List<String> nodeIds = iNodeService.getNodeIdBySpaceIdAndType(spaceId, type);
         if (nodeIds.isEmpty()) {
             return ResponseData.success(new ArrayList<>());
@@ -280,7 +285,7 @@ public class NodeController {
     /**
      * Query nodes.
      */
-    @GetResource(path = "/get", requiredPermission = false)
+    @GetResource(path = "/get", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Query nodes", description = "obtain information about the node "
         + ROLE_DESC)
     @Parameter(name = "nodeIds", description = "node ids", required = true, schema =
@@ -297,7 +302,7 @@ public class NodeController {
     /**
      * Folder preview.
      */
-    @GetResource(path = "/showcase", requiredLogin = false)
+    @GetResource(path = "/showcase", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Folder preview", description = "Nodes that are not in the center of the"
         + " template, make cross-space judgments.")
     @Parameters({
@@ -364,7 +369,7 @@ public class NodeController {
     /**
      * Node info window.
      */
-    @GetResource(path = "/window", requiredPermission = false)
+    @GetResource(path = "/window", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Node info window", description = "Nodes that are not in the center of "
         + "the template, make spatial judgments.")
     public ResponseData<NodeInfoWindowVo> showNodeInfoWindow(
@@ -384,7 +389,7 @@ public class NodeController {
     /**
      * Get parent nodes.
      */
-    @GetResource(path = "/parents", requiredPermission = false)
+    @GetResource(path = "/parents", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get parent nodes", description =
         "Gets a list of all parent nodes of the specified node " + ROLE_DESC)
     @Parameter(name = "nodeId", description = "node id", required = true, schema =
@@ -402,7 +407,7 @@ public class NodeController {
     /**
      * Get child nodes.
      */
-    @GetResource(path = "/children", requiredPermission = false)
+    @GetResource(path = "/children", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get child nodes", description =
         "Obtain the list of child nodes of the specified node. The nodes are classified into "
             + "folders or datasheet by type "
@@ -432,7 +437,7 @@ public class NodeController {
     /**
      * Position node.
      */
-    @GetResource(path = "/position/{nodeId}", requiredPermission = false)
+    @GetResource(path = "/position/{nodeId}", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Position node", description = "node in must " + ROLE_DESC)
     @Parameter(name = "nodeId", description = "node id", required = true, schema =
         @Schema(type = "string"), in = ParameterIn.PATH, example = "nodRTGSy43DJ9")
@@ -452,7 +457,7 @@ public class NodeController {
      * Create child node.
      */
     @Notification(templateId = NotificationTemplateId.NODE_CREATE)
-    @PostResource(path = "/create", requiredPermission = false)
+    @PostResource(path = "/create", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Create child node", description = "create a new node under the node"
         + ROLE_DESC)
     @Parameter(name = ParamsConstants.PLAYER_SOCKET_ID, description = "user socket id",
@@ -488,7 +493,7 @@ public class NodeController {
      * Edit node.
      */
     @Notification(templateId = NotificationTemplateId.NODE_UPDATE)
-    @PostResource(path = "/update/{nodeId}", requiredPermission = false)
+    @PostResource(path = "/update/{nodeId}", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Edit node", description = "node id must. name, icon is not required"
         + ROLE_DESC)
     @Parameters({
@@ -520,7 +525,7 @@ public class NodeController {
      * Update node description.
      */
     @Notification(templateId = NotificationTemplateId.NODE_UPDATE_DESC)
-    @PostResource(path = "/updateDesc", requiredPermission = false)
+    @PostResource(path = "/updateDesc", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Update node description")
     @Parameter(name = ParamsConstants.PLAYER_SOCKET_ID, description = "user socket id",
         schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "QkKp9XJEl")
@@ -546,7 +551,7 @@ public class NodeController {
      * Move node.
      */
     @Notification(templateId = NotificationTemplateId.NODE_MOVE)
-    @PostResource(path = "/move")
+    @PostResource(path = "/move", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Move node", description = "Node ID and parent node ID are required, and"
         + " pre Node Id is not required.")
     @Parameters({
@@ -594,7 +599,7 @@ public class NodeController {
      */
     @Notification(templateId = NotificationTemplateId.NODE_DELETE)
     @PostResource(path = "/delete/{nodeId}", method = {RequestMethod.DELETE,
-        RequestMethod.POST}, requiredPermission = false)
+        RequestMethod.POST}, requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Delete node", description = "You can pass in an ID array and delete "
         + "multiple nodes.")
     @Parameters({
@@ -625,7 +630,7 @@ public class NodeController {
      * Copy node.
      */
     @Notification(templateId = NotificationTemplateId.NODE_CREATE)
-    @PostResource(path = "/copy", requiredPermission = false)
+    @PostResource(path = "/copy", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Copy node", description = "node id is required, whether to copy data is"
         + " not required.")
     @Parameter(name = ParamsConstants.PLAYER_SOCKET_ID, description = "user socket id",
@@ -664,7 +669,7 @@ public class NodeController {
     /**
      * Export Bundle.
      */
-    @GetResource(path = "/exportBundle", requiredPermission = false)
+    @GetResource(path = "/exportBundle", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Export Bundle")
     @Parameters({
         @Parameter(name = "nodeId", description = "node id", required = true, schema =
@@ -695,7 +700,7 @@ public class NodeController {
     /**
      * Analyze Bundle.
      */
-    @PostResource(path = "/analyzeBundle", requiredLogin = false)
+    @PostResource(path = "/analyzeBundle", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Analyze Bundle", description = "The front node is saved in the first "
         + "place of the parent node when it is not under the parent node. Save in the first place"
         + " of the first level directory when it is not transmitted.")
@@ -724,7 +729,7 @@ public class NodeController {
      * Import excel.
      */
     @Notification(templateId = NotificationTemplateId.NODE_CREATE)
-    @PostResource(path = "/import", requiredPermission = false)
+    @PostResource(path = "/import", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Import excel", description = "all parameters must be")
     public ResponseData<NodeInfoVo> importExcel(@Valid ImportExcelOpRo data) throws IOException {
         ExceptionUtil.isTrue(data.getFile().getSize() <= limitProperties.getMaxFileSize(),
@@ -783,14 +788,14 @@ public class NodeController {
     /**
      * Record active node.
      */
-    @PostResource(name = "record active nodes", path = "/active", requiredPermission = false)
+    @PostResource(name = "record active nodes", path = "/active", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Record active node", description = "node id and view id are not "
         + "required（do not pass means all closed）")
     @Parameter(name = ParamsConstants.SPACE_ID, description = "space id", required = true,
         schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "spcBrtP3ulTXR")
     public ResponseData<Void> activeSheets(@RequestBody @Valid ActiveSheetsOpRo opRo) {
-        Long userId = SessionContext.getUserId();
-        String spaceId;
+        Long userId = 1L;
+        String spaceId = "spc71PbGiltqC";
         if (opRo.getNodeId() == null) {
             spaceId = LoginContext.me().getSpaceId();
             userSpaceOpenedSheetCacheService.refresh(userId, spaceId, null);
@@ -812,7 +817,7 @@ public class NodeController {
     /**
      * Remind notification.
      */
-    @PostResource(name = "Remind notification", path = "/remind", requiredLogin = false)
+    @PostResource(name = "Remind notification", path = "/remind", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Remind notification")
     public ResponseData<Void> remind(@RequestBody @Valid RemindMemberRo ro) {
         Long userId = SessionContext.getUserIdWithoutException();
@@ -834,7 +839,7 @@ public class NodeController {
     /**
      * Gets no permission member before remind.
      */
-    @PostResource(path = "/remind/units/noPermission", requiredPermission = false)
+    @PostResource(path = "/remind/units/noPermission", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Gets no permission member before remind")
     public ResponseData<List<MemberBriefInfoVo>> postRemindUnitsNoPermission(
         @RequestBody @Validated RemindUnitsNoPermissionRo request) {
@@ -855,7 +860,7 @@ public class NodeController {
     /**
      * Check for associated nodes.
      */
-    @GetResource(path = "/checkRelNode", requiredPermission = false)
+    @GetResource(path = "/checkRelNode", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "check for associated nodes", description = "permission of the "
         + "associated node is not required. Scenario: Check whether the view associated mirror "
         + "before deleting the table.")
@@ -878,7 +883,7 @@ public class NodeController {
     /**
      * Get associated node.
      */
-    @GetResource(path = "/getRelNode", requiredPermission = false)
+    @GetResource(path = "/getRelNode", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get associated node", description = "This interface requires readable "
         + "or above permissions of the associated node.Scenario: Open the display columns of form"
         + " and mirror in the datasheet.")
@@ -909,7 +914,7 @@ public class NodeController {
     /**
      * Member recent open node list.
      */
-    @GetResource(path = "/recentList", requiredPermission = false)
+    @GetResource(path = "/recentList", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "member recent open node list", description = "member recent open node list")
     @Parameter(name = ParamsConstants.SPACE_ID, description = "space id", required = true, schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "spcyQkKp9XJEl")
     public ResponseData<List<NodeSearchResult>> recentList() {

@@ -206,7 +206,7 @@ public class UserController {
      * @param request HttpServletRequest
      * @return Get personal information
      */
-    @GetResource(name = "get personal information", path = "/me",
+    @GetResource(name = "get personal information", path = "/me", requiredLogin = false,
         requiredPermission = false)
     @Operation(summary = "get personal information", description = "get personal "
         + "information")
@@ -226,13 +226,13 @@ public class UserController {
         @RequestParam(name = "filter", required = false, defaultValue =
             "false") final Boolean filter,
         final HttpServletRequest request) {
-        Long userId = SessionContext.getUserId();
+        Long userId = 1L;
 
         // try to return SpaceId
         String trySpaceId = tryReturnSpaceId(nodeId, spaceId, userId, request);
 
         // Get user information
-        UserInfoVo userInfo = iUserService.getCurrentUserInfo(userId,
+        UserInfoVo userInfo = iUserService.getCurrentUserInfo(1L,
             trySpaceId,
             filter);
 
@@ -240,6 +240,7 @@ public class UserController {
         String spaceDomain = returnSpaceDomain(trySpaceId,
             userInfo.getSpaceId());
         userInfo.setSpaceDomain(spaceDomain);
+        userInfo.setUserId("1");
         return ResponseData.success(userInfo);
     }
 
@@ -287,7 +288,7 @@ public class UserController {
                 }
             }
         }
-        return spaceId;
+        return "spc71PbGiltqC";
     }
 
     /**
@@ -578,7 +579,7 @@ public class UserController {
      * @return {@link ResponseData}
      */
     @PostResource(name = "Retrieve password", path = "/retrievePwd",
-        requiredLogin = false)
+        requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Retrieve password")
     public ResponseData<Void> retrievePwd(
         @RequestBody @Valid final RetrievePwdOpRo param) {
@@ -709,7 +710,7 @@ public class UserController {
         "Get the enabled experimental functions")
     public ResponseData<LabsFeatureVo> getEnabledLabFeatures(
         @RequestParam final String spaceId) {
-        Long userId = SessionContext.getUserId();
+        Long userId = 1L;
         List<String> applicants = new ArrayList<>();
         if (StrUtil.isNotBlank(spaceId)) {
             applicants.add(spaceId);

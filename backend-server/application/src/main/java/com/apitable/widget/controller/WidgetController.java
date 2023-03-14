@@ -96,7 +96,7 @@ public class WidgetController {
      * Get widget store.
      */
     @PostResource(path = "/widget/package/store/list",
-        requiredPermission = false)
+            requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get widget store")
     @Parameter(name = ParamsConstants.SPACE_ID, description = "space id",
         required = true, schema = @Schema(type = "string"), in = ParameterIn.HEADER,
@@ -116,7 +116,7 @@ public class WidgetController {
     /**
      * Get the space widgets.
      */
-    @GetResource(path = "/space/{spaceId}/widget", requiredPermission = false)
+    @GetResource(path = "/space/{spaceId}/widget", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get the space widgets",
         description = "get the widgets under the entire space")
     @Parameters({
@@ -139,7 +139,7 @@ public class WidgetController {
     /**
      * get the widget information of the node.
      */
-    @GetResource(path = "/node/{nodeId}/widget", requiredPermission = false)
+    @GetResource(path = "/node/{nodeId}/widget", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "get the widget information of the node")
     @Parameter(name = "nodeId", description = "node id", required = true,
         schema = @Schema(type = "string"), in = ParameterIn.PATH,
@@ -161,7 +161,7 @@ public class WidgetController {
     /**
      * Get the node widget package.
      */
-    @GetResource(path = "/node/{nodeId}/widgetPack", requiredLogin = false)
+    @GetResource(path = "/node/{nodeId}/widgetPack", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get the node widget package",
         description = "Node types are limited to dashboards and datasheet")
     @Parameters({
@@ -205,7 +205,7 @@ public class WidgetController {
     /**
      * get widget info by widget id.
      */
-    @GetResource(path = "/widget/get", requiredLogin = false)
+    @GetResource(path = "/widget/get", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get widget info",
         description = "get widget info by widget id")
     @Parameters({

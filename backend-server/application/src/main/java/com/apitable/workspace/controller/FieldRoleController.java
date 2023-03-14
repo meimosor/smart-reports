@@ -119,7 +119,7 @@ public class FieldRoleController {
      * Enable field role.
      */
     @PostResource(path = "/datasheet/{dstId}/field/{fieldId}/permission/enable",
-        requiredPermission = false)
+            requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Enable field role")
     @Parameters({
         @Parameter(name = "dstId", description = "datasheet id", required = true, schema
@@ -159,7 +159,7 @@ public class FieldRoleController {
      * Disable field role.
      */
     @PostResource(path = "/datasheet/{dstId}/field/{fieldId}/permission/disable",
-        requiredPermission = false)
+            requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Disable field role")
     @Parameters({
         @Parameter(name = "dstId", description = "datasheet id", required = true, schema
@@ -187,7 +187,7 @@ public class FieldRoleController {
     /**
      * Gets the field role infos in datasheet.
      */
-    @GetResource(path = "/datasheet/{dstId}/field/{fieldId}/listRole", requiredPermission = false)
+    @GetResource(path = "/datasheet/{dstId}/field/{fieldId}/listRole", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Gets the field role infos in datasheet.")
     @Parameters({
         @Parameter(name = "dstId", description = "datasheet id", required = true, schema
@@ -400,7 +400,7 @@ public class FieldRoleController {
     /**
      * Get multi datasheet field permission.
      */
-    @GetResource(path = "/datasheet/field/permission", requiredLogin = false)
+    @GetResource(path = "/datasheet/field/permission", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get multi datasheet field permission")
     @Parameters({
         @Parameter(name = "dstIds", description = "datasheet id", required = true,

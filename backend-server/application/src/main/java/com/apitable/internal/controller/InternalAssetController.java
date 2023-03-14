@@ -76,7 +76,7 @@ public class InternalAssetController {
     /**
      * Get Asset Info.
      */
-    @GetResource(name = "Get Asset Info", path = "/get", requiredLogin = false)
+    @GetResource(name = "Get Asset Info", path = "/get", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Get Asset Info", description = "scene：Fusion server query the "
         + "attachment field data before writing")
     @Parameter(name = "token", description = "resource key", required = true, schema = @Schema(type =

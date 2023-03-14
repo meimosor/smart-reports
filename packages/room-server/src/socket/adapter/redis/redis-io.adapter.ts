@@ -78,10 +78,10 @@ export class RedisIoAdapter extends IoAdapter implements WebSocketAdapter {
     });
 
     // record error log
-    server.of(GatewayConstants.SOCKET_NAMESPACE).adapter.on('error', function (error: any) {
+    server.of(GatewayConstants.SOCKET_NAMESPACE).adapter.on('error', function(error: any) {
       _nestedLogger.error(error.message, error?.stack);
     });
-    server.of(GatewayConstants.ROOM_NAMESPACE).adapter.on('error', function (error: any) {
+    server.of(GatewayConstants.ROOM_NAMESPACE).adapter.on('error', function(error: any) {
       _nestedLogger.error(error.message, error?.stack);
     });
     return server;
@@ -90,7 +90,7 @@ export class RedisIoAdapter extends IoAdapter implements WebSocketAdapter {
   override bindClientConnect(server: SocketIo.Server, callback: (socket: AuthenticatedSocket) => {}): void {
     server.on(SocketEventEnum.CONNECTION, (socket: AuthenticatedSocket) => {
       if (!isNil(socket.auth)) {
-        this.logger.debug({ message: 'RedisIoAdapter:clientConnect', userId: socket.auth.userId, socketId: socket.id, nsp: socket.nsp.name });
+        this.logger.debug({ message: 'RedisIoAdapter:clientConnect', userId: '1', socketId: socket.id, nsp: socket.nsp.name });
         this.socketIoService.joinRoom(socket);
       } else {
         this.logger.warn({ message: 'RedisIoAdapter:bindClientConnect:invalidUserIdForAuth', handshake: socket.handshake });

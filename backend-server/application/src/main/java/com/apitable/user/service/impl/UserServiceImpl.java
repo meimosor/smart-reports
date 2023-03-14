@@ -724,56 +724,57 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity>
         log.info("Get user information and space content");
         // Query the user's basic information
         // Whether the invitation code has been used for rewards
-        boolean usedInviteReward =
-            userServiceFacade.getInvitationReward(userId);
-        UserInfoVo userInfo = UserInfoVo.builder()
-            .sendSubscriptionNotify(true)
-            .usedInviteReward(usedInviteReward)
-            .build();
-        LoginUserDto loginUserDto = LoginContext.me().getLoginUser();
-        userInfo.transferDataFromLoginUserDto(loginUserDto);
-        UserLinkInfo userLinkInfo =
-            userLinkServiceFacade.getUserLinkInfo(userId);
-        if (userLinkInfo != null) {
-            // Copy third-party account associated information
-            List<UserLinkVo> userLinkVos =
-                new ArrayList<>(userLinkInfo.getAccountLinkList().size());
-            for (int i = 0; i < userLinkInfo.getAccountLinkList().size(); i++) {
-                UserLinkVo linkVo = new UserLinkVo();
-                BeanUtil.copyProperties(
-                    userLinkInfo.getAccountLinkList().get(i), linkVo);
-                userLinkVos.add(linkVo);
-            }
-            userInfo.transferDataFromDto(userLinkInfo, userLinkVos);
-        } else {
-            userInfo.setApiKey(iDeveloperService.getApiKeyByUserId(userId));
-            String actions = playerActivityMapper.selectActionsByUserId(userId);
-            userInfo.setWizards(JSONUtil.parseObj(actions));
-        }
+//        boolean usedInviteReward =
+//            userServiceFacade.getInvitationReward(userId);
+//        UserInfoVo userInfo = UserInfoVo.builder()
+//            .sendSubscriptionNotify(true)
+//            .usedInviteReward(usedInviteReward)
+//            .build();
+//        LoginUserDto loginUserDto = LoginContext.me().getLoginUser();
+//        userInfo.transferDataFromLoginUserDto(loginUserDto);
+//        UserLinkInfo userLinkInfo =
+//            userLinkServiceFacade.getUserLinkInfo(userId);
+//        if (userLinkInfo != null) {
+//            // Copy third-party account associated information
+//            List<UserLinkVo> userLinkVos =
+//                new ArrayList<>(userLinkInfo.getAccountLinkList().size());
+//            for (int i = 0; i < userLinkInfo.getAccountLinkList().size(); i++) {
+//                UserLinkVo linkVo = new UserLinkVo();
+//                BeanUtil.copyProperties(
+//                    userLinkInfo.getAccountLinkList().get(i), linkVo);
+//                userLinkVos.add(linkVo);
+//            }
+//            userInfo.transferDataFromDto(userLinkInfo, userLinkVos);
+//        } else {
+//            userInfo.setApiKey(iDeveloperService.getApiKeyByUserId(userId));
+//            String actions = playerActivityMapper.selectActionsByUserId(userId);
+//            userInfo.setWizards(JSONUtil.parseObj(actions));
+//        }
         // Cancel the account during the calm period,
         // and calculate the official cancellation time
-        if (userInfo.getIsPaused()) {
-            UserHistoryEntity userHistory =
-                iUserHistoryService.getLatestUserHistoryEntity(userId,
-                    UserOperationType.APPLY_FOR_CLOSING);
-            ExceptionUtil.isNotNull(userHistory,
-                UserClosingException.USER_HISTORY_RECORD_ISSUE);
-            userInfo.setCloseAt(userHistory.getCreatedAt()
-                .plusDays(USER_IS_PAUSED_CLOSE_DAY)
-                .withHour(0)
-                .withMinute(0)
-                .withSecond(0));
-        }
+//        if (userInfo.getIsPaused()) {
+//            UserHistoryEntity userHistory =
+//                iUserHistoryService.getLatestUserHistoryEntity(userId,
+//                    UserOperationType.APPLY_FOR_CLOSING);
+//            ExceptionUtil.isNotNull(userHistory,
+//                UserClosingException.USER_HISTORY_RECORD_ISSUE);
+//            userInfo.setCloseAt(userHistory.getCreatedAt()
+//                .plusDays(USER_IS_PAUSED_CLOSE_DAY)
+//                .withHour(0)
+//                .withMinute(0)
+//                .withSecond(0));
+//        }
 
-        boolean noSpace = StrUtil.isBlank(spaceId);
-        String spcId = spaceId;
+        boolean noSpace = StrUtil.isBlank("spc71PbGiltqC");
+        String spcId = "spc71PbGiltqC";
+        UserInfoVo userInfo = UserInfoVo.builder()
+            .sendSubscriptionNotify(true)
+            .build();
+
         // Selectively filter spatial related information
         if (BooleanUtil.isTrue(filter)) {
-            if (noSpace) {
-                return userInfo;
-            }
             Long memberId =
-                iMemberService.getMemberIdByUserIdAndSpaceId(userId, spcId);
+                iMemberService.getMemberIdByUserIdAndSpaceId(1L, spcId);
             if (ObjectUtil.isNull(memberId)) {
                 return userInfo;
             }
@@ -794,8 +795,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity>
         // Cache session
         UserSpaceDto userSpace =
             userSpaceCacheService.getUserSpace(userId, spcId);
-        userInfo.setSpaceId(userSpace.getSpaceId());
-        userInfo.setSpaceName(userSpace.getSpaceName());
+        userInfo.setSpaceId(spcId);
+        userInfo.setSpaceName("HT");
         userInfo.setSpaceLogo(userSpace.getSpaceLogo());
         userInfo.setMemberId(userSpace.getMemberId());
         userInfo.setMemberName(userSpace.getMemberName());

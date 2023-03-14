@@ -22,7 +22,7 @@
 import { RewriteFrames } from '@sentry/integrations';
 import * as Sentry from '@sentry/nextjs';
 import { Integrations } from '@sentry/tracing';
-import { Api, getLanguage, injectStore, IReduxState, Navigation, Selectors, StatusCode, StoreActions, Strings, t, Url } from '@apitable/core';
+import { Api, getLanguage, injectStore, IReduxState, Navigation, StatusCode, StoreActions, Strings, t, Url } from '@apitable/core';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { BillingModal, Modal } from 'pc/components/common/modal/modal/modal';
@@ -105,8 +105,7 @@ function initAxios(store: Store<IReduxState>) {
       success && data && response.config.url?.startsWith('/nest/v1/') &&
       !IGNORE_PATH_REG.test(location.pathname)
     ) {
-      const state = store.getState();
-      const activeSpaceId = Selectors.activeSpaceId(state);
+      const activeSpaceId = 'spc71PbGiltqC';
       const spaceId = data.datasheet?.spaceId || data.mirror?.spaceId || data.dashboard?.spaceId || data.form?.spaceId;
       if (spaceId && (spaceId !== activeSpaceId)) {
         axios.defaults.headers.common['X-Space-Id'] = spaceId;
@@ -131,6 +130,7 @@ function initAxios(store: Store<IReduxState>) {
     console.log('code And Data is:', code);
     console.log('code And Data is:', data);
     
+    console.log('code????????????????', code);
     switch (code) {
       case StatusCode.UN_AUTHORIZED: {
         if (window.location.pathname !== '/login') {

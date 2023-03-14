@@ -97,7 +97,8 @@ public class NodeShareController {
     /**
      * Get node share info.
      */
-    @GetResource(path = "/shareSettings/{nodeId}", requiredPermission = false)
+    @GetResource(path = "/shareSettings/{nodeId}", requiredLogin = false, requiredPermission =
+            false)
     @Operation(summary = "Get node share info")
     @Parameters({
         @Parameter(name = "nodeId", description = "node id", required = true, schema =
@@ -121,7 +122,8 @@ public class NodeShareController {
      * Update node share setting.
      */
     @Notification(templateId = NotificationTemplateId.NODE_SHARE)
-    @PostResource(path = "/updateShare/{nodeId}", requiredPermission = false,
+    @PostResource(path = "/updateShare/{nodeId}", requiredLogin = false, requiredPermission =
+            false,
         requiredAccessDomain = true)
     @Operation(summary = "Update node share setting", description = "Update node share setting \n"
         + SHARE_PARAM_DESC)
@@ -154,7 +156,8 @@ public class NodeShareController {
      * Disable node sharing.
      */
     @Notification(templateId = NotificationTemplateId.NODE_SHARE)
-    @PostResource(path = "/disableShare/{nodeId}", requiredPermission = false)
+    @PostResource(path = "/disableShare/{nodeId}", requiredLogin = false, requiredPermission =
+            false)
     @Operation(summary = "Disable node sharing")
     @Parameters({
         @Parameter(name = "nodeId", description = "node id", required = true, schema =
@@ -177,7 +180,8 @@ public class NodeShareController {
      * Sotre share data.
      */
     @Notification(templateId = NotificationTemplateId.NODE_CREATE)
-    @PostResource(path = "/storeShareData", requiredPermission = false)
+    @PostResource(path = "/storeShareData", requiredLogin = false, requiredPermission =
+            false)
     @Operation(summary = "Sotre share data")
     @Parameter(name = ParamsConstants.PLAYER_SOCKET_ID, description = "user socket id",
         schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "QkKp9XJEl")

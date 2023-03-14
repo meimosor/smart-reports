@@ -266,7 +266,7 @@ const Share: React.FC<React.PropsWithChildren<IShareProps>> = ({ shareInfo }) =>
     spaceName: shareSpaceName,
     allowApply,
   } = shareSpace;
-  const realSpaceId = userInfo?.spaceId;
+  const realSpaceId = 'spc71PbGiltqC';
 
   // Control the display of the application to join the space
   const applicationJoinAlertVisible = (

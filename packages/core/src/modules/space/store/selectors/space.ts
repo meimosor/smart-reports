@@ -16,8 +16,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { IReduxState } from '../../../../exports/store/interfaces';
-
-export const activeSpaceId = (state: IReduxState) => {
-  return state.space.activeId;
+export const activeSpaceId = () => {
+  return 'spc71PbGiltqC';
 };

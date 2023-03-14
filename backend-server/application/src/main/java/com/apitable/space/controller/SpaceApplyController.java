@@ -89,7 +89,7 @@ public class SpaceApplyController {
      * Applying to join the space.
      */
     @Notification(templateId = NotificationTemplateId.SPACE_JOIN_APPLY)
-    @PostResource(path = "/join", requiredPermission = false)
+    @PostResource(path = "/join", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Applying to join the space")
     public ResponseData<Void> apply(
         @RequestBody @Valid final SpaceJoinApplyRo ro) {
@@ -139,7 +139,7 @@ public class SpaceApplyController {
     /**
      * Process joining application.
      */
-    @PostResource(path = "/process", requiredPermission = false)
+    @PostResource(path = "/process", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Process joining application")
     public ResponseData<Void> process(
         @RequestBody @Valid final SpaceJoinProcessRo ro) {

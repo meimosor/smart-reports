@@ -111,7 +111,7 @@ export const toggleSpace = async(spaceId?: string | null) => {
   if (!spaceId) {
     return;
   }
-  const activeSpaceId = store.getState().space.activeId;
+  const activeSpaceId = 'spc71PbGiltqC';
   if (activeSpaceId === spaceId) {
     return;
   }

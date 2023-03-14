@@ -71,6 +71,8 @@ export const WidgetPanelHeader = (props: { onClosePanel: () => void | Promise<vo
 
   useEffect(() => {
     const widgetPanelStatusMap = getStorage(StorageName.WidgetPanelStatusMap)!;
+    console.log('widgetPanelStatusMap=================', widgetPanelStatusMap);
+    
     if (!widgetPanelStatusMap) {
       return;
     }

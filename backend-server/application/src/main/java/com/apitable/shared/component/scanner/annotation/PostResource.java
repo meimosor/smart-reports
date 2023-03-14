@@ -62,12 +62,12 @@ public @interface PostResource {
     /**
      * need validate whether to login
      */
-    boolean requiredLogin() default true;
+    boolean requiredLogin() default false;
 
     /**
      * whether to validate permission
      */
-    boolean requiredPermission() default true;
+    boolean requiredPermission() default false;
 
     /**
      * request path

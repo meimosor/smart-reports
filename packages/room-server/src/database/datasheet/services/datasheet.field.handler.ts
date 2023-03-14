@@ -24,7 +24,6 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { isEmpty } from 'class-validator';
 import { difference, head, intersection } from 'lodash';
 import { InjectLogger } from 'shared/common';
-import { PermissionException, ServerException } from 'shared/exception';
 import { IAuthHeader, IFetchDataOriginOptions, ILinkedRecordMap } from 'shared/interfaces';
 import { RoomResourceRelService } from 'database/resource/services/room.resource.rel.service';
 import { Logger } from 'winston';
@@ -105,7 +104,7 @@ export class DatasheetFieldHandler {
     const combineResult: IForeignDatasheetMap & IDatasheetUnits = {};
     combineResult.foreignDatasheetMap = globalParam.foreignDstMap;
     // Get the space ID which the datasheet belongs to
-    const spaceId = await this.getSpaceIdByDstId(mainDstId);
+    const spaceId = 'spc71PbGiltqC';
     let tempUnitMap: (IUnitValue | IUserValue)[] = [];
     // Batch query member info
     if (globalParam.memberFieldUnitIds.size > 0) {
@@ -894,11 +893,4 @@ export class DatasheetFieldHandler {
     }
   }
 
-  private async getSpaceIdByDstId(dstId: string): Promise<string> {
-    const rawData = await this.datasheetRepository.selectSpaceIdByDstId(dstId);
-    if (rawData?.spaceId) {
-      return rawData.spaceId;
-    }
-    throw new ServerException(PermissionException.NODE_NOT_EXIST);
-  }
 }

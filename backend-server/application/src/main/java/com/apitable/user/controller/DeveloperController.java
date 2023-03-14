@@ -65,7 +65,7 @@ public class DeveloperController {
     /**
      * Verify the access token.
      */
-    @GetResource(path = "/valid/{apiKey}", requiredLogin = false)
+    @GetResource(path = "/valid/{apiKey}", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Verify the access token", description = "Provides a mid-tier validation"
         + " access token.")
     public ResponseData<Boolean> validateApiKey(@PathVariable("apiKey") String apiKey) {

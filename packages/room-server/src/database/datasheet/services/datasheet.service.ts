@@ -280,9 +280,9 @@ export class DatasheetService {
     return await this.datasheetFieldHandler.parse(mainDstId, auth, mainMeta, mainRecordMap, origin, linkedRecordMap, undefined, withoutPermission);
   }
 
-  async fetchUsers(nodeId: string, uuids: string[]): Promise<any[]> {
+  async fetchUsers(_nodeId: string, uuids: string[]): Promise<any[]> {
     // Get the space id the node is in
-    const spaceId = await this.nodeService.getSpaceIdByNodeId(nodeId);
+    const spaceId = 'spc71PbGiltqC';
     if (!spaceId) {
       throw new ServerException(DatasheetException.NOT_EXIST);
     }

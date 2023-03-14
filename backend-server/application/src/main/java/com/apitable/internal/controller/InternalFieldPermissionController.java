@@ -109,7 +109,7 @@ public class InternalFieldPermissionController {
     /**
      * get field permissions.
      */
-    @GetResource(path = "/node/{nodeId}/field/permission", requiredLogin = false)
+    @GetResource(path = "/node/{nodeId}/field/permission", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "get field permissions")
     @Parameters({
         @Parameter(name = "nodeId", description = "node id", required = true, schema = @Schema
@@ -144,7 +144,7 @@ public class InternalFieldPermissionController {
     /**
      * get field permission set for multiple nodes.
      */
-    @PostResource(path = "/node/field/permission", requiredLogin = false)
+    @PostResource(path = "/node/field/permission", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "get field permission set for multiple nodes")
     public ResponseData<List<FieldPermissionView>> getMultiFieldPermissionViews(
         @RequestBody @Valid InternalPermissionRo data) {

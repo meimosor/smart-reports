@@ -75,7 +75,7 @@ public class ActionController {
     /**
      * Send SMS verification code.
      */
-    @PostResource(name = "Send SMS verification code", path = "/sms/code", requiredLogin = false)
+    @PostResource(name = "Send SMS verification code", path = "/sms/code", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Send SMS verification code", description =
         "SMS type; 1: Registration, 2:Login, "
             + "3: Modify login password, 4: DingTalk binding, 5: Bind mobile phone, "
@@ -110,7 +110,7 @@ public class ActionController {
     /**
      * Send email verification code.
      */
-    @PostResource(name = "Send email verification code", path = "/mail/code", requiredLogin = false)
+    @PostResource(name = "Send email verification code", path = "/mail/code", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Send email verification code", description =
         "Email verification code; 1:Email binding, "
             + "2: Email registration, 3: General verification")
@@ -130,7 +130,7 @@ public class ActionController {
      * Mobile verification code verification.
      */
     @PostResource(name = "Mobile verification code verification", path = "/sms/code/validate",
-        requiredLogin = false)
+        requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Mobile verification code verification", description =
         "Usage scenarios: DingTalk binding, "
             + "identity verification before changing the mobile phone mailbox, changing the main "
@@ -152,7 +152,7 @@ public class ActionController {
      * Email verification code verification.
      */
     @PostResource(name = "Email verification code verification", path = "/email/code/validate",
-        requiredLogin = false)
+        requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Email verification code verification", description = "Usage scenario: "
         + "Verify identity before changing email address when no mobile phone, change the main "
         + "administrator")
@@ -169,7 +169,7 @@ public class ActionController {
      * Invitation temporary code verification.
      */
     @PostResource(name = "Invitation temporary code verification", path = "/invite/valid",
-        requiredLogin = false)
+        requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Invitation temporary code verification", description =
         "Invitation link token verification, the"
             + " relevant invitation information can be obtained after the verification is "

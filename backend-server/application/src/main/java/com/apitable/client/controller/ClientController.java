@@ -78,9 +78,14 @@ public class ClientController {
     public ClientInfoVO getTemplateInfo(
         @RequestParam(name = "spaceId", required = false) String spaceId) {
         // If the Request Param is not empty, it will actively switch to the space
+        spaceId = "spc71PbGiltqC";
         this.userSwitchSpace(SessionContext.getUserIdWithoutException(), spaceId);
         ClientInfoVO info = new ClientInfoVO();
-        UserInfoVo userInfoVo = this.getUserInfoFromSession();
+//        UserInfoVo userInfoVo = this.getUserInfoFromSession();
+        UserInfoVo userInfoVo = new UserInfoVo();
+        userInfoVo.setSpaceId(spaceId);
+        userInfoVo.setSpaceName("HT");
+        userInfoVo.setUserId("1");
         if (null != userInfoVo) {
             try {
                 info.setUserInfo(objectMapper.writeValueAsString(userInfoVo));
@@ -91,6 +96,7 @@ public class ClientController {
         } else {
             info.setUserInfo(StrUtil.NULL);
         }
+
         info.setLocale(LocaleContextHolder.getLocale().toLanguageTag());
         info.setWizards(
             StrUtil.toString(iSystemConfigService.getWizardConfig(I18nTypes.ZH_CN.getName())));

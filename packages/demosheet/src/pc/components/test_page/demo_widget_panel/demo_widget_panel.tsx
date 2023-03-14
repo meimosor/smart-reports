@@ -71,9 +71,13 @@ export const DemoWidgetPanel = () => {
 
   useManageWidgetMap();
 
-  if (!isPanelOpening) {
-    return null;
-  }
+  console.log('activeWidgetPanelxxxxxxxxxxxxxxxxxxx', activeWidgetPanel);
+
+  console.log('isPanelOpening--------------------->', isPanelOpening);
+  
+  // if (!isPanelOpening) {
+  //   return null;
+  // }
 
   if (netWorking?.loading) {
     return (

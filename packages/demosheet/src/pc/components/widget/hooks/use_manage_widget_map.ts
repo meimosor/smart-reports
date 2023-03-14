@@ -73,18 +73,14 @@ export const useMountWidgetPanelShortKeys = () => {
   useEffect(() => {
     const toggleWidgetPanel = () => {
       const state = store.getState();
-      const isApiPanelOpen = state.space.isApiPanelOpen;
-      if (isApiPanelOpen) {
-        dispatch(StoreActions.toggleApiPanel(false));
-      }
       const resourceType = mirrorId ? ResourceType.Mirror : ResourceType.Datasheet;
       const spaceId = state.space.activeId;
       const resourceId = mirrorId || datasheetId || '';
-      const { width, opening, activePanelId } = Selectors.getResourceWidgetPanelStatus(state, resourceId, resourceType) || {} as IWidgetPanelStatus;
+      const { width, activePanelId } = Selectors.getResourceWidgetPanelStatus(state, resourceId, resourceType) || {} as IWidgetPanelStatus;
       setStorage(StorageName.WidgetPanelStatusMap, {
         [`${spaceId},${resourceId}`]: {
           width,
-          opening: !opening,
+          opening: true,
           activePanelId,
         },
       });

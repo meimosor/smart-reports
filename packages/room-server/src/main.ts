@@ -128,7 +128,7 @@ async function bootstrap() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   // listening port
-  await app.listen(BootstrapConstants.SERVER_PORT, '0.0.0.0');
+  await app.listen(BootstrapConstants.SERVER_PORT, '127.0.0.1');
 
   // print running environment
   logger.log(`Application[${APPLICATION_NAME}]-Env[${environment}]`, 'Bootstrap');

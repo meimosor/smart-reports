@@ -72,15 +72,15 @@ export const PrivateRoute: FC<React.PropsWithChildren<unknown>> = ({ children })
       location.href = LOGIN_ON_AUTHORIZATION_REDIRECT_TO_URL + encodeURIComponent(location.href);
       return null;
     }
-    const { href } = process.env.SSR ? { href: '' } : location;
+    // const { href } = process.env.SSR ? { href: '' } : location;
 
-    if (!process.env.SSR && !router.asPath.includes('login')) {
-      Router.redirect( Navigation.LOGIN,{
-        query: {
-          reference: href
-        },
-      });
-    }
+    // if (!process.env.SSR && !router.asPath.includes('login')) {
+    //   Router.redirect( Navigation.LOGIN,{
+    //     query: {
+    //       reference: href
+    //     },
+    //   });
+    // }
 
     return null;
   };

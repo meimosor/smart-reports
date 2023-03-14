@@ -61,8 +61,8 @@ public class NodeFavoriteController {
     @Parameter(name = ParamsConstants.SPACE_ID, description = "space id", required = true,
         schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "spczJrh2i3tLW")
     public ResponseData<List<FavoriteNodeInfo>> list() {
-        String spaceId = LoginContext.me().getSpaceId();
-        Long memberId = LoginContext.me().getMemberId();
+        String spaceId = "spc71PbGiltqC";
+        Long memberId = 1L;
         return ResponseData.success(iNodeFavoriteService.getFavoriteNodeList(spaceId, memberId));
     }
 

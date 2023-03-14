@@ -50,7 +50,7 @@ public class AssetCallbackController {
      * Resource upload completion notification callbac.
      */
     @PostResource(name = "Resource upload completion notification callback",
-        path = "/upload/callback", requiredLogin = false)
+        path = "/upload/callback", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "Resource upload completion notification callback",
         description = "After S3 completes the client upload, "
             + "it actively reaches the notification server")
@@ -65,7 +65,7 @@ public class AssetCallbackController {
      * widget upload callback.
      */
     @PostResource(name = "widget upload callback",
-        path = "/widget/uploadCallback", requiredLogin = false)
+        path = "/widget/uploadCallback", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "widget upload callback")
     public ResponseData<Void> widgetCallback(
         @RequestBody final WidgetUploadNotifyRO body) {

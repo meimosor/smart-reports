@@ -97,7 +97,7 @@ public class AuthController {
      * @return {@link ResponseData}
      * @author Chambers
      */
-    @PostResource(path = "/register", requiredLogin = false)
+    @PostResource(path = "/register", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "register", description = "serving for community edition")
     public ResponseData<Void> register(@RequestBody @Valid final RegisterRO data) {
         if (BooleanUtil.isFalse(skipRegisterValidate)) {
@@ -115,7 +115,7 @@ public class AuthController {
      * @param request request info
      * @return {@link ResponseData}
      */
-    @PostResource(name = "Login", path = "/signIn", requiredLogin = false)
+    @PostResource(name = "Login", path = "/signIn", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "login",
         description = AUTH_DESC)
     public ResponseData<Void> login(@RequestBody @Valid final LoginRo data,

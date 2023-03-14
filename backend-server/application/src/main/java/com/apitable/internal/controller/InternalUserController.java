@@ -69,7 +69,7 @@ public class InternalUserController {
     /**
      * Check whether logged in.
      */
-    @GetResource(name = "check whether logged in", path = "/user/session", requiredLogin = false)
+    @GetResource(name = "check whether logged in", path = "/user/session", requiredLogin = false, requiredPermission = false)
     @Operation(summary = "check whether logged in", description = "get the necessary information")
     public ResponseData<Boolean> meSession() {
         HttpSession session = HttpContextUtil.getSession(false);
