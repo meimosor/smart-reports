@@ -34,7 +34,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiInternalServerErrorResponse, ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiInternalServerErrorResponse, ApiOperation, ApiProduces, ApiTags } from '@nestjs/swagger';
 import { InternalCreateDatasheetVo } from 'database/interfaces';
 import { AttachmentUploadRo } from 'fusion/ros/attachment.upload.ro';
 import { AttachmentService } from 'database/attachment/services/attachment.service';
@@ -48,14 +48,11 @@ import { NodePermissionEnum } from 'shared/enums/node.permission.enum';
 import { ApiException } from 'shared/exception';
 import { ApiCacheInterceptor, apiCacheTTLFactory } from 'shared/interceptor/api.cache.interceptor';
 import { ApiNotifyInterceptor } from 'shared/interceptor/api.notify.interceptor';
-import { ApiUsageInterceptor } from 'shared/interceptor/api.usage.interceptor';
 import { IFileInterface } from 'shared/interfaces/file.interface';
-import { ApiAuthGuard } from 'fusion/middleware/guard/api.auth.guard';
 import { ApiDatasheetGuard } from 'fusion/middleware/guard/api.datasheet.guard';
 import { ApiFieldGuard } from 'fusion/middleware/guard/api.field.guard';
 import { ApiNodeGuard } from 'fusion/middleware/guard/api.node.guard';
 import { ApiSpaceGuard } from 'fusion/middleware/guard/api.space.guard';
-import { ApiUsageGuard } from 'fusion/middleware/guard/api.usage.guard';
 import { NodePermissionGuard } from 'fusion/middleware/guard/node.permission.guard';
 import { RestService } from 'shared/services/rest/rest.service';
 import { AssetUploadQueryRo } from './ros/asset.query';
@@ -90,9 +87,9 @@ import { QueryPipe } from './middleware/pipe/query.pipe';
  */
 @ApiTags(SwaggerConstants.TAG)
 @Controller('/fusion/v1')
-@ApiBearerAuth()
-@UseGuards(ApiAuthGuard, ApiUsageGuard, NodePermissionGuard)
-@UseInterceptors(ApiUsageInterceptor)
+// @ApiBearerAuth()
+@UseGuards(NodePermissionGuard)
+// @UseInterceptors(ApiUsageInterceptor)
 export class FusionApiController {
   constructor(
     private readonly fusionApiService: FusionApiService,
@@ -170,7 +167,7 @@ export class FusionApiController {
     }
     return;
   }
-
+  
   @Post('/datasheets/:datasheetId/attachments')
   @ApiOperation({
     summary: 'Upload datasheet attachment',

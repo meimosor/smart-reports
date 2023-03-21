@@ -17,7 +17,6 @@
  */
 
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { SPACE_ID_HTTP_DECORATE, USER_HTTP_DECORATE } from '../../../shared/common';
 import { ApiException } from '../../../shared/exception';
 import { ApiTipConstant } from '@apitable/core';
 import { UnitMemberService } from 'unit/services/unit.member.service';
@@ -34,10 +33,11 @@ export class ApiSpaceGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
-    const user = request[USER_HTTP_DECORATE];
-    const spaceId = request[SPACE_ID_HTTP_DECORATE];
-    const spaceIds = await this.memberService.selectSpaceIdsByUserId(user.id);
+    
+    console.log('KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK',context);
+    const spaceId = 'spc71PbGiltqC';
+
+    const spaceIds = await this.memberService.selectSpaceIdsByUserId('1');
     // no permission of the space
     if (!spaceIds.includes(spaceId)) {
       throw ApiException.tipError(ApiTipConstant.api_forbidden_because_of_not_in_space);

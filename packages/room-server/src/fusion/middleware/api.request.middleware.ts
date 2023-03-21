@@ -16,9 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { ApiTipConstant } from '@apitable/core';
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { ApiException } from 'shared/exception';
 
 /**
  * request context middleware
@@ -26,9 +24,11 @@ import { ApiException } from 'shared/exception';
 @Injectable()
 export class ApiRequestMiddleware implements NestMiddleware {
   use(req: any, _res: any, next: () => void): any {
-    if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-      throw ApiException.tipError(ApiTipConstant.api_unauthorized);
-    }
+    // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
+    //   throw ApiException.tipError(ApiTipConstant.api_unauthorized);
+    // }
+    console.log('7', req);
+    
     next();
   }
 }

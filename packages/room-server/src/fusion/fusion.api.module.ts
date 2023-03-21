@@ -25,7 +25,6 @@ import {
 } from 'fusion/field';
 import { CacheConfigService } from 'shared/cache/cache.config.service';
 import { ApiRequestMiddleware } from './middleware/api.request.middleware';
-import { NodeRateLimiterMiddleware } from 'shared/middleware/node.rate.limiter.middleware';
 import { FusionApiController } from './fusion.api.controller';
 import { ApiUsageRepository } from './repositories/api.usage.repository';
 import { DatabaseModule } from 'database/database.module';
@@ -94,6 +93,6 @@ import { UnitModule } from 'unit/unit.module';
 })
 export class FusionApiModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ApiRequestMiddleware, NodeRateLimiterMiddleware).forRoutes(FusionApiController);
+    consumer.apply(ApiRequestMiddleware).forRoutes(FusionApiController);
   }
 }

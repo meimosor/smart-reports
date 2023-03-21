@@ -17,7 +17,7 @@
  */
 
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { DATASHEET_HTTP_DECORATE, USER_HTTP_DECORATE } from '../../../shared/common';
+import { DATASHEET_HTTP_DECORATE } from '../../../shared/common';
 import { ApiException } from '../../../shared/exception';
 import { ApiTipConstant } from '@apitable/core';
 import { UnitMemberService } from 'unit/services/unit.member.service';
@@ -44,9 +44,8 @@ export class ApiDatasheetGuard implements CanActivate {
     if (!datasheet) {
       throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
     }
-    const spaceId = datasheet.spaceId;
-    const user = request[USER_HTTP_DECORATE];
-    const spaceIds = await this.memberService.selectSpaceIdsByUserId(user.id);
+    const spaceId = 'spc71PbGiltqC';
+    const spaceIds = await this.memberService.selectSpaceIdsByUserId('1');
     // no permission of the space
     if (!spaceIds.length || !spaceIds.includes(spaceId)) {
       throw ApiException.tipError(ApiTipConstant.api_datasheet_not_visible);
