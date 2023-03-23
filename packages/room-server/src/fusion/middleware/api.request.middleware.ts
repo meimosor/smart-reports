@@ -27,7 +27,8 @@ export class ApiRequestMiddleware implements NestMiddleware {
     // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
     //   throw ApiException.tipError(ApiTipConstant.api_unauthorized);
     // }
-    console.log('7', req);
+    console.log('12', req);
+    console.log(88);
     
     next();
   }

@@ -103,7 +103,7 @@ const Share: React.FC<React.PropsWithChildren<IShareProps>> = ({ shareInfo }) =>
   const { sideBarVisible, setSideBarVisible } = useSideBarVisible();
   const shareLoginFailed = getStorage(StorageName.ShareLoginFailed);
   const { shareId, datasheetId, formId, dashboardId } = useSelector(state => state.pageParams);
-  const userInfo = useSelector(state => state.user.info);
+  // const userInfo = useSelector(state => state.user.info);
   const [nodeTree, setNodeTree] = useState<INodeTree>();
   const [visible, setVisible] = useState(false);
   const [shareClose, setShareClose] = useState(false);

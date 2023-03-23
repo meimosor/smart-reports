@@ -275,14 +275,14 @@ public class DatasheetServiceImpl extends ServiceImpl<DatasheetMapper, Datasheet
             metaMap.put("recordId" + i, recordId);
         }
 
-        String viewId = IdUtil.createViewId();
-        metaMap.put("viewId", viewId);
+//        String viewId = IdUtil.createViewId();
+        metaMap.put("viewId", "df_view");
         // internationalization elements
         // view name
-        String defaultViewName =
-            StrUtil.isNotBlank(viewName) ? viewName
-                : I18nStringsUtil.t("default_view", currentLang);
-        metaMap.put("defaultView", defaultViewName);
+//        String defaultViewName =
+//            StrUtil.isNotBlank(viewName) ? viewName
+//                : I18nStringsUtil.t("default_view", currentLang);
+        metaMap.put("defaultView", "默认视图");
         // Datasheet title column
         metaMap.put("defaultDatasheetTitle", I18nStringsUtil.t("default_datasheet_title", currentLang));
         // Datasheet options column

@@ -60,8 +60,6 @@ import {
   DATASHEET_META_HTTP_DECORATE,
   EnvConfigKey,
   InjectLogger,
-  SPACE_ID_HTTP_DECORATE,
-  USER_HTTP_DECORATE,
 } from 'shared/common';
 import { OrderEnum } from 'shared/enums';
 import { SourceTypeEnum } from 'shared/enums/changeset.source.type.enum';
@@ -716,8 +714,8 @@ export class FusionApiService {
     // TODO: Copywriting ApiException.error({ tipId: ApiTipIdEnum.apiParamsNotExists, property: 'recordIds', value: diffs.join(',') })
     const limit = this.envConfigService.getRoomConfig(EnvConfigKey.CONST) as IServerConfig;
     const auth = { token: this.request.headers.authorization };
-    const spaceId = this.request[SPACE_ID_HTTP_DECORATE];
-    const userId = this.request[USER_HTTP_DECORATE].id;
+    const spaceId = 'spc71PbGiltqC';
+    const userId = '1';
     const totalCount = recordCount + body.records.length; // Coming over limit alerts >= 90 bars < 100 bars
     if (totalCount >= (limit.maxRecordCount * limit.recordRemindRange) / 100 && totalCount <= limit.maxRecordCount) {
       this.restService.createRecordLimitRemind(
