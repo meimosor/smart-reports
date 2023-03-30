@@ -1,5 +1,5 @@
 import { Button, IconButton, Skeleton, ThemeName } from '@apitable/components';
-import { Events, IWidgetPanelStatus, Player, ResourceType, Selectors, Strings, t } from '@apitable/core';
+import { Events, Player, ResourceType, Selectors, Strings, t } from '@apitable/core';
 import { AddOutlined, CloseOutlined } from '@apitable/icons';
 import { useMount } from 'ahooks';
 import { ShortcutActionManager, ShortcutActionName } from 'modules/shared/shortcut_key';
@@ -11,7 +11,7 @@ import { shallowEqual, useSelector } from 'react-redux';
 import { useManageWidgetMap } from 'pc/components/widget/hooks';
 import { expandWidgetCenter } from 'pc/components/widget/widget_center/widget_center';
 import styles from './style.module.less';
-import { WidgetList } from './demo_widget_list';
+import { DemoWidgetList } from './demo_widget_list';
 import { WidgetPanelHeader } from './demo_widget_panel_header';
 import WidgetEmptyLight from 'static/icon/datasheet/widget_empty_light.png';
 import WidgetEmptyDark from 'static/icon/datasheet/widget_empty_dark.png';
@@ -62,18 +62,18 @@ export const DemoWidgetPanel = () => {
   const netWorking = useSelector(state => Selectors.getResourceNetworking(state, datasheetId!, ResourceType.Datasheet), shallowEqual);
   const isEmptyPanel = !activeWidgetPanel;
   const isEmptyWidget = !(activeWidgetPanel && activeWidgetPanel.widgets.length);
-  const { opening: isPanelOpening } = useSelector(state => {
-    return Selectors.getResourceWidgetPanelStatus(state, resourceId, resourceType) || ({} as IWidgetPanelStatus);
-  });
+  // const { opening: isPanelOpening } = useSelector(state => {
+  //   return Selectors.getResourceWidgetPanelStatus(state, resourceId, resourceType) || ({} as IWidgetPanelStatus);
+  // });
   const onClosePanel = async() => {
     await ShortcutActionManager.trigger(ShortcutActionName.ToggleWidgetPanel);
   };
 
   useManageWidgetMap();
 
-  console.log('activeWidgetPanelxxxxxxxxxxxxxxxxxxx', activeWidgetPanel);
+  // console.log('activeWidgetPanelxxxxxxxxxxxxxxxxxxx', activeWidgetPanel);
 
-  console.log('isPanelOpening--------------------->', isPanelOpening);
+  // console.log('isPanelOpening--------------------->', isPanelOpening);
   
   // if (!isPanelOpening) {
   //   return null;
@@ -98,7 +98,7 @@ export const DemoWidgetPanel = () => {
       ) : (
         <div className={styles.widgetPanel}>
           <WidgetPanelHeader onClosePanel={onClosePanel} />
-          {isEmptyWidget ? <DemoEmptyPanel /> : <WidgetList />}
+          {isEmptyWidget ? <DemoEmptyPanel /> : <DemoWidgetList />}
         </div>
       )}
     </div>

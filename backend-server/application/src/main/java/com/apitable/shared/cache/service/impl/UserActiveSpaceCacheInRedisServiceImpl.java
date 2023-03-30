@@ -23,12 +23,14 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 
 import cn.hutool.core.util.StrUtil;
+import com.apitable.shared.util.AuthUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import com.apitable.shared.cache.service.UserActiveSpaceCacheService;
 import com.apitable.organization.mapper.MemberMapper;
 import com.apitable.core.constants.RedisConstants;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -53,15 +55,15 @@ public class UserActiveSpaceCacheInRedisServiceImpl implements UserActiveSpaceCa
 
     @Override
     public String getLastActiveSpace(Long userId) {
-        BoundValueOperations<String, String> opts = redisTemplate.boundValueOps(RedisConstants.getUserActiveSpaceKey(userId));
-        String spaceId = opts.get();
+        BoundValueOperations<String, String> opts = redisTemplate.boundValueOps(RedisConstants.getUserActiveSpaceKey(AuthUtil.getUserId()));
+        String spaceId = StringUtils.isNotEmpty(opts.get()) ? opts.get() : AuthUtil.getDefaultSpaceId();
         if (StrUtil.isBlank(spaceId)) {
-            spaceId = memberMapper.selectActiveSpaceByUserId(userId);
+            spaceId = memberMapper.selectActiveSpaceByUserId(AuthUtil.getUserId());
             if (StrUtil.isBlank(spaceId)) {
-                spaceId = memberMapper.getFirstSpaceIdByUserId(userId);
+                spaceId = memberMapper.getFirstSpaceIdByUserId(AuthUtil.getUserId());
             }
         }
-        return spaceId;
+        return spaceId ;
     }
 
     @Override

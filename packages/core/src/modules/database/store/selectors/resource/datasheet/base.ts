@@ -51,6 +51,7 @@ export const getDatasheetPrimaryField = (snapshot: ISnapshot) => {
  * @returns
  */
 export const getDatasheetPack = (state: IReduxState, id?: string | void) => {
+  
   const datasheetId = id || state.pageParams?.datasheetId;
   if (!datasheetId) {
     return;
@@ -348,6 +349,9 @@ export const getWidgetPanels = (state: IReduxState, datasheetId?: string) => {
 
 export const getWidgetPanelStatus = (state: IReduxState, datasheetId?: string) => {
   const client = getDatasheetClient(state, datasheetId);
+  console.log('client*****************______++++++', client);
+  // const widgetPanelStatus = client?.widgetPanelStatus；
+  // widgetPanelStatus.activePanelId = 'wplSM11YeqQQH';
   return client?.widgetPanelStatus;
 };
 

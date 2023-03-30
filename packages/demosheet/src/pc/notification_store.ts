@@ -45,7 +45,8 @@ export class NotificationStore {
   static init(userId: string, spaceId?: string) {
     this.destroy();
     console.log('NotificationStore initialized');
-    this.socket = this.openWsNotification(userId, spaceId);
+    const uid = userId || '1';
+    this.socket = this.openWsNotification(uid, spaceId);
   }
 
   static openWsNotification(userId: string, spaceId?: string) {

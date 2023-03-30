@@ -179,12 +179,12 @@ export const getResourceActiveWidgetPanel = (state: IReduxState, resourceId: str
   }
 
   const widgetPanelStatus = getResourceWidgetPanelStatus(state, resourceId, resourceType);
-  const activePanelId = widgetPanelStatus?.activePanelId;
-  const panelOpening = widgetPanelStatus?.opening;
+  const activePanelId = widgetPanelStatus?.activePanelId || 'wplSM11YeqQQH';
+  // const panelOpening = widgetPanelStatus?.opening;
 
-  if (!panelOpening) {
-    return;
-  }
+  // if (!panelOpening) {
+  //   return;
+  // }
 
   if (activePanelId) {
     return panels.find(item => item.id === activePanelId) || panels[0];

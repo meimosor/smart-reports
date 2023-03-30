@@ -31,6 +31,7 @@ import javax.annotation.Resource;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
+import com.apitable.shared.util.AuthUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import com.apitable.shared.cache.bean.SpaceResourceDto;
@@ -83,17 +84,19 @@ public class UserSpaceCacheInRedisServiceImpl implements UserSpaceCacheService {
 
     @Override
     public UserSpaceDto saveUserSpace(Long userId, String spaceId, Long memberId) {
-        MemberEntity memberEntity = memberMapper.selectMemberIdAndSpaceId(spaceId, memberId);
+        MemberEntity memberEntity = memberMapper.selectMemberIdAndSpaceId(AuthUtil.getDefaultSpaceId(), memberId);
         ExceptionUtil.isNotNull(memberEntity, NOT_IN_SPACE);
         UnitEntity unitEntity = unitMapper.selectByRefId(memberId);
         ExceptionUtil.isNotNull(unitEntity, NOT_IN_SPACE);
         SpaceEntity spaceEntity = spaceMapper.selectBySpaceId(spaceId);
         ExceptionUtil.isNotNull(spaceEntity, SpaceException.SPACE_NOT_EXIST);
-        boolean isMainAdmin = memberId.equals(spaceEntity.getOwner());
-        boolean isAdmin = SqlTool.retCount(spaceMemberRoleRelMapper.selectCountBySpaceIdAndMemberId(spaceId, memberId)) > 0;
+//        boolean isMainAdmin = memberId.equals(spaceEntity.getOwner());
+//        boolean isAdmin = SqlTool.retCount(spaceMemberRoleRelMapper.selectCountBySpaceIdAndMemberId(spaceId, memberId)) > 0;
+        boolean isMainAdmin = true;
+        boolean isAdmin = true;
         UserSpaceDto userSpaceDto = new UserSpaceDto();
-        userSpaceDto.setUserId(userId);
-        userSpaceDto.setSpaceId(spaceId);
+        userSpaceDto.setUserId(AuthUtil.getUserId());
+        userSpaceDto.setSpaceId(AuthUtil.getDefaultSpaceId());
         userSpaceDto.setSpaceName(spaceEntity.getName());
         userSpaceDto.setSpaceLogo(spaceEntity.getLogo());
         userSpaceDto.setMemberId(memberId);

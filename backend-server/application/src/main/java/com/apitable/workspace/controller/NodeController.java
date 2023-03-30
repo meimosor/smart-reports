@@ -61,6 +61,7 @@ import com.apitable.shared.context.SessionContext;
 import com.apitable.shared.holder.SpaceHolder;
 import com.apitable.shared.listener.event.AuditSpaceEvent;
 import com.apitable.shared.listener.event.AuditSpaceEvent.AuditSpaceArg;
+import com.apitable.shared.util.AuthUtil;
 import com.apitable.shared.util.information.InformationUtil;
 import com.apitable.space.enums.AuditSpaceAction;
 import com.apitable.space.enums.SpaceException;
@@ -463,18 +464,18 @@ public class NodeController {
     @Parameter(name = ParamsConstants.PLAYER_SOCKET_ID, description = "user socket id",
         schema = @Schema(type = "string"), in = ParameterIn.HEADER, example = "QkKp9XJEl")
     public ResponseData<NodeInfoVo> create(@RequestBody @Valid NodeOpRo nodeOpRo) {
-        Long userId = SessionContext.getUserId();
+        Long userId = AuthUtil.getUserId();
         // The method includes determining whether a node exists.
-        String spaceId = iNodeService.getSpaceIdByNodeId(nodeOpRo.getParentId());
+        String spaceId = AuthUtil.getDefaultSpaceId();
         SpaceHolder.set(spaceId);
         // The method includes determining whether the user is in this space.
         Long memberId = LoginContext.me().getMemberId(userId, spaceId);
-        // Check whether the parent node has the specified operation permission
-        iNodeService.checkEnableOperateNodeBySpaceFeature(memberId, spaceId,
-            nodeOpRo.getParentId());
+//        // Check whether the parent node has the specified operation permission
+//        iNodeService.checkEnableOperateNodeBySpaceFeature(memberId, spaceId,
+//            nodeOpRo.getParentId());
         ControlRole role = controlTemplate.fetchNodeRole(memberId, nodeOpRo.getParentId());
-        ExceptionUtil.isTrue(role.hasPermission(NodePermission.CREATE_NODE),
-            PermissionException.NODE_OPERATION_DENIED);
+//        ExceptionUtil.isTrue(role.hasPermission(NodePermission.CREATE_NODE),
+//            PermissionException.NODE_OPERATION_DENIED);
         // Check whether the source tables of form and mirror exist and whether they have the
         // specified operation permissions.
         iNodeService.checkSourceDatasheet(spaceId, memberId, nodeOpRo.getType(),

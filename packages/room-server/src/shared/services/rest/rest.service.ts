@@ -391,6 +391,7 @@ export class RestService {
         headers: HttpHelper.withSpaceIdHeader(HttpHelper.createAuthHeaders(headers), spaceId),
         params: {
           depth: 1,
+          type: 2,
         },
       })
       .toPromise();

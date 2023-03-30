@@ -54,7 +54,7 @@ const ResponsiveGridLayout: any = WidthProvider(Responsive);
 
 export const WIDGET_MENU = 'WIDGET_MENU';
 
-export const WidgetList = () => {
+export const DemoWidgetList = () => {
   const colors = useThemeColors();
   const { datasheetId, widgetId, mirrorId } = useSelector(state => state.pageParams);
   const resourceId = mirrorId || datasheetId;

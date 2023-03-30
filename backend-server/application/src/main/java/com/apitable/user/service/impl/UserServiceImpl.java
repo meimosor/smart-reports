@@ -86,6 +86,7 @@ import com.apitable.shared.constants.NotificationConstants;
 import com.apitable.shared.context.LoginContext;
 import com.apitable.shared.security.PasswordService;
 import com.apitable.shared.sysconfig.notification.NotificationTemplate;
+import com.apitable.shared.util.AuthUtil;
 import com.apitable.space.entity.SpaceEntity;
 import com.apitable.space.mapper.SpaceMapper;
 import com.apitable.space.ro.SpaceUpdateOpRo;
@@ -765,8 +766,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity>
 //                .withSecond(0));
 //        }
 
-        boolean noSpace = StrUtil.isBlank("spc71PbGiltqC");
-        String spcId = "spc71PbGiltqC";
         UserInfoVo userInfo = UserInfoVo.builder()
             .sendSubscriptionNotify(true)
             .build();
@@ -774,29 +773,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity>
         // Selectively filter spatial related information
         if (BooleanUtil.isTrue(filter)) {
             Long memberId =
-                iMemberService.getMemberIdByUserIdAndSpaceId(1L, spcId);
+                iMemberService.getMemberIdByUserIdAndSpaceId(1L, spaceId);
             if (ObjectUtil.isNull(memberId)) {
                 return userInfo;
             }
-        } else if (noSpace) {
-            // When the space ID is not transferred,
-            // obtain the space ID of the user's recent work
-            String activeSpaceId =
-                userActiveSpaceCacheService.getLastActiveSpace(userId);
-            if (StrUtil.isBlank(activeSpaceId)) {
-                return userInfo;
-            }
-            spcId = activeSpaceId;
         } else {
             // Prevent access to not join spaces
-            userSpaceCacheService.getMemberId(userId, spcId);
+            userSpaceCacheService.getMemberId(userId, spaceId);
         }
         userInfo.setNeedCreate(false);
         // Cache session
         UserSpaceDto userSpace =
-            userSpaceCacheService.getUserSpace(userId, spcId);
-        userInfo.setSpaceId(spcId);
-        userInfo.setSpaceName("HT");
+            userSpaceCacheService.getUserSpace(userId, spaceId);
+        userInfo.setSpaceId(userSpace.getSpaceId());
+        userInfo.setSpaceName(userSpace.getSpaceName());
+        userInfo.setUserId(userSpace.getUserId().toString());
         userInfo.setSpaceLogo(userSpace.getSpaceLogo());
         userInfo.setMemberId(userSpace.getMemberId());
         userInfo.setMemberName(userSpace.getMemberName());
@@ -810,7 +801,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity>
 
         // Get the last opened data table information
         OpenedSheet openedSheet =
-            userSpaceOpenedSheetCacheService.getOpenedSheet(userId, spcId);
+            userSpaceOpenedSheetCacheService.getOpenedSheet(userId, spaceId);
         if (ObjectUtil.isNotNull(openedSheet)
             && ObjectUtil.isNotNull(openedSheet.getNodeId())) {
             userInfo.setActiveNodeId(openedSheet.getNodeId());

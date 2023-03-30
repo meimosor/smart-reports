@@ -53,7 +53,7 @@ export const expandWidgetRoute = (widgetId: string, isReplace?: boolean, widgetF
     const params = { nodeId: nodeId, widgetId, embedId };
     isReplace ? Router.replace(Navigation.EMBED_SPACE, { params, query }) : Router.push(Navigation.EMBED_SPACE, { params, query });
   } else {
-    const params = { nodeId: nodeId, datasheetId, viewId, spaceId, widgetId };
+    const params = { nodeId: nodeId, datasheetId, viewId: 'df_view', spaceId, widgetId };
     isReplace ? Router.replace(Navigation.WORKBENCH, { params, query }) : Router.push(Navigation.WORKBENCH, { params, query });
   }
 };

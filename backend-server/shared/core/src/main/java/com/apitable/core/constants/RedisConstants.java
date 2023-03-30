@@ -162,7 +162,10 @@ public class RedisConstants {
      * @return user information storage key
      */
     public static String getUserActiveSpaceKey(Long userId) {
-        Assert.notNull(userId, "user does not exist");
+        if(userId == null) {
+            return StrUtil.format(USER_ACTIVE_SPACE_KEY, 1L);
+        }
+//        Assert.notNull(userId, "user does not exist");
         return StrUtil.format(USER_ACTIVE_SPACE_KEY, userId);
     }
 

@@ -58,7 +58,7 @@ export const collaboratorCursorSelector = createSelector(
           recordId: collaborator.activeCell!.recordId,
           avatar: collaborator.avatar,
           socketId: collaborator.socketId,
-          userId: collaborator.userId,
+          userId: collaborator.userId || '1',
           userName: collaborator.userName,
           memberName: collaborator.memberName,
           touchTime: collaborator.activeCell!.time, // the time of active cell

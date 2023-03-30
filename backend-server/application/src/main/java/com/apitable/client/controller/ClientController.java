@@ -26,6 +26,7 @@ import com.apitable.shared.component.scanner.annotation.ApiResource;
 import com.apitable.shared.component.scanner.annotation.GetResource;
 import com.apitable.shared.context.SessionContext;
 import com.apitable.shared.sysconfig.i18n.I18nTypes;
+import com.apitable.shared.util.AuthUtil;
 import com.apitable.space.service.ISpaceService;
 import com.apitable.user.service.IUserService;
 import com.apitable.user.vo.UserInfoVo;
@@ -78,14 +79,13 @@ public class ClientController {
     public ClientInfoVO getTemplateInfo(
         @RequestParam(name = "spaceId", required = false) String spaceId) {
         // If the Request Param is not empty, it will actively switch to the space
-        spaceId = "spc71PbGiltqC";
-        this.userSwitchSpace(SessionContext.getUserIdWithoutException(), spaceId);
+        this.userSwitchSpace(AuthUtil.getUserId(), AuthUtil.getDefaultSpaceId());
         ClientInfoVO info = new ClientInfoVO();
-//        UserInfoVo userInfoVo = this.getUserInfoFromSession();
-        UserInfoVo userInfoVo = new UserInfoVo();
-        userInfoVo.setSpaceId(spaceId);
-        userInfoVo.setSpaceName("HT");
-        userInfoVo.setUserId("1");
+        UserInfoVo userInfoVo = this.getUserInfoFromSession();
+//        UserInfoVo userInfoVo = new UserInfoVo();
+//        userInfoVo.setSpaceId(spaceId);
+//        userInfoVo.setSpaceName("HT");
+//        userInfoVo.setUserId("1");
         if (null != userInfoVo) {
             try {
                 info.setUserInfo(objectMapper.writeValueAsString(userInfoVo));
@@ -104,12 +104,12 @@ public class ClientController {
     }
 
     private UserInfoVo getUserInfoFromSession() {
-        if (!HttpContextUtil.hasSession()) {
-            return null;
-        }
+//        if (!HttpContextUtil.hasSession()) {
+//            return null;
+//        }
         UserInfoVo userInfoVo;
         try {
-            userInfoVo = iUserService.getCurrentUserInfo(SessionContext.getUserId(), null, false);
+            userInfoVo = iUserService.getCurrentUserInfo(AuthUtil.getUserId(), AuthUtil.getDefaultSpaceId(), false);
         } catch (Exception e) {
             log.warn("Failed to get UserInfo from Session.", e);
             return null;
