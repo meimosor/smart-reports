@@ -38,14 +38,7 @@ import com.apitable.workspace.ro.NodeMoveOpRo;
 import com.apitable.workspace.ro.NodeOpRo;
 import com.apitable.workspace.ro.NodeRelRo;
 import com.apitable.workspace.ro.NodeUpdateOpRo;
-import com.apitable.workspace.vo.BaseNodeInfo;
-import com.apitable.workspace.vo.NodeFromSpaceVo;
-import com.apitable.workspace.vo.NodeInfo;
-import com.apitable.workspace.vo.NodeInfoTreeVo;
-import com.apitable.workspace.vo.NodeInfoVo;
-import com.apitable.workspace.vo.NodeInfoWindowVo;
-import com.apitable.workspace.vo.NodePathVo;
-import com.apitable.workspace.vo.NodeSearchResult;
+import com.apitable.workspace.vo.*;
 import com.apitable.workspace.vo.ShowcaseVo.NodeExtra;
 import com.baomidou.mybatisplus.extension.service.IService;
 import java.io.IOException;
@@ -244,7 +237,7 @@ public interface INodeService extends IService<NodeEntity> {
      * @return NodeInfoVos
      */
     List<NodeInfoVo> getChildNodesByNodeId(String spaceId, Long memberId, String nodeId,
-                                           NodeType nodeType);
+                                           NodeType nodeType, Long tenant);
 
     /**
      * gets the node parent path
@@ -305,6 +298,13 @@ public interface INodeService extends IService<NodeEntity> {
      */
     String createDatasheetWithDesc(String spaceId, Long userId,
                                    CreateDatasheetRo createDatasheetRo);
+
+    /**
+     * Create forms and add pictures (if needed).
+     *
+     * @param vo           some params
+     */
+    void bindFormRecordInfo(DstRelInfoVo vo);
 
     /**
      * create child node.

@@ -90,11 +90,7 @@ import com.apitable.workspace.dto.NodeCopyOptions;
 import com.apitable.workspace.dto.NodeData;
 import com.apitable.workspace.dto.NodeExtraDTO;
 import com.apitable.workspace.dto.UrlNodeInfoDTO;
-import com.apitable.workspace.entity.DatasheetEntity;
-import com.apitable.workspace.entity.DatasheetMetaEntity;
-import com.apitable.workspace.entity.DatasheetRecordEntity;
-import com.apitable.workspace.entity.NodeDescEntity;
-import com.apitable.workspace.entity.NodeEntity;
+import com.apitable.workspace.entity.*;
 import com.apitable.workspace.enums.FieldType;
 import com.apitable.workspace.enums.IdRulePrefixEnum;
 import com.apitable.workspace.enums.NodeException;
@@ -105,9 +101,7 @@ import com.apitable.workspace.enums.ViewType;
 import com.apitable.workspace.listener.CsvReadListener;
 import com.apitable.workspace.listener.ExcelSheetsDataListener;
 import com.apitable.workspace.listener.MultiSheetReadListener;
-import com.apitable.workspace.mapper.DatasheetMetaMapper;
-import com.apitable.workspace.mapper.NodeMapper;
-import com.apitable.workspace.mapper.NodeShareSettingMapper;
+import com.apitable.workspace.mapper.*;
 import com.apitable.workspace.ro.CreateDatasheetRo;
 import com.apitable.workspace.ro.FieldMapRo;
 import com.apitable.workspace.ro.ImportExcelOpRo;
@@ -129,20 +123,9 @@ import com.apitable.workspace.service.INodeRelService;
 import com.apitable.workspace.service.INodeRoleService;
 import com.apitable.workspace.service.INodeService;
 import com.apitable.workspace.service.IResourceMetaService;
-import com.apitable.workspace.vo.BaseNodeInfo;
-import com.apitable.workspace.vo.FieldPermissionInfo;
-import com.apitable.workspace.vo.NodeFromSpaceVo;
-import com.apitable.workspace.vo.NodeInfo;
-import com.apitable.workspace.vo.NodeInfoTreeVo;
-import com.apitable.workspace.vo.NodeInfoVo;
-import com.apitable.workspace.vo.NodeInfoWindowVo;
+import com.apitable.workspace.vo.*;
 import com.apitable.workspace.vo.NodeInfoWindowVo.MemberInfo;
-import com.apitable.workspace.vo.NodePathVo;
-import com.apitable.workspace.vo.NodePermissionView;
-import com.apitable.workspace.vo.NodeSearchResult;
-import com.apitable.workspace.vo.NodeShareTree;
 import com.apitable.workspace.vo.ShowcaseVo.NodeExtra;
-import com.apitable.workspace.vo.SimpleSortableNodeInfo;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
@@ -172,6 +155,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.StringUtils;
 
 /**
  * node service implement.
@@ -182,6 +166,9 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
 
     @Resource
     private NodeMapper nodeMapper;
+
+    @Resource
+    private DstRelMapper dstRelMapper;
 
     @Resource
     private INodeDescService iNodeDescService;
@@ -440,10 +427,10 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
 
     @Override
     public List<NodeInfoVo> getChildNodesByNodeId(String spaceId, Long memberId, String nodeId,
-                                                  NodeType nodeType) {
+                                                  NodeType nodeType,Long tenant) {
         log.info("Query the list of child nodes ");
         // Get a direct child node
-        List<String> subNodeIds = nodeMapper.selectOrderSubNodeIds(nodeId, nodeType);
+        List<String> subNodeIds = nodeMapper.selectOrderSubNodeIds(nodeId, nodeType, tenant);
         return this.getNodeInfoByNodeIds(spaceId, memberId, subNodeIds);
     }
 
@@ -557,6 +544,7 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
         NodeEntity nodeEntity = NodeEntity.builder()
             .parentId(nodeOpRo.getParentId())
             .spaceId(spaceId)
+            .tenant(nodeOpRo.getTenant())
             .preNodeId(preNodeId)
             .nodeName(name)
             .type(nodeOpRo.getType())
@@ -577,6 +565,13 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
         // Create node
         String nodeId = createNode(userId, spaceId, nodeOpRo);
 
+        // 保存dst_id(node_id)与formId关联关系
+        if(StringUtils.isEmpty(ro.getFormId())) {
+            throw new BusinessException("低代码表单ID不能为空！");
+        }
+        DstRelEntity dre = new DstRelEntity(ro.getFormId(), nodeId);
+        dstRelMapper.insert(dre);
+
         // Add description information
         if (ro.needToInsertDesc()) {
             NodeDescEntity descEntity = NodeDescEntity.builder().id(IdWorker.getId())
@@ -584,6 +579,17 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
             nodeDescService.insertBatch(Collections.singletonList(descEntity));
         }
         return nodeId;
+    }
+
+    @Override
+    @Transactional
+    public void bindFormRecordInfo(DstRelInfoVo vo) {
+        if(StringUtils.isEmpty(vo.getFormId())) {
+            throw new BusinessException("低代码表单ID不能为空！");
+        }
+        DstRelEntity dre = new DstRelEntity(vo.getFormId(),vo.getDstId(),vo.getDataId(), vo.getRecordId());
+        dstRelMapper.insert(dre);
+        // 保存dst_id(node_id)与formId关联关系
     }
 
     @Override

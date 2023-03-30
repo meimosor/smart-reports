@@ -61,4 +61,17 @@ export class RecordCreateRo {
   @IsEnum(FieldKeyEnum, { message: ApiTipConstant.api_params_invalid_field_key })
   @IsOptional()
   fieldKey: FieldKeyEnum = FieldKeyEnum.NAME;
+
+  @ApiPropertyOptional({
+    description: '[Optional], what the fields map is made of key. id or name, default is name',
+    default: '',
+  })
+  formId!: string;
+  
+  @ApiPropertyOptional({
+    enum: FieldKeyEnum,
+    description: '[Optional], what the fields map is made of key. id or name, default is name',
+    default: FieldKeyEnum.NAME,
+  })
+  dataId!: string;
 }

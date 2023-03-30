@@ -36,6 +36,7 @@ import com.apitable.shared.constants.ParamsConstants;
 import com.apitable.shared.context.LoginContext;
 import com.apitable.shared.context.SessionContext;
 import com.apitable.shared.holder.SpaceHolder;
+import com.apitable.shared.util.AuthUtil;
 import com.apitable.workspace.entity.NodeEntity;
 import com.apitable.workspace.ro.CreateDatasheetRo;
 import com.apitable.workspace.service.INodeService;
@@ -77,7 +78,7 @@ public class InternalNodeController {
     public ResponseData<CreateDatasheetVo> createDatasheet(@PathVariable("spaceId") String spaceId,
         @RequestBody CreateDatasheetRo ro) {
         SpaceHolder.set(spaceId);
-        Long userId = 1L;
+        Long userId = AuthUtil.getUserId();
         // Get the member ID, the method includes judging whether the user is in this space
 //        Long memberId = LoginContext.me().getMemberId(userId, spaceId);
         // Check whether the parent node has the specified operation permission

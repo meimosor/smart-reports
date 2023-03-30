@@ -642,19 +642,26 @@ export class FusionApiService {
         },
         { auth, prependOps: updateFieldOperations },
       );
+
+      console.log('form--------------------------------id', body.formId);
+      
       if (result.result !== ExecuteResult.Success) {
         throw ApiException.tipError(ApiTipConstant.api_insert_error);
       }
-
+      
       const userId = result.saveResult as string;
       const recordIds = result.data as string[];
-
+      // TODO 1、低代码那边先要查询FormId对应的DstId
+     
       // API submission requires a record source for tracking the source of the record
       this.datasheetRecordSourceService.createRecordSource(userId, dstId, dstId, recordIds, SourceTypeEnum.OPEN_API);
       const rows = recordIds.map(recordId => {
         return { recordId };
       });
 
+      // TODO 2、保存recordId与DataId的关系
+      this.restService.updateDstRelInfo(body.formId, dstId, body.dataId, result.data?.[0]);
+      console.log('{}{}}{}{}{}{}}{}{}}}result.dataid', recordIds?.[0]);
       const newDatasheet = await this.databusService.getDatasheet(dstId, {
         loadOptions: {
           auth,

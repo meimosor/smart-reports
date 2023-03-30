@@ -158,6 +158,9 @@
         FROM pre p
         JOIN ${tablePrefix}node vn ON p.node_id = vn.pre_node_id
         AND vn.is_rubbish = 0
+        <if test="tenant != null">
+            AND vn.tenant =  #{tenant}
+        </if>
         )
         SELECT node_id
         FROM pre

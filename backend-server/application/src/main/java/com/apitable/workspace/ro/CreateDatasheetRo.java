@@ -52,6 +52,13 @@ public class CreateDatasheetRo {
     @Schema(description = "Description", example = "This is a table")
     private String description;
 
+    @Schema(description = "Tenant", example = "16625454654654")
+    private Long tenant;
+
+
+    @Schema(description = "formId", example = "form id..")
+    private String formId;
+
     /**
      * Tranfer To NodeOpRo.
      */
@@ -59,6 +66,8 @@ public class CreateDatasheetRo {
         return NodeOpRo.builder()
             .nodeName(this.name)
             .type(2)
+            .formId(this.formId)
+            .tenant(this.tenant)
             .parentId(this.folderId)
             .preNodeId(this.preNodeId)
             .build();

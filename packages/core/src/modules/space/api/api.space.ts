@@ -58,11 +58,12 @@ export function getRootNode() {
  * @param nodeType
  * @returns
  */
-export function getChildNodeList(nodeId: string, nodeType?: NodeType) {
+export function getChildNodeList(nodeId: string, nodeType?: NodeType, tenant?: number) {
   return axios.get<IApiWrapper & { data: Omit<INodesMapItem, 'children'>[] }>(Url.GET_NODE_LIST, {
     params: {
       nodeId,
-      nodeType
+      nodeType,
+      tenant: tenant || '1519577181757374466'
     },
   });
 }

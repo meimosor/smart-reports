@@ -69,6 +69,11 @@ public class NodeEntity implements Serializable {
     private String parentId;
 
     /**
+     * Tenant ID
+     */
+    private Long tenant;
+
+    /**
      * ID of the previous node under the same level
      */
     private String preNodeId;

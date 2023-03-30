@@ -221,7 +221,8 @@ public interface NodeMapper extends BaseMapper<NodeEntity> {
      * @return children node
      */
     List<String> selectOrderSubNodeIds(@Param("nodeId") String nodeId,
-                                       @Param("nodeType") NodeType nodeType);
+                                       @Param("nodeType") NodeType nodeType,
+                                       @Param("tenant") Long tenant);
 
     /**
      * get the node sharing tree.

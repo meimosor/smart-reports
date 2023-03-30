@@ -61,6 +61,15 @@ public class NodeOpRo {
         + "when it is empty", example = "nod10")
     private String preNodeId;
 
+
+    @Schema(description = "witch tenant you are? "
+            + "when it is empty", example = "16000015454664")
+    private Long tenant;
+
+    @Schema(description = "witch form you choose? "
+            + "when it is empty", example = "16000015454664")
+    private String formId;
+
     @Schema(description = "Other information")
     private NodeRelRo extra;
     @Schema(description = "Whether to detect duplicate node names", example = "true")

@@ -73,6 +73,7 @@ export class RestService {
   private NODE_TREE = 'node/tree';
   private NODE_DETAIL = 'node/get';
   private NODE_CHILDREN = 'node/children';
+  private DST_REL_URL = 'node/dstRel';
 
   // Get attachment asset
   private GET_UPLOAD_PRESIGNED_URL = 'internal/asset/upload/preSignedUrl';
@@ -577,5 +578,16 @@ export class RestService {
       this.httpService.get(sprintf(this.SPACE_INFO, { spaceId })),
     );
     return response.data;
+  }
+
+  async updateDstRelInfo(formId: string, dstId: string, dataId: any, recordId: any): Promise<any> {
+    const response = await lastValueFrom(
+      this.httpService.post(
+        this.DST_REL_URL,
+        { formId, dstId, dataId, recordId },
+      ),
+    );
+    return response.data;
+    
   }
 }

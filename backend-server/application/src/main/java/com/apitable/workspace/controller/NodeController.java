@@ -89,14 +89,7 @@ import com.apitable.workspace.service.INodeDescService;
 import com.apitable.workspace.service.INodeRelService;
 import com.apitable.workspace.service.INodeService;
 import com.apitable.workspace.service.NodeBundleService;
-import com.apitable.workspace.vo.NodeInfo;
-import com.apitable.workspace.vo.NodeInfoTreeVo;
-import com.apitable.workspace.vo.NodeInfoVo;
-import com.apitable.workspace.vo.NodeInfoWindowVo;
-import com.apitable.workspace.vo.NodePathVo;
-import com.apitable.workspace.vo.NodePermissionView;
-import com.apitable.workspace.vo.NodeSearchResult;
-import com.apitable.workspace.vo.ShowcaseVo;
+import com.apitable.workspace.vo.*;
 import com.apitable.workspace.vo.ShowcaseVo.NodeExtra;
 import com.apitable.workspace.vo.ShowcaseVo.Social;
 import io.swagger.v3.oas.annotations.Operation;
@@ -421,7 +414,8 @@ public class NodeController {
     })
     public ResponseData<List<NodeInfoVo>> getNodeChildrenList(
         @RequestParam(name = "nodeId") String nodeId,
-        @RequestParam(name = "nodeType", required = false) Integer nodeType) {
+        @RequestParam(name = "nodeType", required = false) Integer nodeType,
+        @RequestParam(name = "tenant", required = true) Long tenant) {
         // get the space ID, the method includes judging whether the node exists
         String spaceId = iNodeService.getSpaceIdByNodeId(nodeId);
         NodeType nodeTypeEnum = null;
@@ -431,7 +425,7 @@ public class NodeController {
         // The method includes determining whether the user is in this space.
         Long memberId = LoginContext.me().getUserSpaceDto(spaceId).getMemberId();
         List<NodeInfoVo> nodeInfos =
-            iNodeService.getChildNodesByNodeId(spaceId, memberId, nodeId, nodeTypeEnum);
+            iNodeService.getChildNodesByNodeId(spaceId, memberId, nodeId, nodeTypeEnum, tenant);
         return ResponseData.success(nodeInfos);
     }
 
@@ -507,7 +501,7 @@ public class NodeController {
             StrUtil.isNotBlank(nodeOpRo.getNodeName()) || ObjectUtil.isNotNull(nodeOpRo.getIcon())
                 || ObjectUtil.isNotNull(nodeOpRo.getCover()) || ObjectUtil.isNotNull(
                 nodeOpRo.getShowRecordHistory()), ParameterException.NO_ARG);
-        Long userId = SessionContext.getUserId();
+        Long userId = AuthUtil.getUserId();
         // The method includes determining whether a node exists.
         String spaceId = iNodeService.getSpaceIdByNodeId(nodeId);
         SpaceHolder.set(spaceId);
@@ -925,4 +919,14 @@ public class NodeController {
         return ResponseData.success(nodeInfos);
     }
 
+    /**
+     * Gets no permission member before remind.
+     */
+    @PostResource(path = "/dstRel", requiredLogin = false, requiredPermission = false)
+    @Operation(summary = "数据行记录关联")
+    public ResponseData<Void> postRecordRel(
+            @RequestBody @Validated DstRelInfoVo vo) {
+        iNodeService.bindFormRecordInfo(vo);
+        return ResponseData.success();
+    }
 }
