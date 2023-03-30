@@ -587,6 +587,10 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
         if(StringUtils.isEmpty(vo.getFormId())) {
             throw new BusinessException("低代码表单ID不能为空！");
         }
+
+        if(StringUtils.isEmpty(vo.getDataId())) {
+            throw new BusinessException("低代码行记录ID不能为空！");
+        }
         DstRelEntity dre = new DstRelEntity(vo.getFormId(),vo.getDstId(),vo.getDataId(), vo.getRecordId());
         dstRelMapper.insert(dre);
         // 保存dst_id(node_id)与formId关联关系
