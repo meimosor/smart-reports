@@ -80,10 +80,11 @@ public class DstRelEntity implements Serializable {
         this.dstId = dstId;
     }
 
-    public DstRelEntity(String formId, String dstId, String dataId, String recordId) {
+    public DstRelEntity(String formId, String dstId, String dataId, String recordId, Boolean isDeleted) {
         this.formId = formId;
         this.dstId = dstId;
         this.dataId = dataId;
         this.recordId = recordId;
+        this.isDeleted = isDeleted;
     }
 }

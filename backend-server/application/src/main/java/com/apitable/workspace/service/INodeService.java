@@ -608,4 +608,5 @@ public interface INodeService extends IService<NodeEntity> {
      */
     boolean nodeNameExists(String parentNodeId, String nodeName);
 
+    String selectDstIdByFormId(String formId);
 }

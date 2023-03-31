@@ -32,7 +32,7 @@
     <select id="selectDstIdByFormId" resultType="java.lang.String">
         SELECT distinct dst_id
         FROM ${tablePrefix}datasheet_rel
-        WHERE form_id = #{nodeId} AND is_deleted = 0
+        WHERE form_id = #{formId} AND is_deleted = 0
     </select>
 
 

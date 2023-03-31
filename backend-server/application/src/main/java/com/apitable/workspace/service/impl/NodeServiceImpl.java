@@ -45,6 +45,7 @@ import com.apitable.control.infrastructure.ControlTemplate;
 import com.apitable.control.infrastructure.permission.NodePermission;
 import com.apitable.control.infrastructure.role.ControlRole;
 import com.apitable.core.exception.BusinessException;
+import com.apitable.core.support.ResponseData;
 import com.apitable.core.support.tree.DefaultTreeBuildFactory;
 import com.apitable.core.util.ExceptionUtil;
 import com.apitable.core.util.FileTool;
@@ -570,6 +571,7 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
             throw new BusinessException("低代码表单ID不能为空！");
         }
         DstRelEntity dre = new DstRelEntity(ro.getFormId(), nodeId);
+        dre.setIsDeleted(false);
         dstRelMapper.insert(dre);
 
         // Add description information
@@ -591,7 +593,7 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
         if(StringUtils.isEmpty(vo.getDataId())) {
             throw new BusinessException("低代码行记录ID不能为空！");
         }
-        DstRelEntity dre = new DstRelEntity(vo.getFormId(),vo.getDstId(),vo.getDataId(), vo.getRecordId());
+        DstRelEntity dre = new DstRelEntity(vo.getFormId(),vo.getDstId(),vo.getDataId(), vo.getRecordId(), false);
         dstRelMapper.insert(dre);
         // 保存dst_id(node_id)与formId关联关系
     }
@@ -2005,6 +2007,14 @@ public class NodeServiceImpl extends ServiceImpl<NodeMapper, NodeEntity> impleme
     public boolean nodeNameExists(String parentNodeId, String nodeName) {
         return SqlTool.retCount(
             baseMapper.selectCountByParentIdAndNodeName(parentNodeId, nodeName)) > 0;
+    }
+
+    @Override
+    public String selectDstIdByFormId(String formId) {
+        if(org.apache.commons.lang3.StringUtils.isEmpty(formId)) {
+            throw new BusinessException("表单ID不能为空");
+        }
+        return dstRelMapper.selectDstIdByFormId(formId);
     }
 
     private List<NodeSearchResult> formatNodeSearchResults(String spaceId,

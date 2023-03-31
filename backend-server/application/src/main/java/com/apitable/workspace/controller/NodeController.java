@@ -111,6 +111,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -928,5 +929,15 @@ public class NodeController {
             @RequestBody @Validated DstRelInfoVo vo) {
         iNodeService.bindFormRecordInfo(vo);
         return ResponseData.success();
+    }
+
+    /**
+     * Gets no permission member before remind.
+     */
+    @GetResource(path = "/getDstIdByFormId", requiredLogin = false, requiredPermission = false)
+    @Operation(summary = "获取表单关联ID")
+    public ResponseData<String> selectDstIdByFormId(@RequestParam("formId") String formId) {
+        String dstId = iNodeService.selectDstIdByFormId(formId);
+        return ResponseData.success(dstId);
     }
 }
