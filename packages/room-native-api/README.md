@@ -27,3 +27,5 @@ apt-get install -y crossbuild-essential-arm64
 yarn install
 yarn build --target aarch64-unknown-linux-gnu --zig-link-only
 ```
+# windows server used it
+# "build:arm64": "napi build --platform --release --target x86_64-pc-windows-msvc",
