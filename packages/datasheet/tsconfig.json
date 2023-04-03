@@ -1,0 +1,45 @@
+{
+  "extends": "../../common-tsconfig.json",
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "paths": {
+      "pc": [
+        "./src/pc"
+      ],
+      "enterprise": [
+        "../../../enterprise/datasheet"
+      ]
+    },
+    "module": "esnext",
+    "baseUrl": "./src",
+    "allowJs": true,
+    "strict": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+//    "noUncheckedIndexedAccess": true,
+    "noUnusedParameters": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true
+  },
+  "exclude": ["**/node_modules", "**/.*/"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+  ]
+}
