@@ -86,6 +86,16 @@ export class FusionApiTransformer implements IFieldTransformInterface {
     );
   }
 
+  getUpdateCellOptionsLcode(recordIds: string[], records: FieldUpdateRo[]): ISetRecordOptions[] {
+    return records.flatMap((record, index) =>
+      Object.keys(record.fields).map(fieldId => ({
+        recordId: recordIds[index] || '',
+        fieldId,
+        value: record.fields[fieldId]!,
+      })),
+    );
+  }
+
   public nodeDetailVoTransform(nodeItem: INode): IAPINodeDetail {
     const res: IAPINodeDetail = {
       id: nodeItem.nodeId,

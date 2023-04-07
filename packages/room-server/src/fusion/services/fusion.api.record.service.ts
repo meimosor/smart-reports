@@ -47,4 +47,71 @@ export class FusionApiRecordService {
       throw ApiException.tipError(error, { recordId: diffs.join(',') });
     }
   }
+  
+  /**
+   * Check if Lcode relation recordId and table ID match
+   *
+   * @param dstId
+   * @param recordIds
+   * @param error error message
+   *
+   * @throws ApiException
+   */
+  public async validateRecordExistsOfLcode(dstId: string, recordIds: string[], error: ApiTipId) {
+    const dbRecordIds = await this.recordService.selectDstRelRecordIdsByDstIdAndDataIds(dstId, recordIds);
+    if (!dbRecordIds?.length) {
+      throw ApiException.tipError(error, { recordId: recordIds.join(', ') });
+    }
+    return dbRecordIds;
+  }
+  /**
+   * Check if Lcode relation recordId and table ID match
+   *
+   * @param dstId
+   * @param recordIds
+   * @param error error message
+   *
+   * @throws ApiException
+   */
+  public async deleteDstRelRecordsByDataId(recordIds: string[]) {
+    console.log('$#####$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', recordIds);
+
+    const res = await this.recordService.deleteDstRelRecordsByDataId(recordIds);
+    console.log('jjjjjjjjjjjjjdasdasdasdsaj22222222222222222222222222222222222222222', res);
+    return res;
+    
+  }
+  /**
+   * Check if recordId and dataId match
+   *
+   * @param dstId
+   * @param dataId
+   * @param error error message
+   *
+   * @throws ApiException
+   */
+  public async getRecordIdByDataId(dstId: string, dataId: string, error: ApiTipId) {
+    const dbRecordIds = await this.recordService.selectDstRelRecordIdByDataId(dstId, dataId);
+    if (!dbRecordIds?.length) {
+      throw ApiException.tipError(error, { recordId: '没有找到对应的记录' });
+    }
+    return dbRecordIds[0];
+  }
+
+  /**
+   * Check if recordId and dataId match
+   *
+   * @param dstId
+   * @param dataId
+   * @param error error message
+   *
+   * @throws ApiException
+   */
+  public async getRecordsIdByDataIds(dstId: string, dataIds: string[], error: ApiTipId) {
+    const dbRecordIds = await this.recordService.selectDstRelRecordIdsByDstIdAndDataIds(dstId, dataIds);
+    if (!dbRecordIds?.length) {
+      throw ApiException.tipError(error, { dataIds: dataIds.join(', ') });
+    }
+    return dbRecordIds;
+  }
 }

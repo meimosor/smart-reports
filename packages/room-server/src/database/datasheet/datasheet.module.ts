@@ -29,6 +29,8 @@ import { DatasheetChangesetRepository } from './repositories/datasheet.changeset
 import { DatasheetChangesetSourceRepository } from './repositories/datasheet.changeset.source.repository';
 import { DatasheetMetaRepository } from './repositories/datasheet.meta.repository';
 import { DatasheetRecordRepository } from './repositories/datasheet.record.repository';
+import { DstRelRepository } from './repositories/dst.rel.repository';
+
 import { DatasheetRecordSourceRepository } from './repositories/datasheet.record.source.repository';
 import { DatasheetRepository } from './repositories/datasheet.repository';
 import { DatasheetWidgetRepository } from './repositories/datasheet.widget.repository';
@@ -57,6 +59,7 @@ import { DatasheetWidgetService } from './services/datasheet.widget.service';
       DatasheetChangesetSourceRepository,
       DatasheetMetaRepository,
       DatasheetRecordRepository,
+      DstRelRepository,
       DatasheetRecordSourceRepository,
       DatasheetRepository,
       DatasheetWidgetRepository,

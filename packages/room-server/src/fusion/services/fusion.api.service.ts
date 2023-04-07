@@ -519,6 +519,110 @@ export class FusionApiService {
     return recordViewObjects;
   }
 
+  /**
+   * LowCode Update Records
+   *
+   * @param dstId   datasheet id
+   * @param body    update recorded data
+   * @param viewId  view id
+   */
+  public async updateRecordsOfLcode(dstId: string, body: RecordUpdateRo, viewId: string): Promise<ListVo> {
+    // Validate the existence in advance to prevent repeatedly swiping all the count table data
+    const updateRecordsProfiler = this.logger.startTimer();
+    const records = await this.fusionApiRecordService.validateRecordExistsOfLcode(dstId, body.getRecordIds(), ApiTipConstant.api_param_record_not_exists);
+  
+    const meta: IMeta = this.request[DATASHEET_META_HTTP_DECORATE];
+    const fieldMap = body.fieldKey === FieldKeyEnum.NAME ? keyBy(meta.fieldMap, 'name') : meta.fieldMap;
+  
+    // Convert a field to get the modified column
+    const linkDatasheet: ILinkedRecordMap = this.request[DATASHEET_LINKED];
+    const recordIdSet: Set<string> = new Set(records.map(record => record));
+    console.log('recordIdSet=========================================================================================', recordIdSet);
+
+    const linkedRecordMap = Object.keys(linkDatasheet).length ? linkDatasheet : undefined;
+    linkedRecordMap &&
+        linkedRecordMap[dstId]?.forEach(recordId => {
+          recordIdSet.add(recordId);
+        });
+    const recordIds = Array.from(recordIdSet);
+    const rows: IViewRow[] = recordIds.map(recordId => {
+      return { recordId };
+    });
+    const auth = { token: this.request.headers.authorization };
+  
+    const permissionValidationProfiler = this.logger.startTimer();
+    const datasheet = await this.databusService.getDatasheet(dstId, {
+      loadOptions: {
+        auth,
+        recordIds,
+        linkedRecordMap,
+      },
+    });
+    if (datasheet === null) {
+      throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
+    }
+      
+    if (viewId) {
+      await this.checkViewExists(datasheet, viewId);
+    }
+  
+    const updateFieldOperations = await this.getFieldUpdateOps(datasheet, auth);
+    const result = await datasheet.updateRecords(this.transform.getUpdateCellOptionsLcode(recordIds, body.records), {
+      auth,
+      prependOps: updateFieldOperations,
+    } as IServerSaveOptions);
+    permissionValidationProfiler.done({ message: `update ${dstId}'s records permission validation profiler, result: ${result.result}` });
+  
+    // No change required
+    if (result.result === ExecuteResult.None) {
+      // TODO return records in viewId instead of first view
+      const firstView = meta.views[0]!;
+      const view = await datasheet.getView({
+        getViewInfo: () => ({
+          id: firstView.id,
+          type: firstView.type,
+          name: firstView.name,
+          rows,
+          columns: firstView.columns,
+          fieldMap,
+        }),
+      });
+      if (view === null) {
+        // TODO throw exception
+        return { records: [] };
+      }
+  
+      const records = await view.getRecords({});
+      const recordViewObjects = this.getRecordViewObjects(records);
+      updateRecordsProfiler.done({ message: `update ${dstId}'s records profiler, records count: ${records.length}` });
+      return {
+        records: recordViewObjects,
+      };
+    }
+  
+    // Command execution failed
+    if (result.result !== ExecuteResult.Success) {
+      throw ApiException.tipError(ApiTipConstant.api_update_error);
+    }
+  
+    const newDatasheet = await this.databusService.getDatasheet(dstId, {
+      loadOptions: {
+        auth,
+        recordIds,
+        linkedRecordMap,
+      },
+    });
+    if (newDatasheet === null) {
+      throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
+    }
+  
+    CacheManager.clear();
+  
+    const recordViewObjects = this.getNewRecordListVo(newDatasheet, { viewId, rows, fieldMap });
+    updateRecordsProfiler.done({ message: `update ${dstId}'s records profiler, records count: ${rows.length}` });
+    return recordViewObjects;
+  }
+
   private async getNewRecordListVo(
     newDatasheet: databus.Datasheet,
     options: { viewId?: string; rows: IViewRow[]; fieldMap: IFieldMap },
@@ -708,6 +812,38 @@ export class FusionApiService {
     }
 
     const result = await datasheet.deleteRecords(recordIds, { auth });
+    // command execution failed
+    if (result.result !== ExecuteResult.Success) {
+      throw ApiException.tipError(ApiTipConstant.api_delete_error);
+    }
+    return true;
+  }
+
+  /**
+   * Delete records
+   *
+   * @param dstId     datasheet id
+   * @param recordIds Record Id Set
+   */
+  public async deleteRecordOfLcode(dstId: string, dataIds: string[]): Promise<boolean> {
+    // 获取关联记录
+    const recordIds = await this.fusionApiRecordService.getRecordsIdByDataIds(dstId, dataIds, ApiTipConstant.api_param_record_not_exists);
+    // Validate the existence in advance to prevent repeatedly swiping all the count table data
+    await this.fusionApiRecordService.validateRecordExists(dstId, recordIds, ApiTipConstant.api_param_record_not_exists);
+    const auth = { token: this.request.headers.authorization };
+    const datasheet = await this.databusService.getDatasheet(dstId, {
+      loadOptions: {
+        auth,
+        recordIds,
+      },
+    });
+    if (datasheet === null) {
+      throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
+    }
+  
+    const result = await datasheet.deleteRecords(recordIds, { auth });
+    // 删除关联表记录
+    await this.fusionApiRecordService.deleteDstRelRecordsByDataId(dataIds);
     // command execution failed
     if (result.result !== ExecuteResult.Success) {
       throw ApiException.tipError(ApiTipConstant.api_delete_error);

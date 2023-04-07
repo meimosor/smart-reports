@@ -32,6 +32,8 @@ import { DatasheetChangesetService } from './datasheet.changeset.service';
 import { UnitInfoDto } from '../../../unit/dtos/unit.info.dto';
 import { In } from 'typeorm';
 import { DatasheetRecordEntity } from '../entities/datasheet.record.entity';
+import { DstRelRepository } from '../repositories/dst.rel.repository';
+import { DstRelEntity } from '../entities/dst.rel.entity';
 
 @Injectable()
 export class DatasheetRecordService {
@@ -39,6 +41,7 @@ export class DatasheetRecordService {
 
   constructor(
     private readonly recordRepo: DatasheetRecordRepository,
+    private readonly dstRelRepo: DstRelRepository,
     private readonly recordCommentService: RecordCommentService,
     private readonly datasheetChangesetService: DatasheetChangesetService,
   ) {}
@@ -304,5 +307,19 @@ export class DatasheetRecordService {
 
   async selectIdsByDstIdAndRecordIds(dstId: string, recordIds: string[]): Promise<string[] | null> {
     return await this.recordRepo.selectIdsByDstIdAndRecordIds(dstId, recordIds);
+  }
+
+  async selectDstRelRecordIdsByDstIdAndDataIds(dstId: string, formIds: string[]): Promise<string[] | null> {
+    return await this.dstRelRepo.selectDstRelRecordIdsByDstIdAndDataIds(dstId, formIds);
+  }
+  async selectDstRelRecordsDataByDstIdAndFormId(dstId: string, formId: string): Promise<DstRelEntity[] | undefined> {
+    return await this.dstRelRepo.selectDstRelRecordsDataByDstIdAndFormId(dstId, formId);
+  }
+  async selectDstRelRecordIdByDataId(dstId: string, dataId: string): Promise<string[] | undefined> {
+    return await this.dstRelRepo.selectDstRelRecordIdByDataId(dstId, dataId);
+  }
+
+  async deleteDstRelRecordsByDataId(dataIds: string[]): Promise<string[] | undefined> {
+    return await this.dstRelRepo.deleteDstRelRecordsByDataId(dataIds);
   }
 }

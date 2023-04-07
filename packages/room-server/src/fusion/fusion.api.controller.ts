@@ -258,6 +258,32 @@ export class FusionApiController {
     return ApiResponse.success(listVo);
   }
 
+  @Patch('/dst/:datasheetId/records')
+  @ApiOperation({
+    summary: 'Update Records',
+    description:
+      'Update several records of a datasheet. ' +
+      'When submitted using the PUT method, only the fields that are specified will have their data updated, ' +
+      'and fields that are not specified will retain their old values.',
+    deprecated: false,
+  })
+  @ApiBody({
+    description: 'Update record parameters',
+    type: RecordUpdateRo,
+  })
+  @ApiProduces('application/json')
+  @ApiConsumes('application/json')
+  @UseGuards(ApiDatasheetGuard)
+  @UseInterceptors(ApiNotifyInterceptor)
+  public async updateRecordsOfLcode(
+    @Param() param: RecordParamRo,
+    @Query() query: RecordViewQueryRo,
+    @Body(FieldPipe) body: RecordUpdateRo,
+  ): Promise<RecordListVo> {
+    const listVo = await this.fusionApiService.updateRecordsOfLcode(param.datasheetId, body, query.viewId!);
+    return ApiResponse.success(listVo);
+  }
+
   @Put('/datasheets/:datasheetId/records')
   @ApiOperation({
     summary: 'Update Records',
@@ -299,6 +325,28 @@ export class FusionApiController {
       throw ApiException.tipError(ApiTipConstant.api_params_records_max_count_error, { count: API_MAX_MODIFY_RECORD_COUNTS });
     }
     const result = await this.fusionApiService.deleteRecord(param.datasheetId, Array.from(new Set(query.recordIds)));
+    if (result) {
+      return ApiResponse.success(undefined);
+    }
+    throw ApiException.tipError(ApiTipConstant.api_delete_error);
+  }
+  
+  @Delete('/dst/:datasheetId/records')
+  @ApiOperation({
+    summary: 'Delete records',
+    description: 'Delete a number of records from a datasheet',
+    deprecated: false,
+  })
+  @ApiProduces('application/json')
+  @UseGuards(ApiDatasheetGuard)
+  public async deleteRecordsOfLcode(@Param() param: RecordParamRo, @Query(QueryPipe) query: RecordDeleteRo): Promise<RecordDeleteVo> {
+    if (!query.recordIds) {
+      throw ApiException.tipError(ApiTipConstant.api_params_empty_error, { property: 'recordIds' });
+    }
+    if (query.recordIds.length > API_MAX_MODIFY_RECORD_COUNTS) {
+      throw ApiException.tipError(ApiTipConstant.api_params_records_max_count_error, { count: API_MAX_MODIFY_RECORD_COUNTS });
+    }
+    const result = await this.fusionApiService.deleteRecordOfLcode(param.datasheetId, Array.from(new Set(query.recordIds)));
     if (result) {
       return ApiResponse.success(undefined);
     }
