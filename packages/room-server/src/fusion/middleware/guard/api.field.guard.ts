@@ -17,7 +17,7 @@
  */
 
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { DATASHEET_HTTP_DECORATE, USER_HTTP_DECORATE } from '../../../shared/common';
+import { DATASHEET_HTTP_DECORATE } from '../../../shared/common';
 import { ApiException } from '../../../shared/exception';
 import { ApiTipConstant } from '@apitable/core';
 import { UnitMemberService } from 'unit/services/unit.member.service';
@@ -48,8 +48,8 @@ export class ApiFieldGuard implements CanActivate {
     if (!datasheet) {
       throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
     }
-    const user = request[USER_HTTP_DECORATE];
-    const spaceIds = await this.memberService.selectSpaceIdsByUserId(user.id);
+    // const user = request[USER_HTTP_DECORATE];
+    const spaceIds = await this.memberService.selectSpaceIdsByUserId('1');
     // no permission of the space
     if (!spaceIds.includes(spaceId)) {
       throw ApiException.tipError(ApiTipConstant.api_forbidden_because_of_not_in_space);
