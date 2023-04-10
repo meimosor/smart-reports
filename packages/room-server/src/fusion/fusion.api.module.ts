@@ -34,6 +34,8 @@ import { DataBusService } from './services/databus/databus.service';
 import { NodePermissionGuard } from './middleware/guard/node.permission.guard';
 import { QueryPipe } from './middleware/pipe/query.pipe';
 import { FieldPipe } from './middleware/pipe/field.pipe';
+import { FieldLcodePipe } from './middleware/pipe/field.lcode.pipe';
+
 import { ApiAuthGuard } from './middleware/guard/api.auth.guard';
 import { FusionApiTransformer } from './transformer/fusion.api.transformer';
 import { FusionApiFilter } from './filter/fusion.api.filter';
@@ -61,6 +63,7 @@ import { UnitModule } from 'unit/unit.module';
     DataBusService,
     QueryPipe,
     FieldPipe,
+    FieldLcodePipe,
     ApiAuthGuard,
     NodePermissionGuard,
     // field service

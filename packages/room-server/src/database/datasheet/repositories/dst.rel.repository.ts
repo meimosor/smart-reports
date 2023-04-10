@@ -37,6 +37,15 @@ export class DstRelRepository extends Repository<DstRelEntity> {
     });
   }
 
+  selectDstIdByFormId(formId: string): Promise<string[] | undefined> {
+    return this.find({
+      select: ['dstId'],
+      where: [{ formId }],
+    }).then(entities => {
+      return entities.map(entity => entity.dstId);
+    });
+  }
+
   selectDstRelRecordIdByDataId(dstId: string, dataId: string): Promise<string[] | undefined> {
     return this.find({
       select: ['recordId'],

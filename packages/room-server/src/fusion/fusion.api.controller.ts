@@ -80,6 +80,8 @@ import { CreateDatasheetPipe } from './middleware/pipe/create.datasheet.pipe';
 import { CreateFieldPipe } from './middleware/pipe/create.field.pipe';
 import { FieldPipe } from './middleware/pipe/field.pipe';
 import { QueryPipe } from './middleware/pipe/query.pipe';
+import { RecordLcodeParamRo } from './ros/record.lcode.param.ro';
+import { FieldLcodePipe } from './middleware/pipe/field.lcode.pipe';
 
 /**
  * TODO: cache response data, send notification while member changed, should maintain the data in the same server and cache them
@@ -120,13 +122,6 @@ export class FusionApiController {
   @Post('/datasheets/:datasheetId/records')
   @ApiOperation({
     summary: 'Add multiple rows to a specified datasheet',
-    description:
-      'Up to 10 records can be created in a single request.' +
-      'You need to bring `Content-Type: application/json` in the Request Header to submit data in raw json format. \n' +
-      'The POST data is a JSON object, which should contain an array: `records`, the records array contains multiple records to be created. \n' +
-      'The object `fields` contains the values of the fields to be created in a record,' +
-      'and can contain any number of field values, not necessarily all of them. If there are field defaults set,' +
-      'field values that are not passed in will be saved according to the default values at the time the fields were set.',
     deprecated: false,
   })
   @ApiBody({
@@ -139,6 +134,24 @@ export class FusionApiController {
   @UseInterceptors(ApiNotifyInterceptor)
   async addRecords(@Param() param: RecordParamRo, @Query() query: RecordViewQueryRo, @Body(FieldPipe) body: RecordCreateRo): Promise<RecordListVo> {
     const res = await this.fusionApiService.addRecords(param.datasheetId, body, query.viewId!);
+    return ApiResponse.success(res);
+  }
+  
+  @Post('/dst/:formId/records')
+  @ApiOperation({
+    summary: 'Add multiple rows to a specified datasheet',
+    deprecated: false,
+  })
+  @ApiBody({
+    description: 'Add Rel record parameters',
+    type: RecordCreateRo,
+  })
+  @ApiProduces('application/json')
+  @ApiConsumes('application/json')
+  // @UseGuards(ApiDstGuard)
+  @UseInterceptors(ApiNotifyInterceptor)
+  async addRelRecords(@Param() param: RecordLcodeParamRo, @Query() query: RecordViewQueryRo, @Body(FieldLcodePipe) body: RecordCreateRo): Promise<RecordListVo> {
+    const res = await this.fusionApiService.addRelRecords(param.formId, body, query.viewId!);
     return ApiResponse.success(res);
   }
 
@@ -258,13 +271,9 @@ export class FusionApiController {
     return ApiResponse.success(listVo);
   }
 
-  @Patch('/dst/:datasheetId/records')
+  @Patch('/dst/:formId/records')
   @ApiOperation({
     summary: 'Update Records',
-    description:
-      'Update several records of a datasheet. ' +
-      'When submitted using the PUT method, only the fields that are specified will have their data updated, ' +
-      'and fields that are not specified will retain their old values.',
     deprecated: false,
   })
   @ApiBody({
@@ -273,14 +282,14 @@ export class FusionApiController {
   })
   @ApiProduces('application/json')
   @ApiConsumes('application/json')
-  @UseGuards(ApiDatasheetGuard)
+  // @UseGuards(ApiDatasheetGuard)
   @UseInterceptors(ApiNotifyInterceptor)
   public async updateRecordsOfLcode(
-    @Param() param: RecordParamRo,
+    @Param() param: RecordLcodeParamRo,
     @Query() query: RecordViewQueryRo,
-    @Body(FieldPipe) body: RecordUpdateRo,
+    @Body(FieldLcodePipe) body: RecordUpdateRo,
   ): Promise<RecordListVo> {
-    const listVo = await this.fusionApiService.updateRecordsOfLcode(param.datasheetId, body, query.viewId!);
+    const listVo = await this.fusionApiService.updateRecordsOfLcode(param.formId, body, query.viewId!);
     return ApiResponse.success(listVo);
   }
 
@@ -331,22 +340,22 @@ export class FusionApiController {
     throw ApiException.tipError(ApiTipConstant.api_delete_error);
   }
   
-  @Delete('/dst/:datasheetId/records')
+  @Delete('/dst/:formId/records')
   @ApiOperation({
     summary: 'Delete records',
     description: 'Delete a number of records from a datasheet',
     deprecated: false,
   })
   @ApiProduces('application/json')
-  @UseGuards(ApiDatasheetGuard)
-  public async deleteRecordsOfLcode(@Param() param: RecordParamRo, @Query(QueryPipe) query: RecordDeleteRo): Promise<RecordDeleteVo> {
+  // @UseGuards(ApiDatasheetGuard)
+  public async deleteRecordsOfLcode(@Param() param: RecordLcodeParamRo, @Query(QueryPipe) query: RecordDeleteRo): Promise<RecordDeleteVo> {
     if (!query.recordIds) {
       throw ApiException.tipError(ApiTipConstant.api_params_empty_error, { property: 'recordIds' });
     }
     if (query.recordIds.length > API_MAX_MODIFY_RECORD_COUNTS) {
       throw ApiException.tipError(ApiTipConstant.api_params_records_max_count_error, { count: API_MAX_MODIFY_RECORD_COUNTS });
     }
-    const result = await this.fusionApiService.deleteRecordOfLcode(param.datasheetId, Array.from(new Set(query.recordIds)));
+    const result = await this.fusionApiService.deleteRecordOfLcode(param.formId, Array.from(new Set(query.recordIds)));
     if (result) {
       return ApiResponse.success(undefined);
     }
@@ -418,6 +427,35 @@ export class FusionApiController {
     @Param('datasheetId') datasheetId: string,
     @Body(CreateFieldPipe) createRo: FieldCreateRo,
   ): Promise<FieldCreateVo> {
+    // TODO only fetch field names
+    const fields = await this.fusionApiService.getFieldList(datasheetId, { viewId: '' });
+    const duplicatedName = fields.filter(field => field.name === createRo.name);
+    if (duplicatedName.length > 0) {
+      throw ApiException.tipError(ApiTipConstant.api_params_must_unique, { property: 'name' });
+    }
+    const fieldCreateDto = await this.fusionApiService.addField(datasheetId, createRo);
+    return ApiResponse.success(fieldCreateDto);
+  }
+  
+  @Post('/spaces/:spaceId/dst/:formId/fields')
+  @ApiOperation({
+    summary: 'New field',
+    description: 'New field',
+    deprecated: false,
+  })
+  @ApiBody({
+    description: 'New field',
+    type: FieldCreateRo,
+  })
+  @ApiProduces('application/json')
+  @ApiConsumes('application/json')
+  // @UseGuards(ApiFieldGuard)
+  public async createLcodeField(
+    @Param('spaceId') _spaceId: string,
+    @Param('formId') formId: string,
+    @Body(CreateFieldPipe) createRo: FieldCreateRo,
+  ): Promise<FieldCreateVo> {
+    const datasheetId = await this.fusionApiService.getDstIdByFormId(formId);
     // TODO only fetch field names
     const fields = await this.fusionApiService.getFieldList(datasheetId, { viewId: '' });
     const duplicatedName = fields.filter(field => field.name === createRo.name);

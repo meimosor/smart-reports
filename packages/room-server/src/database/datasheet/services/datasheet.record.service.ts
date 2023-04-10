@@ -322,4 +322,12 @@ export class DatasheetRecordService {
   async deleteDstRelRecordsByDataId(dataIds: string[]): Promise<string[] | undefined> {
     return await this.dstRelRepo.deleteDstRelRecordsByDataId(dataIds);
   }
+
+  async selectDstIdByFormId(formId: string): Promise<any> {
+    const res = await this.dstRelRepo.selectDstIdByFormId(formId);
+    if(res && res.length > 0) {
+      return res[0];
+    }
+    return null;
+  }
 }

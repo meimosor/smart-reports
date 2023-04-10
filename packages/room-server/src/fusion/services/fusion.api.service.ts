@@ -526,9 +526,15 @@ export class FusionApiService {
    * @param body    update recorded data
    * @param viewId  view id
    */
-  public async updateRecordsOfLcode(dstId: string, body: RecordUpdateRo, viewId: string): Promise<ListVo> {
+  public async updateRecordsOfLcode(formId: string, body: RecordUpdateRo, viewId: string): Promise<ListVo> {
     // Validate the existence in advance to prevent repeatedly swiping all the count table data
     const updateRecordsProfiler = this.logger.startTimer();
+    const dstId = await this.fusionApiRecordService.selectDstIdByFormId(formId);
+
+    if(!dstId) {
+      throw new ServerException(DatasheetException.NOT_EXIST, CommonStatusCode.DEFAULT_ERROR_CODE);
+    }
+
     const records = await this.fusionApiRecordService.validateRecordExistsOfLcode(dstId, body.getRecordIds(), ApiTipConstant.api_param_record_not_exists);
   
     const meta: IMeta = this.request[DATASHEET_META_HTTP_DECORATE];
@@ -537,7 +543,6 @@ export class FusionApiService {
     // Convert a field to get the modified column
     const linkDatasheet: ILinkedRecordMap = this.request[DATASHEET_LINKED];
     const recordIdSet: Set<string> = new Set(records.map(record => record));
-    console.log('recordIdSet=========================================================================================', recordIdSet);
 
     const linkedRecordMap = Object.keys(linkDatasheet).length ? linkDatasheet : undefined;
     linkedRecordMap &&
@@ -747,8 +752,6 @@ export class FusionApiService {
         { auth, prependOps: updateFieldOperations },
       );
 
-      console.log('form--------------------------------id', body.formId);
-      
       if (result.result !== ExecuteResult.Success) {
         throw ApiException.tipError(ApiTipConstant.api_insert_error);
       }
@@ -756,6 +759,95 @@ export class FusionApiService {
       const userId = result.saveResult as string;
       const recordIds = result.data as string[];
       // TODO 1、低代码那边先要查询FormId对应的DstId
+     
+      // API submission requires a record source for tracking the source of the record
+      this.datasheetRecordSourceService.createRecordSource(userId, dstId, dstId, recordIds, SourceTypeEnum.OPEN_API);
+      const rows = recordIds.map(recordId => {
+        return { recordId };
+      });
+
+      // TODO 2、保存recordId与DataId的关系
+      // this.restService.updateDstRelInfo(body.formId, dstId, body.dataId, result.data?.[0]);
+      console.log('{}{}}{}{}{}{}}{}{}}}result.dataid', recordIds?.[0]);
+      const newDatasheet = await this.databusService.getDatasheet(dstId, {
+        loadOptions: {
+          auth,
+          recordIds,
+          linkedRecordMap: this.request[DATASHEET_LINKED],
+        },
+      });
+      if (newDatasheet === null) {
+        throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
+      }
+
+      addRecordsProfiler.done({
+        message: `addRecords ${dstId} profiler`,
+      });
+
+      return this.getNewRecordListVo(newDatasheet, { viewId, rows, fieldMap });
+    } finally {
+      await unlock();
+    }
+  }
+
+  public async addRelRecords(formId: string, body: RecordCreateRo, viewId: string): Promise<ListVo> {
+    console.log('==========================================res===formId======================================================', formId);
+    const dstId = await this.fusionApiRecordService.selectDstIdByFormId(formId);
+    console.log('==========================================res===dstId======================================================', dstId);
+    if(!dstId) {
+      throw new ServerException(DatasheetException.NOT_EXIST, CommonStatusCode.DEFAULT_ERROR_CODE);
+    }
+
+    // await this.checkDstRecordCount(dstId, body);
+    const client = this.redisService.getClient();
+    const lock = promisify<string | string[], number, () => void>(RedisLock(client as any));
+    /*
+     * Add locks to resources, api of the same resource can only be consumed sequentially.
+     * Solve the problem of concurrent writing of link fields and incomplete data of associated tables, 120 seconds timeout
+     */
+    const unlock = await lock('api.add.' + dstId, 120 * 1000);
+
+    try {
+      const addRecordsProfiler = this.logger.startTimer();
+
+      const meta: IMeta = this.request[DATASHEET_META_HTTP_DECORATE];
+      const fieldMap = body.fieldKey === FieldKeyEnum.NAME ? keyBy(meta.fieldMap, 'name') : meta.fieldMap;
+
+      // Convert written fields
+      const auth = { token: this.request.headers.authorization };
+      const datasheet = await this.databusService.getDatasheet(dstId, {
+        loadOptions: {
+          auth,
+          recordIds: [],
+          linkedRecordMap: this.request[DATASHEET_LINKED],
+        },
+      });
+      if (datasheet === null) {
+        throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
+      }
+
+      if (viewId) {
+        await this.checkViewExists(datasheet, viewId);
+      }
+
+      const updateFieldOperations = await this.getFieldUpdateOps(datasheet, auth);
+
+      const result = await datasheet.addRecords(
+        {
+          viewId: meta.views[0]!.id,
+          index: meta.views[0]!.rows.length,
+          recordValues: body.records.map(record => record.fields),
+          ignoreFieldPermission: true,
+        },
+        { auth, prependOps: updateFieldOperations },
+      );
+
+      if (result.result !== ExecuteResult.Success) {
+        throw ApiException.tipError(ApiTipConstant.api_insert_error);
+      }
+      
+      const userId = result.saveResult as string;
+      const recordIds = result.data as string[];
      
       // API submission requires a record source for tracking the source of the record
       this.datasheetRecordSourceService.createRecordSource(userId, dstId, dstId, recordIds, SourceTypeEnum.OPEN_API);
@@ -825,7 +917,13 @@ export class FusionApiService {
    * @param dstId     datasheet id
    * @param recordIds Record Id Set
    */
-  public async deleteRecordOfLcode(dstId: string, dataIds: string[]): Promise<boolean> {
+  public async deleteRecordOfLcode(formId: string, dataIds: string[]): Promise<boolean> {
+
+    const dstId = await this.fusionApiRecordService.selectDstIdByFormId(formId);
+
+    if(!dstId) {
+      throw new ServerException(DatasheetException.NOT_EXIST, CommonStatusCode.DEFAULT_ERROR_CODE);
+    }
     // 获取关联记录
     const recordIds = await this.fusionApiRecordService.getRecordsIdByDataIds(dstId, dataIds, ApiTipConstant.api_param_record_not_exists);
     // Validate the existence in advance to prevent repeatedly swiping all the count table data
@@ -849,6 +947,20 @@ export class FusionApiService {
       throw ApiException.tipError(ApiTipConstant.api_delete_error);
     }
     return true;
+  }
+
+  /**
+   * 查询dstId
+   *
+   * @param formId     form id
+   */
+  public async getDstIdByFormId(formId: string) {
+    const dstId = await this.fusionApiRecordService.selectDstIdByFormId(formId);
+
+    if(!dstId) {
+      throw new ServerException(DatasheetException.NOT_EXIST, CommonStatusCode.DEFAULT_ERROR_CODE);
+    }
+    return dstId;
   }
 
   private checkDstRecordCount(dstId: string, body: RecordCreateRo) {

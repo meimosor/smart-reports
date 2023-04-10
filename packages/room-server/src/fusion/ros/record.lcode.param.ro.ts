@@ -16,17 +16,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
-/**
- * request context middleware
- */
-@Injectable()
-export class ApiRequestMiddleware implements NestMiddleware {
-  use(_req: any, _res: any, next: () => void): any {
-    // if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer ')) {
-    //   throw ApiException.tipError(ApiTipConstant.api_unauthorized);
-    // }
-    next();
-  }
+export class RecordLcodeParamRo {
+  @ApiProperty({
+    type: String,
+    required: true,
+    example: 'dst0Yj5aNeoHldqvf6',
+    description: 'datasheet Id',
+  })
+  @IsString()
+  formId!: string;
 }

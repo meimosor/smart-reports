@@ -74,12 +74,21 @@ export class FusionApiRecordService {
    * @throws ApiException
    */
   public async deleteDstRelRecordsByDataId(recordIds: string[]) {
-    console.log('$#####$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', recordIds);
-
     const res = await this.recordService.deleteDstRelRecordsByDataId(recordIds);
-    console.log('jjjjjjjjjjjjjdasdasdasdsaj22222222222222222222222222222222222222222', res);
     return res;
     
+  }
+
+  /**
+   * Check if Lcode relation recordId and table ID match
+   *
+   * @param formId
+   * @param error error message
+   *
+   * @throws ApiException
+   */
+  public async selectDstIdByFormId(formId: string) {
+    return await this.recordService.selectDstIdByFormId(formId);
   }
   /**
    * Check if recordId and dataId match

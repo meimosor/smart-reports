@@ -48,6 +48,7 @@ import {
   SPACE_ID_HTTP_DECORATE, SwaggerConstants, USER_HTTP_DECORATE,
 } from '../common';
 import { FusionApiVersion } from '../enums';
+import { DatasheetRecordService } from 'database/datasheet/services/datasheet.record.service';
 
 export const initSwagger = (app: INestApplication) => {
   // wouldn't be enabled in production
@@ -122,6 +123,28 @@ export const initHttpHook = (app: INestApplication) => {
         request[SPACE_ID_HTTP_DECORATE] = datasheet.spaceId;
         const metaService = app.select(DatabaseModule).get(DatasheetMetaService);
         request[DATASHEET_META_HTTP_DECORATE] = await metaService.getMetaDataByDstId((request.params as any)['datasheetId']);
+        request[DATASHEET_LINKED] = {};
+        request[DATASHEET_ENRICH_SELECT_FIELD] = {};
+        request[DATASHEET_MEMBER_FIELD] = new Set();
+      }
+    }
+
+    // datasheetId param should be defined in the fusion api controller by query parameter(datasheets/:datasheetId)
+    if ((request.params as any)['formId']) {
+      const recordService = app.select(DatabaseModule).get(DatasheetRecordService);
+      console.log('333333333333333333333333333333333333333333333333333dasdasdasdasdasdasdasdsadas');
+
+      const dstId = await recordService.selectDstIdByFormId((request.params as any)['formId']);
+      const datasheetService = app.select(DatabaseModule).get(DatasheetService);
+
+      const datasheet = await datasheetService.getDatasheet(dstId);
+
+      if (datasheet) {
+        // TODO: should be optimized
+        request[DATASHEET_HTTP_DECORATE] = datasheet;
+        request[SPACE_ID_HTTP_DECORATE] = datasheet.spaceId;
+        const metaService = app.select(DatabaseModule).get(DatasheetMetaService);
+        request[DATASHEET_META_HTTP_DECORATE] = await metaService.getMetaDataByDstId(dstId);
         request[DATASHEET_LINKED] = {};
         request[DATASHEET_ENRICH_SELECT_FIELD] = {};
         request[DATASHEET_MEMBER_FIELD] = new Set();
