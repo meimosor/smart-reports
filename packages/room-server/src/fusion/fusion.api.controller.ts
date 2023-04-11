@@ -465,6 +465,49 @@ export class FusionApiController {
     const fieldCreateDto = await this.fusionApiService.addField(datasheetId, createRo);
     return ApiResponse.success(fieldCreateDto);
   }
+  @Post('/dst/:formId/fields/update')
+  @ApiOperation({
+    summary: 'Update field',
+    description: 'Update field',
+    deprecated: false,
+  })
+  @ApiBody({
+    description: 'Update Datasheet and their fields',
+    type: DatasheetCreateRo,
+  })
+  @ApiProduces('application/json')
+  @ApiConsumes('application/json')
+  public async updateLcodeFields(
+    @Param('formId') formId: string,
+    @Body(CreateDatasheetPipe) createRo: DatasheetCreateRo,
+  ): Promise<FieldDeleteVo> {
+    // 1、根据formId查询DstId
+    const datasheetId = await this.fusionApiService.getDstIdByFormId(formId);
+    
+    // // 2、根据DstId获取所有字段fieldDtos
+    // const fields = await this.fusionApiService.getFieldList(datasheetId, { viewId: '' });
+    // const fieldDtos = fields.map(field =>
+    //   field.getViewObject((f, { state }) => Field.bindContext(f, state).getApiMeta(datasheetId) as DatasheetFieldDto),
+    // );
+    // console.log(fieldDtos);
+    
+    // // 3、删除工作表对应的所有字段fieldDtos
+    // await this.fusionApiService.deleteBatchFieldsOfLcode(datasheetId, fieldDtos, false);
+    // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>1.删除所有字段成功<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+
+    // 3、新增Body传来的所有字段
+    
+    if (!createRo.fields || createRo.fields.length === 0) {
+      return ApiResponse.error('字段列表不能为空！');
+    }
+    try {
+      const datasheetCreateDto = await this.fusionApiService.addDatasheetFields(datasheetId, createRo);
+      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>更新数据表结构成功<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
+      return ApiResponse.success(datasheetCreateDto);
+    } catch (err) {
+      return ApiResponse.error('更新失败，具体错误信息：' + JSON.stringify(err) );
+    }
+  }
 
   @Delete('/spaces/:spaceId/datasheets/:datasheetId/fields/:fieldId')
   @ApiOperation({

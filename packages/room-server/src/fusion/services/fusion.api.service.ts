@@ -388,6 +388,41 @@ export class FusionApiService {
     }
   }
 
+  public async deleteBatchFieldsOfLcode(datasheetId: string, fieldDtos: any[], conversion?: boolean) {
+    const auth = { token: this.request.headers.authorization };
+    const datasheet = await this.databusService.getDatasheet(datasheetId, {
+      loadOptions: {
+        auth,
+        loadBasePacks: {
+          foreignDstIds: [],
+        },
+      },
+      createStore: dst => this.createStoreForBaseDstPacks(dst),
+    });
+    if (datasheet === null) {
+      throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
+    }
+
+    const arr: any[] = [];
+
+    fieldDtos.map((item) => {
+      arr.push({
+        deleteBrotherField: conversion,
+        fieldId: item.id
+      });
+    });
+
+    console.log('llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll', arr);
+    
+    const result = await datasheet.deleteFields(
+      arr,
+      { auth } as IServerSaveOptions,
+    );
+    if (result.result !== ExecuteResult.Success) {
+      throw ApiException.tipError(ApiTipConstant.api_delete_error);
+    }
+  }
+
   public async addDatasheetFields(dstId: string, datasheetCreateRo: DatasheetCreateRo): Promise<DatasheetCreateDto> {
     const auth = { token: this.request.headers.authorization };
     const foreignDatasheetIds = datasheetCreateRo.foreignDatasheetIds();
@@ -406,6 +441,9 @@ export class FusionApiService {
 
     const defaultFields = Object.values(datasheet.fields).map(field => ({ fieldId: field.id }));
     const commandDatas = datasheetCreateRo.transferToCommandData();
+    console.log('*************************************************************************');
+    console.log('commandDatas', commandDatas);
+    
     const fields = [];
     for (const commandData of commandDatas) {
       const fieldId = await this.addDatasheetField(datasheet, commandData, auth);
