@@ -82,6 +82,9 @@ import { FieldPipe } from './middleware/pipe/field.pipe';
 import { QueryPipe } from './middleware/pipe/query.pipe';
 import { RecordLcodeParamRo } from './ros/record.lcode.param.ro';
 import { FieldLcodePipe } from './middleware/pipe/field.lcode.pipe';
+import { FieldLcodeDeleteRo } from './ros/field.lcode.delete.ro';
+import { DstFieldsCreateRo } from './ros/dst.fields.create.ro';
+import { CreateDstFieldsPipe } from './middleware/pipe/create.dst.fields.pipe';
 
 /**
  * TODO: cache response data, send notification while member changed, should maintain the data in the same server and cache them
@@ -437,34 +440,6 @@ export class FusionApiController {
     return ApiResponse.success(fieldCreateDto);
   }
   
-  @Post('/spaces/:spaceId/dst/:formId/fields')
-  @ApiOperation({
-    summary: 'New field',
-    description: 'New field',
-    deprecated: false,
-  })
-  @ApiBody({
-    description: 'New field',
-    type: FieldCreateRo,
-  })
-  @ApiProduces('application/json')
-  @ApiConsumes('application/json')
-  // @UseGuards(ApiFieldGuard)
-  public async createLcodeField(
-    @Param('spaceId') _spaceId: string,
-    @Param('formId') formId: string,
-    @Body(CreateFieldPipe) createRo: FieldCreateRo,
-  ): Promise<FieldCreateVo> {
-    const datasheetId = await this.fusionApiService.getDstIdByFormId(formId);
-    // TODO only fetch field names
-    const fields = await this.fusionApiService.getFieldList(datasheetId, { viewId: '' });
-    const duplicatedName = fields.filter(field => field.name === createRo.name);
-    if (duplicatedName.length > 0) {
-      throw ApiException.tipError(ApiTipConstant.api_params_must_unique, { property: 'name' });
-    }
-    const fieldCreateDto = await this.fusionApiService.addField(datasheetId, createRo);
-    return ApiResponse.success(fieldCreateDto);
-  }
   @Post('/dst/:formId/fields/update')
   @ApiOperation({
     summary: 'Update field',
@@ -538,6 +513,79 @@ export class FusionApiController {
       throw ApiException.tipError(ApiTipConstant.api_params_primary_field_not_allowed_to_delete, { property: 'name' });
     }
     await this.fusionApiService.deleteField(datasheetId, fieldId, fieldDeleteRo.conversion);
+    return ApiResponse.success({});
+  }
+
+  @Post('/dst/:formId/fields')
+  @ApiOperation({
+    summary: 'New field',
+    description: 'New field',
+    deprecated: false,
+  })
+  @ApiBody({
+    description: 'New field',
+    type: FieldCreateRo,
+  })
+  @ApiProduces('application/json')
+  @ApiConsumes('application/json')
+  public async createLcodeField(
+    @Param('formId') formId: string,
+    @Body(CreateDstFieldsPipe) createRo: DstFieldsCreateRo,
+  ): Promise<FieldDeleteVo> {
+    // 1、根据formId查询DstId
+    const datasheetId = await this.fusionApiService.getDstIdByFormId(formId);
+    // 2、查询字段列表
+    const fields = await this.fusionApiService.getFieldList(datasheetId, { viewId: '' });
+
+    // 3、校验新增的字段，name不能重复
+    const duplicatedNames = fields.filter(field => {
+      return createRo.fields?.find( addRo => {
+        return addRo.name === field.name;
+      });  
+    });
+
+    console.log('duplicatedNames{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{', duplicatedNames);
+    
+    if (duplicatedNames.length > 0) {
+      throw ApiException.tipError(ApiTipConstant.api_params_must_unique, { property: 'name' });
+    }
+    const fieldCreateDto = await this.fusionApiService.addBatchFieldsOfLcode(datasheetId, createRo);
+    return ApiResponse.success(fieldCreateDto);
+  }
+
+  @Delete('/dst/:formId/fields')
+  @ApiOperation({
+    summary: 'Delete field',
+    description: 'Delete field',
+    deprecated: false,
+  })
+  @ApiProduces('application/json')
+  @ApiConsumes('application/json')
+  public async deleteLcodeFields(
+    @Param('formId') formId: string,
+    @Query(QueryPipe) query: FieldLcodeDeleteRo,
+  ): Promise<FieldDeleteVo> {
+    if (!query.filedIds) {
+      throw ApiException.tipError(ApiTipConstant.api_params_empty_error, { property: 'filedIds' });
+    }
+    // 1、根据formId查询DstId
+    const datasheetId = await this.fusionApiService.getDstIdByFormId(formId);
+    // 2、查询字段列表
+    const fields = await this.fusionApiService.getFieldList(datasheetId, { viewId: '' });
+
+    // 3、匹配要删除的字段
+    const delteFileIds = fields.filter(field => {
+      return query.filedIds.find(lcodeFieldId => {
+        return lcodeFieldId === field.name;
+      });  
+    });
+
+    if (delteFileIds.length === 0) {
+      throw ApiException.tipError(ApiTipConstant.api_params_not_exists, { property: 'fieldId' });
+    }
+
+    // 4、执行删除操作
+    await this.fusionApiService.deleteBatchFieldsOfLcode(datasheetId, delteFileIds, false);
     return ApiResponse.success({});
   }
 

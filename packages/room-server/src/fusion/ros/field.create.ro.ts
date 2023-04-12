@@ -50,6 +50,15 @@ export class FieldCreateRo {
   @IsString()
   type: string;
 
+  @ApiProperty({
+    type: String,
+    required: true,
+    description: 'Field Desc',
+    example: '',
+  })
+  @IsString()
+  desc?: string;
+
   @ApiPropertyOptional({
     type: Object,
     required: false,
@@ -59,9 +68,15 @@ export class FieldCreateRo {
   @IsOptional()
   property?: IAddOpenFieldProperty | null;
 
-  constructor(name: string, type: string) {
+  // constructor(name: string, type: string) {
+  //   this.name = name;
+  //   this.type = type;
+  // }
+
+  constructor(name: string, type: string, desc: string) {
     this.name = name;
     this.type = type;
+    this.desc = desc;
   }
 
   transferToCommandData(): IAddFieldOptions {
@@ -69,6 +84,7 @@ export class FieldCreateRo {
     const fieldInfo = {
       id: getNewId(IDPrefix.Field),
       name: this.name,
+      desc: this.desc,
       type: fieldType,
       property: getFieldClass(fieldType).defaultProperty(),
     } as IField;
@@ -77,6 +93,7 @@ export class FieldCreateRo {
     return {
       data: {
         name: this.name,
+        desc: this.desc,
         type: fieldType,
         property,
       },

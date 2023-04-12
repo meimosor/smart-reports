@@ -15,32 +15,19 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+import { ApiProperty } from '@nestjs/swagger';
+import { Transform } from 'class-transformer';
+import { IsOptional } from 'class-validator';
+import { stringToArray } from 'shared/helpers/fusion.helper';
 
-// declare const window: any;
-
-export enum LangType {
-  /** Chinese */
-  ZhCN = 'zh-CN',
-  /** English */
-  EnUS = 'en-US'
-}
-/**
- * Used to get the current system language
- * 
- * ## Example
- * ``` js
- * import { getLanguage, LangType } from '@apitable/widget-sdk';
- * 
- * if (getLanguage() === LangType.ZhCN) {
- *   console.log('Current system language is Chinese');
- * }
- * 
- * ```
- */
-export function getLanguage(): LangType {
-  // const language = typeof window == 'object' &&
-  //   window.__initialization_data__ &&
-  //   window.__initialization_data__.lang;
-  // return language || LangType.ZhCN;
-  return LangType.ZhCN;
+export class FieldLcodeDeleteRo {
+  @ApiProperty({
+    type: [String],
+    required: true,
+    description: 'The set of filedId to be deleted',
+    example: 'recwZ6yV3Srv3',
+  })
+  @Transform(value => stringToArray(value), { toClassOnly: true })
+  @IsOptional()
+  filedIds!: string[];
 }

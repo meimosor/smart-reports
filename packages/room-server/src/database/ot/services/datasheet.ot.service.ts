@@ -1659,24 +1659,24 @@ export class DatasheetOtService {
       });
 
       if (isDelete) {
-        const jsonParams = cellData.reduce((pre: any, cur: any) => {
-          pre += `, '$.${cur.fieldId}'`;
-          return pre;
-        }, '');
+        // const jsonParams = cellData.reduce((pre: any, cur: any) => {
+        //   pre += `, '$.${cur.fieldId}'`;
+        //   return pre;
+        // }, '');
 
-        // Delete cell content in database
-        await manager
-          .createQueryBuilder()
-          .update(DatasheetRecordEntity)
-          .set({
-            data: () => `JSON_REMOVE(data ${jsonParams})`,
-            recordMeta: newRecordMeta,
-            revision,
-            revisionHistory: () => `CONCAT_WS(',', revision_history, ${revision})`,
-            updatedBy: userId,
-          })
-          .where([{ dstId, recordId }])
-          .execute();
+        // // Delete cell content in database
+        // await manager
+        //   .createQueryBuilder()
+        //   .update(DatasheetRecordEntity)
+        //   .set({
+        //     data: () => `JSON_REMOVE(data ${jsonParams})`,
+        //     recordMeta: newRecordMeta,
+        //     revision,
+        //     revisionHistory: () => `CONCAT_WS(',', revision_history, ${revision})`,
+        //     updatedBy: userId,
+        //   })
+        //   .where([{ dstId, recordId }])
+        //   .execute();
       } else {
         const params: string[] = [];
         const jsonParams = cellData.reduce((pre: any, cur: any) => {

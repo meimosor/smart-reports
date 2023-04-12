@@ -185,14 +185,11 @@ function MyAppMain({ Component, pageProps, envVars }: AppProps & { envVars: stri
     const getUser = async() => {
       const res = await axios.get('/client/info');
       let userInfo = JSON.parse(res.data.userInfo);
-      console.log('userinfo///////////////////////', userInfo);
-      
       setUserData(userInfo);
 
       const pathUrl = window.location.pathname;
       const { nodeId } = getPageParams(pathUrl || '');
       const spaceId = 'spc71PbGiltqC';
-      console.log('nodeId///////////////////////', nodeId);
       let userInfoError: IUserInfoError | undefined;
 
       /**

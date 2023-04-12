@@ -17,51 +17,12 @@
  */
 
 import { Field, FieldType, getFieldClass, getFieldTypeByString, getNewId, IAddFieldOptions, IDPrefix, IField, IReduxState } from '@apitable/core';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsOptional, ValidateNested } from 'class-validator';
 import { DatasheetFieldCreateRo } from './datasheet.field.create.ro';
 
-export class DatasheetCreateRo {
-  @ApiProperty({
-    type: String,
-    required: true,
-    description: 'datasheet name',
-    example: 'New dataSheet',
-  })
-  @IsString()
-  name: string;
-
-  @ApiPropertyOptional({
-    type: String,
-    required: false,
-    example: 'viwG9l1VPD6nH',
-    description: 'datasheet description, plain text only',
-  })
-  @IsString()
-  @IsOptional()
-  description: string;
-
-  @ApiPropertyOptional({
-    type: String,
-    required: false,
-    example: 'fodn173Q0e8nC',
-    description: 'folder Id, if not filled in, it is under the working directory',
-  })
-  @IsString()
-  @IsOptional()
-  folderId?: string;
-
-  @ApiPropertyOptional({
-    type: String,
-    required: false,
-    example: '',
-    description: 'Previous node Id, or first if not filled in',
-  })
-  @IsString()
-  @IsOptional()
-  preNodeId?: string;
-
+export class DstFieldsCreateRo {
   @ApiPropertyOptional({
     type: [DatasheetFieldCreateRo],
     required: false,
@@ -90,11 +51,6 @@ export class DatasheetCreateRo {
   @Type(() => DatasheetFieldCreateRo)
   @ValidateNested()
   fields?: DatasheetFieldCreateRo[];
-
-  constructor(name: string, description: string) {
-    this.name = name;
-    this.description = description;
-  }
 
   transferToCommandData(): IAddFieldOptions[] {
     const fields: any[] = [];

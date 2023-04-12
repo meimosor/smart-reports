@@ -85,6 +85,7 @@ import { IServerSaveOptions } from './databus/server.data.storage.provider';
 import { promisify } from 'util';
 import { RedisLock } from 'shared/helpers/redis.lock';
 import { RedisService } from '@apitable/nestjs-redis';
+import { DstFieldsCreateRo } from 'fusion/ros/dst.fields.create.ro';
 
 @Injectable()
 export class FusionApiService {
@@ -412,8 +413,6 @@ export class FusionApiService {
       });
     });
 
-    console.log('llllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll', arr);
-    
     const result = await datasheet.deleteFields(
       arr,
       { auth } as IServerSaveOptions,
@@ -421,6 +420,33 @@ export class FusionApiService {
     if (result.result !== ExecuteResult.Success) {
       throw ApiException.tipError(ApiTipConstant.api_delete_error);
     }
+  }
+
+  public async addBatchFieldsOfLcode(dstId: string, datasheetCreateRo: DstFieldsCreateRo): Promise<DatasheetCreateDto> {
+    const auth: IAuthHeader = { token: this.request.headers.authorization };
+    const foreignDatasheetIds = datasheetCreateRo.foreignDatasheetIds();
+    const datasheet = await this.databusService.getDatasheet(dstId, {
+      loadOptions: {
+        auth,
+        loadBasePacks: {
+          foreignDstIds: foreignDatasheetIds,
+        },
+      },
+      createStore: dst => this.createStoreForBaseDstPacks(dst),
+    });
+    if (datasheet === null) {
+      throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
+    }
+
+    const commandDatas = datasheetCreateRo.transferToCommandData();
+
+    const fields = [];
+    for (const commandData of commandDatas) {
+      const fieldId = await this.addDatasheetField(datasheet, commandData, auth);
+      fields.push({ id: fieldId, name: commandData.data.name, desc:  commandData.data.desc });
+    }
+
+    return { id: dstId, createdAt: undefined as any, fields };
   }
 
   public async addDatasheetFields(dstId: string, datasheetCreateRo: DatasheetCreateRo): Promise<DatasheetCreateDto> {
@@ -441,13 +467,11 @@ export class FusionApiService {
 
     const defaultFields = Object.values(datasheet.fields).map(field => ({ fieldId: field.id }));
     const commandDatas = datasheetCreateRo.transferToCommandData();
-    console.log('*************************************************************************');
-    console.log('commandDatas', commandDatas);
     
     const fields = [];
     for (const commandData of commandDatas) {
       const fieldId = await this.addDatasheetField(datasheet, commandData, auth);
-      fields.push({ id: fieldId, name: commandData.data.name });
+      fields.push({ id: fieldId, name: commandData.data.name, desc:  commandData.data.desc });
     }
 
     await this.deleteDefaultFields(datasheet, defaultFields, auth);

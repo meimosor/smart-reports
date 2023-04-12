@@ -47,6 +47,9 @@ export class DatasheetMetaService {
         metaMap[meta.dstId] = meta.metaData;
       }
     }
+
+    console.log('##################################################################################################',metas);
+    
     return metaMap;
   }
 

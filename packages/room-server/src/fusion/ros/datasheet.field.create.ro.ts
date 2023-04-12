@@ -39,6 +39,15 @@ export class DatasheetFieldCreateRo {
   @IsString()
   type!: string;
 
+  @ApiProperty({
+    type: String,
+    required: true,
+    description: 'Field type',
+    example: '',
+  })
+  @IsString()
+  desc?: string;
+
   @ApiPropertyOptional({
     type: Object,
     required: false,
