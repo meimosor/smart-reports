@@ -16,15 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Field, FieldType, getFieldClass, getFieldTypeByString, getNewId, IAddFieldOptions, IDPrefix, IField, IReduxState } from '@apitable/core';
+import { Field, FieldType, getFieldClass, getFieldTypeByString, IField, IReduxState, ISetFieldAttrOptions } from '@apitable/core';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsOptional, ValidateNested } from 'class-validator';
-import { DatasheetFieldCreateRo } from './datasheet.field.create.ro';
+import { DatasheetFieldUpdateRo } from './datasheet.upadte.ro';
 
-export class DstFieldsCreateRo {
+export class DstFieldsUpdateRo {
   @ApiPropertyOptional({
-    type: [DatasheetFieldCreateRo],
+    type: [DatasheetFieldUpdateRo],
     required: false,
     description: 'List of fields to be created',
     example: [
@@ -48,17 +48,17 @@ export class DstFieldsCreateRo {
   })
   @IsOptional()
   // @ArrayMaxSize(200, { message: ApiTipConstant.api_params_max_count_error, context: { value: 200 }})
-  @Type(() => DatasheetFieldCreateRo)
+  @Type(() => DatasheetFieldUpdateRo)
   @ValidateNested()
-  fields?: DatasheetFieldCreateRo[];
+  fields?: any[];
 
-  transferToCommandData(): IAddFieldOptions[] {
+  transferToUpdateCommandData(): ISetFieldAttrOptions[] {
     const fields: any[] = [];
     if (this.fields) {
       this.fields.forEach(field => {
         const fieldType = getFieldTypeByString(field.type as any)!;
         const fieldInfo = {
-          id: getNewId(IDPrefix.Field),
+          id: field.id,
           name: field.name,
           desc: field.desc,
           type: fieldType,
@@ -68,6 +68,7 @@ export class DstFieldsCreateRo {
         const property = fieldContext.addOpenFieldPropertyTransformProperty(field.property!) || null;
         fields.push({
           data: {
+            id: field.id,
             name: field.name,
             type: fieldType,
             desc: field.desc,
@@ -78,6 +79,7 @@ export class DstFieldsCreateRo {
     }
     return fields;
   }
+
   foreignDatasheetIds(): string[] {
     const foreignDatasheetIds: string[] = [];
     if (this.fields) {

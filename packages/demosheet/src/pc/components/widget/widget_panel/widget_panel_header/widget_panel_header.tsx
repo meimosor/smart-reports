@@ -17,7 +17,7 @@
  */
 
 import { ConfigConstant, ResourceType, Selectors, Strings, t } from '@apitable/core';
-import { AddOutlined, ChevronDownOutlined, ChevronLeftOutlined, CloseOutlined } from '@apitable/icons';
+import { AddOutlined, ChevronDownOutlined, ChevronLeftOutlined } from '@apitable/icons';
 import { InstallPosition } from 'pc/components/widget/widget_center/enum';
 import RcTrigger from 'rc-trigger';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -132,7 +132,7 @@ export const WidgetPanelHeader = (props: { onClosePanel: () => void | Promise<vo
             </span>
           </span>
         </RcTrigger>
-        <IconButton onClick={props.onClosePanel} icon={CloseOutlined} />
+        {/* <IconButton onClick={props.onClosePanel} icon={CloseOutlined} /> */}
       </ComponentDisplay>
       {/** Mobile */}
       <ComponentDisplay maxWidthCompatible={ScreenSize.md}>

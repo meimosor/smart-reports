@@ -124,7 +124,7 @@ export const WidgetHeader: React.FC<React.PropsWithChildren<IWidgetHeaderProps>>
     }
     expandWidgetRoute(widgetId);
   };
-  const ReactIconExpand = () => <ExpandOutlined size={16} color="red"/>;
+  const ReactIconExpand = () => <ExpandOutlined size={16} color={'yellow'} showTitle/>;
   const ReactMoreOutlined = () => <MoreOutlined size={16} color={colors.thirdLevelText} className={styles.rotateIcon} />;
 
   const DividerMargin8 = () => <Divider style={{ margin: '8px' }} orientation='vertical' />;
@@ -233,6 +233,7 @@ export const WidgetHeader: React.FC<React.PropsWithChildren<IWidgetHeaderProps>>
             hideAll();
           }}
         >
+          恢复规划法规和风格
           <Tooltip title={isExpandWidget ? t(Strings.widget_collapse_tooltip) : t(Strings.widget_expand_tooltip)} placement={tooltipPlacement}>
             <IconButton icon={ReactIconExpand} />
           </Tooltip>
@@ -264,6 +265,7 @@ export const WidgetHeader: React.FC<React.PropsWithChildren<IWidgetHeaderProps>>
           )}
           onClick={triggerMenu}
         >
+          打扫打扫大
           <Tooltip title={t(Strings.widget_more_settings_tooltip)} placement={tooltipPlacement}>
             <IconButton icon={ReactMoreOutlined} />
           </Tooltip>

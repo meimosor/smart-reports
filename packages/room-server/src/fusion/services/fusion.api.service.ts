@@ -86,6 +86,7 @@ import { promisify } from 'util';
 import { RedisLock } from 'shared/helpers/redis.lock';
 import { RedisService } from '@apitable/nestjs-redis';
 import { DstFieldsCreateRo } from 'fusion/ros/dst.fields.create.ro';
+import { DstFieldsUpdateRo } from 'fusion/ros/dst.fields.update.ro';
 
 @Injectable()
 export class FusionApiService {
@@ -444,6 +445,34 @@ export class FusionApiService {
     for (const commandData of commandDatas) {
       const fieldId = await this.addDatasheetField(datasheet, commandData, auth);
       fields.push({ id: fieldId, name: commandData.data.name, desc:  commandData.data.desc });
+    }
+
+    return { id: dstId, createdAt: undefined as any, fields };
+  }
+
+  public async updateBatchFieldsOfLcode(dstId: string, datasheetCreateRo: DstFieldsUpdateRo): Promise<DatasheetCreateDto> {
+    const auth: IAuthHeader = { token: this.request.headers.authorization };
+    const foreignDatasheetIds = datasheetCreateRo.foreignDatasheetIds();
+    const datasheet = await this.databusService.getDatasheet(dstId, {
+      loadOptions: {
+        auth,
+        loadBasePacks: {
+          foreignDstIds: foreignDatasheetIds,
+        },
+      },
+      createStore: dst => this.createStoreForBaseDstPacks(dst),
+    });
+    if (datasheet === null) {
+      throw ApiException.tipError(ApiTipConstant.api_datasheet_not_exist);
+    }
+
+    const updateFieldDatas = datasheetCreateRo.transferToUpdateCommandData() as any;
+
+    console.log('udapteRo',updateFieldDatas);
+    const fields = [];
+    for (const updateData of updateFieldDatas) {
+      await datasheet.updateField(updateData.data, { auth, applyChangesets: true });
+      fields.push({ id: updateData.data.id, name: updateData.data.name, desc:  updateData.data.desc });
     }
 
     return { id: dstId, createdAt: undefined as any, fields };
@@ -853,9 +882,7 @@ export class FusionApiService {
   }
 
   public async addRelRecords(formId: string, body: RecordCreateRo, viewId: string): Promise<ListVo> {
-    console.log('==========================================res===formId======================================================', formId);
     const dstId = await this.fusionApiRecordService.selectDstIdByFormId(formId);
-    console.log('==========================================res===dstId======================================================', dstId);
     if(!dstId) {
       throw new ServerException(DatasheetException.NOT_EXIST, CommonStatusCode.DEFAULT_ERROR_CODE);
     }

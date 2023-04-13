@@ -31,6 +31,9 @@ export class Field {
     return this.field.name;
   }
 
+  get desc(): string {
+    return this.field.desc || '';
+  }
   get type(): FieldType {
     return this.field.type;
   }

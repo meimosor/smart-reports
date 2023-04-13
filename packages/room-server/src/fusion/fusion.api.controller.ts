@@ -85,6 +85,7 @@ import { FieldLcodePipe } from './middleware/pipe/field.lcode.pipe';
 import { FieldLcodeDeleteRo } from './ros/field.lcode.delete.ro';
 import { DstFieldsCreateRo } from './ros/dst.fields.create.ro';
 import { CreateDstFieldsPipe } from './middleware/pipe/create.dst.fields.pipe';
+import { DstFieldsUpdateRo } from './ros/dst.fields.update.ro';
 
 /**
  * TODO: cache response data, send notification while member changed, should maintain the data in the same server and cache them
@@ -447,28 +448,17 @@ export class FusionApiController {
     deprecated: false,
   })
   @ApiBody({
-    description: 'Update Datasheet and their fields',
+    description: '清空并批量新增字段',
     type: DatasheetCreateRo,
   })
   @ApiProduces('application/json')
   @ApiConsumes('application/json')
-  public async updateLcodeFields(
+  public async flushAndAddLcodeFields(
     @Param('formId') formId: string,
     @Body(CreateDatasheetPipe) createRo: DatasheetCreateRo,
   ): Promise<FieldDeleteVo> {
     // 1、根据formId查询DstId
     const datasheetId = await this.fusionApiService.getDstIdByFormId(formId);
-    
-    // // 2、根据DstId获取所有字段fieldDtos
-    // const fields = await this.fusionApiService.getFieldList(datasheetId, { viewId: '' });
-    // const fieldDtos = fields.map(field =>
-    //   field.getViewObject((f, { state }) => Field.bindContext(f, state).getApiMeta(datasheetId) as DatasheetFieldDto),
-    // );
-    // console.log(fieldDtos);
-    
-    // // 3、删除工作表对应的所有字段fieldDtos
-    // await this.fusionApiService.deleteBatchFieldsOfLcode(datasheetId, fieldDtos, false);
-    // console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>1.删除所有字段成功<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<');
 
     // 3、新增Body传来的所有字段
     
@@ -523,7 +513,7 @@ export class FusionApiController {
     deprecated: false,
   })
   @ApiBody({
-    description: 'New field',
+    description: '批量新增字段',
     type: FieldCreateRo,
   })
   @ApiProduces('application/json')
@@ -532,6 +522,9 @@ export class FusionApiController {
     @Param('formId') formId: string,
     @Body(CreateDstFieldsPipe) createRo: DstFieldsCreateRo,
   ): Promise<FieldDeleteVo> {
+    if(!createRo.fields || createRo.fields.length == 0) {
+      return ApiResponse.error('请求数据为空, 请检查请求参数配置！');
+    }
     // 1、根据formId查询DstId
     const datasheetId = await this.fusionApiService.getDstIdByFormId(formId);
     // 2、查询字段列表
@@ -544,8 +537,6 @@ export class FusionApiController {
       });  
     });
 
-    console.log('duplicatedNames{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{', duplicatedNames);
-    
     if (duplicatedNames.length > 0) {
       throw ApiException.tipError(ApiTipConstant.api_params_must_unique, { property: 'name' });
     }
@@ -553,6 +544,46 @@ export class FusionApiController {
     return ApiResponse.success(fieldCreateDto);
   }
 
+  @Patch('/dst/:formId/fields')
+  @ApiOperation({
+    summary: 'Update fields',
+    description: 'Update fields',
+    deprecated: false,
+  })
+  @ApiBody({
+    description: '批量更新字段',
+    type: FieldCreateRo,
+  })
+  @ApiProduces('application/json')
+  @ApiConsumes('application/json')
+  public async updateDstFields(
+    @Param('formId') formId: string,
+    @Body(CreateDstFieldsPipe) udapteRo: DstFieldsUpdateRo,
+  ): Promise<FieldDeleteVo> {
+    if(!udapteRo.fields || udapteRo.fields.length == 0) {
+      return ApiResponse.error('请求数据为空, 请检查请求参数配置！');
+    }
+    // 1、根据formId查询DstId
+    const datasheetId = await this.fusionApiService.getDstIdByFormId(formId);
+    // 2、查询字段列表
+    const fields = await this.fusionApiService.getFieldList(datasheetId, { viewId: '' });
+
+    // 3、校验新增的字段，name不能重复
+    const duplicatedNames = fields.filter(field => {
+      return udapteRo.fields?.find( ro => {
+        if(ro.name === field.name) {
+          ro.id = field.id;
+        }
+        return ro.name === field.name;
+      });  
+    });
+
+    if (duplicatedNames.length < (udapteRo.fields?.length || 1)) {
+      throw ApiException.tipError(ApiTipConstant.api_params_not_exists, { property: 'name' });
+    }
+    const fieldCreateDto = await this.fusionApiService.updateBatchFieldsOfLcode(datasheetId, udapteRo);
+    return ApiResponse.success(fieldCreateDto);
+  }
   @Delete('/dst/:formId/fields')
   @ApiOperation({
     summary: 'Delete field',

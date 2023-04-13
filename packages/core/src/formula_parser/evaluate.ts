@@ -210,6 +210,7 @@ export function expressionTransform(
   if (!expression) {
     return expression;
   }
+  console.log('sdadddddddddddddddddddddddddddddddddddddd<><><><><><><><><><><><><<><><<><>');
 
   const lexer = new FormulaExprLexer(expression);
   if (!lexer) {

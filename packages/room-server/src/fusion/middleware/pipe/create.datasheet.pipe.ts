@@ -17,7 +17,7 @@
  */
 
 import {
-  ApiTipConstant, Field, FieldTypeDescriptionMap, getFieldClass, getFieldTypeByString, getMaxFieldCountPerSheet, getNewId, IDPrefix, IField,
+  ApiTipConstant, Field, getFieldClass, getFieldTypeByString, getMaxFieldCountPerSheet, getNewId, IDPrefix, IField,
   IReduxState,
 } from '@apitable/core';
 import { Inject, Injectable, PipeTransform } from '@nestjs/common';
@@ -77,12 +77,12 @@ export class CreateDatasheetPipe implements PipeTransform {
     return fields;
   }
 
-  public validatePrimaryFieldType(type: string) {
-    const fieldType = getFieldTypeByString(type as any)!;
-    const canBePrimaryField = FieldTypeDescriptionMap[fieldType]!.canBePrimaryField;
-    if (!canBePrimaryField) {
-      throw ApiException.tipError(ApiTipConstant.api_params_invalid_primary_field_type_error, { value: type });
-    }
+  public validatePrimaryFieldType(_type: string) {
+    // const fieldType = getFieldTypeByString(type as any)!;
+    // const canBePrimaryField = FieldTypeDescriptionMap[fieldType]!.canBePrimaryField;
+    // if (!canBePrimaryField) {
+    //   throw ApiException.tipError(ApiTipConstant.api_params_invalid_primary_field_type_error, { value: type });
+    // }
   }
 
   public validateFields(fields: DatasheetFieldCreateRo[]) {

@@ -48,11 +48,11 @@ const EmptyPanel = ({ onClosePanel }: { onClosePanel?: () => void | Promise<void
           {t(Strings.add_widget)}
         </Button>
       )}
-      <p className={styles.docTip}>
+      {/* <p className={styles.docTip}>
         <a href={t(Strings.intro_widget)} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block' }}>
           {t(Strings.intro_widget_tips)}
         </a>
-      </p>
+      </p> */}
     </div>
   );
 };

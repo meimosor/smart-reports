@@ -18,7 +18,7 @@
 
 import { CollaCommandName, ExecuteResult, ResourceType, Selectors, StoreActions, Strings, t } from '@apitable/core';
 import classNames from 'classnames';
-import { Modal, Tooltip } from 'pc/components/common';
+import { Modal } from 'pc/components/common';
 import { OperateItem } from 'pc/components/tool_bar/view_switcher/view_item/operate_item';
 import { resourceService } from 'pc/resource_service';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
@@ -27,8 +27,7 @@ import { stopPropagation } from '../../../../utils/dom';
 import { useVerifyOperateItemTitle } from '../../../tool_bar/view_switcher/view_switcher';
 import styles from './style.module.less';
 import { useUnmount } from 'ahooks';
-import { AddOutlined, QuestionCircleOutlined, WidgetOutlined } from '@apitable/icons';
-import { useThemeColors } from '@apitable/components';
+import { AddOutlined, WidgetOutlined } from '@apitable/icons';
 import { ScreenSize } from 'pc/components/common/component_display';
 import { useResponsive } from 'pc/hooks';
 import { FC } from 'react';
@@ -38,7 +37,6 @@ export const WidgetPanelList: FC<React.PropsWithChildren<{ onClickItem?: (panelI
   const { screenIsAtMost } = useResponsive();
   const isMobile = screenIsAtMost(ScreenSize.md);
 
-  const colors = useThemeColors();
   const dispatch = useDispatch();
   const { datasheetId, mirrorId } = useSelector(state => state.pageParams);
   const { manageable, editable } = useSelector(state => {
@@ -162,11 +160,11 @@ export const WidgetPanelList: FC<React.PropsWithChildren<{ onClickItem?: (panelI
     <div className={classNames(styles.widgetListWrapper, isMobile && styles.widgetListWrapperMobile)}>
       <h2>
         {t(Strings.widget_panel)}（{widgetPanels.length}/3）
-        <Tooltip title={t(Strings.click_to_view_instructions)} trigger={'hover'}>
+        {/* <Tooltip title={t(Strings.click_to_view_instructions)} trigger={'hover'}>
           <a href={t(Strings.intro_widget)} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block' }}>
             <QuestionCircleOutlined color={colors.thirdLevelText} />
           </a>
-        </Tooltip>
+        </Tooltip> */}
       </h2>
       {widgetPanels && (
         <div className={styles.panelList}>

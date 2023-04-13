@@ -60,11 +60,13 @@ export function FieldPicker(props: IFieldPicker) {
   const allFields = useFields(viewId);
   const fields = (hasDatasheet ? datasheetFields : allFields).filter(field => !allowedTypes || allowedTypes.includes(field.type));
 
+  console.log('XSAXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+  
   return (
     <Select
       placeholder={placeholder || t(Strings.please_choose)}
       value={fieldId as any}
-      options={fields.map(field => ({ label: field.name, value: field.id }))}
+      options={fields.map(field => ({ label: field.description || '', value: field.id }))}
       onSelected={option => onChange ? onChange(option as IOption) : noop}
       disabled={disabled}
     />

@@ -29,6 +29,7 @@ const ViewPickerWrapper = (props: IViewPicker) => {
   const { datasheet, viewId, onChange, controlJump } = props;
   const { installPosition } = useMeta();
   const viewsMeta = useViewsMeta();
+ 
   const syncPickerViewId = (viewId?: string) => {
     if (
       editable &&
@@ -52,7 +53,11 @@ const ViewPickerWrapper = (props: IViewPicker) => {
     syncPickerViewId(option.value);
   };
   useMount(() => {
-    syncPickerViewId(viewId);
+    let activeViewId = viewId;
+    if(!activeViewId) {
+      activeViewId = 'df_view';
+    }
+    syncPickerViewId(activeViewId);
   });
   return <ViewPickerBase {...props} onChange={onChangeProxy}/>;
 };

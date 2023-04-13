@@ -344,12 +344,13 @@ export const getDatasheetParentId = (state: IReduxState, id?: string) => {
 
 export const getWidgetPanels = (state: IReduxState, datasheetId?: string) => {
   const snapshot = getSnapshot(state, datasheetId);
+  console.log('snapshot*****************______++++++', snapshot);
+
   return snapshot && snapshot.meta.widgetPanels;
 };
 
 export const getWidgetPanelStatus = (state: IReduxState, datasheetId?: string) => {
   const client = getDatasheetClient(state, datasheetId);
-  console.log('client*****************______++++++', client);
   // const widgetPanelStatus = client?.widgetPanelStatus；
   // widgetPanelStatus.activePanelId = 'wplSM11YeqQQH';
   return client?.widgetPanelStatus;
