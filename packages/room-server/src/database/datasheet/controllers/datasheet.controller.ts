@@ -54,7 +54,7 @@ export class DatasheetController {
     // check if the user belongs to this space
     const { userId } = await this.userService.getMe({ cookie });
     await this.nodeService.checkUserForNode(userId, dstId);
-    return await this.datasheetService.fetchDataPack(dstId, { cookie }, { recordIds: query.recordIds });
+    return await this.datasheetService.fetchDstDataPack(dstId, { cookie }, { recordIds: query.recordIds });
   }
 
   @Get(['shares/:shareId/datasheets/:dstId/dataPack', 'share/:shareId/datasheet/:dstId/dataPack'])

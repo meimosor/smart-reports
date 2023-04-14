@@ -121,6 +121,53 @@ export class DatasheetService {
   }
 
   /**
+   * Obtain datasheet data pack, with all linked datasheet data
+   *
+   * @param dstId datasheet ID
+   * @param auth authorization
+   * @param options query parameters
+   */
+  async fetchDstDataPack(dstId: string, auth: IAuthHeader, options?: IFetchDataOptions): Promise<DatasheetPack> {
+    const beginTime = +new Date();
+    this.logger.info(`Start loading main datasheet data [${dstId}]`);
+    // Query datasheet
+    const origin = { internal: true, main: true };
+    const getNodeInfoProfiler = this.logger.startTimer();
+    const { node, fieldPermissionMap } = await this.nodeService.getNodeDetailInfo(dstId, auth, origin);
+    getNodeInfoProfiler.done({ message: `getNodeDetailInfo ${dstId} done` });
+    // Query snapshot
+    const getMetaProfiler = this.logger.startTimer();
+    const meta = await this.datasheetMetaService.getMetaDataByDstId(dstId);
+    if(meta.fieldMap) {
+      for(const key in meta.fieldMap) {
+        meta!.fieldMap[key]!.name = meta.fieldMap[key]?.desc || '';
+      }
+    }
+
+    console.log('========================================================================================');
+    console.log('meta',meta);
+    
+    getMetaProfiler.done({ message: `getMetaProfiler ${dstId} done` });
+    const fetchDataPackProfiler = this.logger.startTimer();
+    const recordMap =
+        options && options.recordIds
+          ? await this.datasheetRecordService.getRecordsByDstIdAndRecordIds(dstId, options.recordIds)
+          : await this.datasheetRecordService.getRecordsByDstId(dstId);
+    fetchDataPackProfiler.done({ message: `fetchDataPackProfiler ${dstId} done` });
+    const endTime = +new Date();
+    this.logger.info(`Finished main datasheet data, duration [${dstId}]: ${endTime - beginTime}ms`);
+    // Query foreignDatasheetMap and unitMap
+    const combine = await this.processField(dstId, auth, meta, recordMap, origin, options?.linkedRecordMap);
+    return {
+      snapshot: { meta, recordMap, datasheetId: node.id },
+      datasheet: node,
+      foreignDatasheetMap: combine.foreignDatasheetMap,
+      units: combine.units as (UserInfo | UnitInfo)[],
+      fieldPermissionMap,
+    };
+  }
+
+  /**
    * Fetch share datasheet data pack, with all linked datasheet data
    *
    * @param shareId share ID
