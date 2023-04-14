@@ -23,6 +23,6 @@ export default create({
   base: 'light',
   colorPrimary: '#7B67EE',
   barSelectedColor: '#7B67EE',
-  brandTitle: 'Vika Components',
+  brandTitle: 'Smart Reports Components',
   brandImage: logo,
 });
