@@ -143,10 +143,6 @@ export class DatasheetService {
         meta!.fieldMap[key]!.name = meta.fieldMap[key]?.desc || '';
       }
     }
-
-    console.log('========================================================================================');
-    console.log('meta',meta);
-    
     getMetaProfiler.done({ message: `getMetaProfiler ${dstId} done` });
     const fetchDataPackProfiler = this.logger.startTimer();
     const recordMap =
